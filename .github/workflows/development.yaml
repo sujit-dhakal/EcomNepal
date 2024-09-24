@@ -11,38 +11,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4 # checking out the code first
-      - name: Install Docker Compose
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y docker-compose
-      - name: .env file
-        run: |
-          echo "POSTGRES_DB=${{ secrets.POSTGRES_DB }}" >> ecom/.env
-          echo "POSTGRES_USER=${{ secrets.POSTGRES_USER }}" >> ecom/.env
-          echo "POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD }}" >> ecom/.env
-          echo "POSTGRES_HOST=${{ secrets.POSTGRES_HOST }}" >> ecom/.env
-          echo "POSTGRES_PORT=${{ secrets.POSTGRES_PORT }}" >> ecom/.env
-          echo "SECRET_KEY==${{ secrets.SECRET_KEY }}" >> ecom/.env
-          echo "EMAIL_HOST_USER=${{ secrets.EMAIL_HOST_USER }}" >> ecom/.env
-          echo "EMAIL_HOST_PASSWORD=${{ secrets.EMAIL_HOST_PASSWORD }}" >> ecom/.env
-          echo "NEXT_PUBLIC_CLIENT_ID=${{ secrets.CLIENT_ID }}" >> ecom/frontend/ecommerce/.env
-      - name: Build and start Docker containers
-        run: |
-          docker-compose -f ecom/docker-compose.yml up -d --build
-      - name: Wait for the backend to be ready
-        run: |
-          until curl --silent --fail http://localhost:8000/; do
-            echo "Waiting for the Django backend  to be ready..."
-            sleep 10
-          done
-        timeout-minutes: 5
-      - name: Wait for the backend to be ready
-        run: |
-          until curl --silent --fail http://localhost:3000/; do
-            echo "Waiting for the Next frontend  to be ready..."
-            sleep 10
-          done
-        timeout-minutes: 5
-      - name: tear down the containers
-        run: |
-          docker-compose -f ecom/docker-compose.yml down
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secret.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_PASSWORD }}
+      - name: build frontend image
+        run: docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/ecommerce-backend:latest ecom/backend
+
+      - name: build backend image
+        run: docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/ecommerce-frontend:latest ecom/fronted/ecommerce
