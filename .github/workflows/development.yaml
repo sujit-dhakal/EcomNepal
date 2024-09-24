@@ -17,15 +17,15 @@ jobs:
           sudo apt-get install -y docker-compose
       - name: .env file
         run: |
-          echo "POSTGRES_DB=${{ secrets.POSTGRES_DB }}" >> .env
-          echo "POSTGRES_USER=${{ secrets.POSTGRES_USER }}" >> .env
-          echo "POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD }}" >> .env
-          echo "POSTGRES_HOST=${{ secrets.POSTGRES_HOST }}" >> .env
-          echo "POSTGRES_PORT=${{ secrets.POSTGRES_PORT }}" >> .env
-          echo "SECRET_KEY==${{ secrets.SECRET_KEY }}" >> .env
-          echo "EMAIL_HOST_USER=${{ secrets.EMAIL_HOST_USER }}" >> .env
-          echo "EMAIL_HOST_PASSWORD=${{ secrets.EMAIL_HOST_PASSWORD }}" >> .env
-          echo "CLIENT_ID=${{ secrets.CLIENT_ID }}" >> .env
+          echo "POSTGRES_DB=${{ secrets.POSTGRES_DB }}" >> ecom/.env
+          echo "POSTGRES_USER=${{ secrets.POSTGRES_USER }}" >> ecom/.env
+          echo "POSTGRES_PASSWORD=${{ secrets.POSTGRES_PASSWORD }}" >> ecom/.env
+          echo "POSTGRES_HOST=${{ secrets.POSTGRES_HOST }}" >> ecom/.env
+          echo "POSTGRES_PORT=${{ secrets.POSTGRES_PORT }}" >> ecom/.env
+          echo "SECRET_KEY==${{ secrets.SECRET_KEY }}" >> ecom/.env
+          echo "EMAIL_HOST_USER=${{ secrets.EMAIL_HOST_USER }}" >> ecom/.env
+          echo "EMAIL_HOST_PASSWORD=${{ secrets.EMAIL_HOST_PASSWORD }}" >> ecom/.env
+          echo "CLIENT_ID=${{ secrets.CLIENT_ID }}" >> ecom/.env
       - name: Build and start Docker containers
         run: |
           docker-compose -f ecom/docker-compose.yml up -d --build
