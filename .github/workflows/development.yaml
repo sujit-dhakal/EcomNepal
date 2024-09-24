@@ -12,7 +12,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4 # checking out the code first
       - name: Install Docker Compose
-      run: |
+        run: |
         sudo apt-get update
         sudo apt-get install -y docker-compose
       - name: Build and start Docker containers
