@@ -13,7 +13,7 @@ jobs:
       - uses: actions/checkout@v4 # checking out the code first
       - name: Build and start Docker containers
         run: |
-          docker-compose -f docker-compose.yml up -d --build
+          docker-compose -f ecom/docker-compose.yml up -d --build
       - name: Wait for the backend to be ready
         run: |
           until curl --silent --fail http://localhost:8000/; do
@@ -30,4 +30,4 @@ jobs:
         timeout-minutes: 5
       - name: tear down the containers
         run: |
-          docker-compose -f docker-compose.yml down
+          docker-compose -f ecom/docker-compose.yml down
