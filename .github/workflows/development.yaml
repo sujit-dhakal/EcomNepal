@@ -25,7 +25,7 @@ jobs:
           echo "SECRET_KEY==${{ secrets.SECRET_KEY }}" >> ecom/.env
           echo "EMAIL_HOST_USER=${{ secrets.EMAIL_HOST_USER }}" >> ecom/.env
           echo "EMAIL_HOST_PASSWORD=${{ secrets.EMAIL_HOST_PASSWORD }}" >> ecom/.env
-          echo "CLIENT_ID=${{ secrets.CLIENT_ID }}" >> ecom/.env
+          echo "CLIENT_ID=${{ secrets.CLIENT_ID }}" >> ecom/frontend/ecommerce/.env
       - name: Build and start Docker containers
         run: |
           docker-compose -f ecom/docker-compose.yml up -d --build
