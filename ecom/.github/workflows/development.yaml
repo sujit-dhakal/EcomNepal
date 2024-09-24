@@ -1,0 +1,30 @@
+name: ecom-github-actions
+on:
+  push:
+    branches:
+      - "**"
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4 # checking out the code first
+      - name: Build and start Docker containers
+        run: |
+          docker-compose -f docker-compose.yml up -d --build
+      - name: Wait for the backend to be ready
+        run: |
+          until curl --silent --fail http://localhost:8000/; do
+            echo "Waiting for the Django backend  to be ready..."
+            sleep 10
+          done
+        timeout-minutes: 5
+      - name: Wait for the backend to be ready
+        run: |
+          until curl --silent --fail http://localhost:3000/; do
+            echo "Waiting for the Next frontend  to be ready..."
+            sleep 10
+          done
+        timeout-minutes: 5
+      - name: tear down the containers
+        run: |
+          docker-compose -f docker-compose.yml down
