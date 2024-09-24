@@ -17,7 +17,7 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_PASSWORD }}
       - name: build frontend image
-        run: docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/ecommerce-backend:latest ecom/backend
+        run: docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/ecommerce-frontend:latest ecom/frontend/ecommerce
 
       - name: build backend image
-        run: docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/ecommerce-frontend:latest ecom/fronted/ecommerce
+        run: docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/ecommerce-backend:latest ecom/backend
