@@ -1,0 +1,41 @@
+services:
+  ecom-django-app:
+    container_name: django-app
+    build:
+      dockerfile: Dockerfile
+      context: ./backend
+    ports:
+      - 8000:8000
+    env_file:
+      - .env
+    command: python manage.py runserver 0.0.0.0:8000
+    depends_on:
+      - ecom-postgres
+    volumes:
+      - ./backend:/app
+
+  ecom-next-app:
+    container_name: next-app
+    build:
+      context: ./frontend/ecommerce
+      dockerfile: Dockerfile
+    ports:
+      - 3000:3000
+    env_file:
+      - ./frontend/ecommerce/.env
+    command: npm run dev
+
+  ecom-postgres:
+    container_name: postgres
+    image: postgres:latest
+    environment:
+      - POSTGRES_DB=${POSTGRES_DB}
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+    ports:
+      - 5433:5432
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:

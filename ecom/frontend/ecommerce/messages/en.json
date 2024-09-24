@@ -1,0 +1,20 @@
+{
+  "NavBar": {
+    "Home": "Home",
+    "Contact": "Contact",
+    "Login": "Login",
+    "SignUp": "SignUp"
+  },
+  "SignUp": {
+    "heading": "Sign Up",
+    "alreadyHaveAnAccount": "Already have an account?",
+    "login": "Login",
+    "createAccount": "Create Account"
+  },
+  "login": {
+    "heading": "Login",
+    "login": "login",
+    "notAUser": "Not a user? ",
+    "createAccount": "Create Account"
+  }
+}
