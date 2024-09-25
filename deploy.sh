@@ -8,8 +8,8 @@ ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa $1@$2 "echo $3 > ~/ecom/deploym
 
 ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa $1@$2 'chmod 644 ~/ecom/deployment/docker-compose.yml'
 
-docker-compose up -d
+ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa $1@$2 'cd ~/ecom/deployment && docker-compose up -d'
 
 sleep 300
 
-docker-compose down
+ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa $1@$2 'cd ~/ecom/deployment && docker-compose down'
