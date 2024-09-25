@@ -32,6 +32,8 @@ jobs:
           echo "first"
           chmod 600 ~/.ssh/id_rsa
           echo "second"
+          echo -e "Host ecom.abhishekd.com.np\n\tProxyCommand /usr/local/bin/cloudflared access ssh --hostname %h" >> ~/.ssh/config
+          echo "third"
       - name: Deploy to server
         run: |
-          ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa sujit@49.244.141.142 'echo "SSH connection successful abc "'
+          ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa sujit@ecom.abhishekd.com.np 'echo "SSH connection successful abc "'
