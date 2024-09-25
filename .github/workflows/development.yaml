@@ -1,0 +1,39 @@
+name: ecom-github-actions
+on:
+  push:
+    branches:
+      - "**"
+  pull_request:
+    branches:
+      - main
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4 # checking out the code first
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_PASSWORD }}
+      - name: build frontend image
+        run: |
+          docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/ecommerce-frontend:latest ecom/frontend/ecommerce
+          docker push ${{ secrets.DOCKERHUB_USERNAME }}/ecommerce-frontend:latest
+
+      - name: build backend image
+        run: |
+          docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/ecommerce-backend:latest ecom/backend
+          docker push ${{ secrets.DOCKERHUB_USERNAME }}/ecommerce-backend:latest
+      - name: Setup ssh
+        run: |
+          sudo apt install wget && wget https://github.com/cloudflare/cloudflared/releases/download/2024.9.1/cloudflared-linux-amd64.deb && sudo apt install ./*.deb
+          mkdir -p ~/.ssh/
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          echo -e "Host ${{ secrets.IP_ADDRESS }}\n\tProxyCommand /usr/local/bin/cloudflared access ssh --hostname %h" >> ~/.ssh/config
+      - name: Make deploy script executable
+        run: chmod +x ./deploy.sh
+      - name: Deploy to server
+        run: |
+          ./deploy.sh "${{ secrets.USERNAME }}" "${{ secrets.IP_ADDRESS }}" "${{ secrets.ENV_CONTENTS }}"
