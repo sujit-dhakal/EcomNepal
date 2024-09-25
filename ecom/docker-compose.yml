@@ -1,9 +1,7 @@
 services:
   ecom-django-app:
     container_name: django-app
-    build:
-      dockerfile: Dockerfile
-      context: ./backend
+    image: sujitramdhakal/ecommerce-backend:latest
     ports:
       - 8000:8000
     env_file:
@@ -16,9 +14,7 @@ services:
 
   ecom-next-app:
     container_name: next-app
-    build:
-      context: ./frontend/ecommerce
-      dockerfile: Dockerfile
+    image: sujitramdhakal/ecommerce-frontend:latest
     ports:
       - 3000:3000
     env_file:
