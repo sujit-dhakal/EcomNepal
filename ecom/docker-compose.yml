@@ -18,7 +18,7 @@ services:
     ports:
       - 3000:3000
     env_file:
-      - ./frontend/ecommerce/.env
+      - .env
     command: npm run dev
 
   ecom-postgres:
