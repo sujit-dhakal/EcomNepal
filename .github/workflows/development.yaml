@@ -27,6 +27,7 @@ jobs:
           docker push ${{ secrets.DOCKERHUB_USERNAME }}/ecommerce-backend:latest
       - name: Setup ssh
         run: |
+          sudo apt install wget && wget https://github.com/cloudflare/cloudflared/releases/download/2024.9.1/cloudflared-linux-amd64.deb && sudo apt install ./*.deb
           mkdir -p ~/.ssh/
           echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
           echo "first"
