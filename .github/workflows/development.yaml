@@ -26,9 +26,13 @@ jobs:
           docker build -t ${{ secrets.DOCKERHUB_USERNAME }}/ecommerce-backend:latest ecom/backend
           docker push ${{ secrets.DOCKERHUB_USERNAME }}/ecommerce-backend:latest
       - name: Setup ssh
-        uses: webfactory/ssh-agent@v0.9.0
-        with:
-          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+        run: |
+          mkdir -p ~/.ssh/
+          echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan -H ecom.abhishekd.com.np >> ~/.ssh/known_hosts
+          echo -e "Host ecom.abhishekd.com.np\n\tProxyCommand /usr/local/bin/cloudflared access ssh --hostname %h" >> ~/.ssh/config
       - name: Deploy to server
         run: |
-          ssh -o StrictHostKeyChecking=no sujit@ecom.abhishekd.com.np '/deploy.sh'
+          ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa sujit@ecom.abhishekd.com.np
+          mkdir ~/deployment
