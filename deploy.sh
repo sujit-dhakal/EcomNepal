@@ -4,7 +4,7 @@ ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa $1@$2 'mkdir -p ~/ecom/deployme
 
 scp -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa ecom/docker-compose.yml $1@$2:~/ecom/deployment/docker-compose.yml
 
-ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa $1@$2 "cat > ~/ecom/deployment/.env <<EOF
+ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa $1@$2 "cat > ~/ecom/deployment/.env << 'EOF'
 $3
 EOF"
 
