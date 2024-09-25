@@ -32,9 +32,6 @@ jobs:
           echo "first"
           chmod 600 ~/.ssh/id_rsa
           echo "second"
-      - name: check dns
-        run: |
-          nslookup ecom.abhishekd.com.np
       - name: Deploy to server
         run: |
-          ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa sujit@ecom.abhishekd.com.np 'echo "SSH connection successful abc "'
+          ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa sujit@192.168.1.25 'echo "SSH connection successful abc "'
