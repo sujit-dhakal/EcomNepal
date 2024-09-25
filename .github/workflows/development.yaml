@@ -31,7 +31,6 @@ jobs:
           ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
       - name: Deploy to server
         run: |
-          ssh -o StrictHostKeyChecking=no ${{ secrets.USERNAME }}@${{ secrets.IP_ADDRESS }} << 'EOF'
+          ssh -o StrictHostKeyChecking=no ${{ secrets.USERNAME }}@${{ secrets.IP_ADDRESS }}
           mkdir ~/deployment
           cp ecom/docker-compose.yml ~/deployment
-          EOF
