@@ -30,11 +30,8 @@ jobs:
           sudo apt install wget && wget https://github.com/cloudflare/cloudflared/releases/download/2024.9.1/cloudflared-linux-amd64.deb && sudo apt install ./*.deb
           mkdir -p ~/.ssh/
           echo "${{ secrets.SSH_PRIVATE_KEY }}" > ~/.ssh/id_rsa
-          echo "first"
           chmod 600 ~/.ssh/id_rsa
-          echo "second"
-          echo -e "Host ecom.abhishekd.com.np\n\tProxyCommand /usr/local/bin/cloudflared access ssh --hostname %h" >> ~/.ssh/config
-          echo "third"
+          echo -e "Host ${{ secrets.IP_ADDRESS }}\n\tProxyCommand /usr/local/bin/cloudflared access ssh --hostname %h" >> ~/.ssh/config
       - name: Deploy to server
         run: |
-          ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa sujit@ecom.abhishekd.com.np 'echo "SSH connection successful abc "'
+          ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa ${{ secrets.USERNAME }}@${{ secrets.IP_ADDRESS }} 'echo "./deploy.sh"'
