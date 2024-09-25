@@ -34,4 +34,8 @@ jobs:
           echo -e "Host ${{ secrets.IP_ADDRESS }}\n\tProxyCommand /usr/local/bin/cloudflared access ssh --hostname %h" >> ~/.ssh/config
       - name: Deploy to server
         run: |
-          ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa ${{ secrets.USERNAME }}@${{ secrets.IP_ADDRESS }} 'ls ecom'
+          ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa ${{ secrets.USERNAME }}@${{ secrets.IP_ADDRESS }} 'mkdir -p ~/ecom/deployment'
+
+          scp -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa ecom/docker-compose.yml ${{ secrets.USERNAME }}@${{ secrets.IP_ADDRESS }}:~/ecom/deployment/docker-compose.yml
+
+          ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa ${{ secrets.USERNAME }}@${{ secrets.IP_ADDRESS }} 'chmod 644 ~/ecom/deployment/docker-compose.yml'
