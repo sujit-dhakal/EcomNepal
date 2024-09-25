@@ -32,13 +32,6 @@ jobs:
           echo "first"
           chmod 600 ~/.ssh/id_rsa
           echo "second"
-          ssh-keyscan -H ecom.abhishekd.com.np >> ~/.ssh/known_hosts
-          echo "third"
-          echo 'Host ecom.abhishekd.com.np
-              ProxyCommand /usr/local/bin/cloudflared access ssh --hostname %h' > ~/.ssh/config
-          echo "fourth"
-          chmod 600 ~/.ssh/config
-          echo "fifth"
       - name: Deploy to server
         run: |
           ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa sujit@ecom.abhishekd.com.np
