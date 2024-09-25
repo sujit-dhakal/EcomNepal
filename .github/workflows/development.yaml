@@ -34,4 +34,4 @@ jobs:
           echo "second"
       - name: Deploy to server
         run: |
-          ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa sujit@ecom.abhishekd.com.np '/deploy.sh'
+          ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa sujit@ecom.abhishekd.com.np 'echo "SSH connection successful"'
