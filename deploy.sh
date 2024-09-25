@@ -10,7 +10,12 @@ ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa $1@$2 'chmod 644 ~/ecom/deploym
 
 cd ~/ecom/deployment
 
-docker-compose up -d --build
+sudo apt-get update
+sudo apt-get install -y curl
+sudo curl -L "https://github.com/docker/compose/releases/latest/download/docker-compose" -o /usr/local/bin/docker-compose
+udo chmod +x /usr/local/bin/docker-compose
+
+docker-compose up -d
 
 sleep 300
 
