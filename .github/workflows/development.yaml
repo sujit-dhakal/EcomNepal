@@ -33,6 +33,6 @@ jobs:
           chmod 600 ~/.ssh/id_rsa
           echo -e "Host ${{ secrets.IP_ADDRESS }}\n\tProxyCommand /usr/local/bin/cloudflared access ssh --hostname %h" >> ~/.ssh/config
       - name: Make deploy script executable
-        run: chmod +x script.sh
+        run: chmod +x ./deploy.sh
       - name: Deploy to server
         run: ./deploy.sh ${{ secrets.USERNAME }} ${{ secrets.IP_ADDRESS }}
