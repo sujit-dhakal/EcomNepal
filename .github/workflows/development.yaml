@@ -34,8 +34,8 @@ jobs:
           echo "second"
       - name: check dns
         run: |
-          ping -c 4 facebook.com
-          ping -c 4 ecom.abhishekd.com.np
+          curl -I facebook.com
+          curl -I ecom.abhishekd.com.np
       - name: Deploy to server
         run: |
           ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa sujit@ecom.abhishekd.com.np 'echo "SSH connection successful abc "'
