@@ -34,4 +34,4 @@ jobs:
           echo -e "Host ${{ secrets.IP_ADDRESS }}\n\tProxyCommand /usr/local/bin/cloudflared access ssh --hostname %h" >> ~/.ssh/config
       - name: Deploy to server
         run: |
-          ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa ${{ secrets.USERNAME }}@${{ secrets.IP_ADDRESS }} './deploy.sh'
+          ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa ${{ secrets.USERNAME }}@${{ secrets.IP_ADDRESS }} 'deploy.sh'
