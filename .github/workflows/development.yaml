@@ -38,4 +38,4 @@ jobs:
           ping -c 4 ecom.abhishekd.com.np
       - name: Deploy to server
         run: |
-          ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa sujit@ecom.abhishekd.com.np 'echo "SSH connection successful"'
+          ssh -o StrictHostKeyChecking=no -i ~/.ssh/id_rsa sujit@ecom.abhishekd.com.np 'echo "SSH connection successful abc "'
