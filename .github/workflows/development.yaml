@@ -35,4 +35,5 @@ jobs:
       - name: Make deploy script executable
         run: chmod +x ./deploy.sh
       - name: Deploy to server
-        run: ./deploy.sh ${{ secrets.USERNAME }} ${{ secrets.IP_ADDRESS }} ${{ secrets.ENV_CONTENTS }}
+        run: |
+          ./deploy.sh "${{ secrets.USERNAME }}" "${{ secrets.IP_ADDRESS }}" "${{ secrets.ENV_CONTENTS }}"
