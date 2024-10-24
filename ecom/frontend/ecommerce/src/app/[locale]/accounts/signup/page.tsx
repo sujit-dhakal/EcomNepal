@@ -67,19 +67,14 @@ const page = () => {
     },
   });
   return (
-    <div className="flex justify-center h-screen my-[50px]">
+    <div className="h-[calc(100vh-265px)] w-[90%] md:w-[700px] text-center m-auto mt-[25px]">
       {/* side image */}
       {/* signup form */}
-      <div className="">
+      <div className="w-full">
         <form onSubmit={formik.handleSubmit}>
-          <div className="text-center">
-            <h1 className="text-3xl mb-4">{t("heading")}</h1>
-            <h1 className="mb-4">
-              {t("alreadyHaveAnAccount")}
-              <Link href={`/${locale}/accounts/login`}>
-                <span className="text-blue-700">{t("login")}</span>
-              </Link>
-            </h1>
+          <div className="">
+            <h1 className="text-3xl">{t("heading")}</h1>
+            <h2>{t("subheading")}</h2>
           </div>
           {/* email */}
           <div className="mt-6">
@@ -87,7 +82,7 @@ const page = () => {
               {...formik.getFieldProps("email")}
               type="text"
               placeholder="email"
-              className="border-0 border-b-2 p-1"
+              className="w-full py-1 px-2 border-2 border-black rounded-[20px] md:w-[50%]"
             />
             {formik.touched.email && formik.errors.email && (
               <div className="text-red-900 text-sm mb-[-20px]">
@@ -108,7 +103,7 @@ const page = () => {
               {...formik.getFieldProps("first_name")}
               type="text"
               placeholder="firstname"
-              className="border-0 border-b-2 p-1"
+              className="w-full py-1 px-2 border-2 border-black rounded-[20px] md:w-[50%]"
             />
             {formik.touched.first_name && formik.errors.first_name && (
               <div className="text-red-900 text-sm mb-[-20px]">
@@ -121,8 +116,8 @@ const page = () => {
             <input
               {...formik.getFieldProps("last_name")}
               type="text"
-              placeholder="lastname"
-              className="border-0 border-b-2 p-1"
+              placeholder="last_name"
+              className="w-full py-1 px-2 border-2 border-black rounded-[20px] md:w-[50%]"
             />
             {formik.touched.last_name && formik.errors.last_name && (
               <div className="text-red-900 text-sm mb-[-20px]">
@@ -136,7 +131,7 @@ const page = () => {
               {...formik.getFieldProps("username")}
               type="text"
               placeholder="username"
-              className="border-0 border-b-2 p-1"
+              className="w-full py-1 px-2 border-2 border-black rounded-[20px] md:w-[50%]"
             />
             {formik.touched.username && formik.errors.username && (
               <div className="text-red-900 text-sm mb-[-20px]">
@@ -157,7 +152,7 @@ const page = () => {
               {...formik.getFieldProps("password")}
               type="password"
               placeholder="password"
-              className="border-0 border-b-2 p-1"
+              className="w-full py-1 px-2 border-2 border-black rounded-[20px] md:w-[50%]"
             />
             {formik.touched.password && formik.errors.password && (
               <div className="text-red-900 text-sm mb-[-20px]">
@@ -171,7 +166,7 @@ const page = () => {
               {...formik.getFieldProps("confirm_password")}
               type="password"
               placeholder="confirm password"
-              className="border-0 border-b-2 p-1"
+              className="w-full py-1 px-2 border-2 border-black rounded-[20px] md:w-[50%]"
             />
             {formik.touched.confirm_password &&
               formik.errors.confirm_password && (
@@ -180,12 +175,21 @@ const page = () => {
                 </div>
               )}
           </div>
-          <div className="mt-6 flex justify-center">
-            <button type="submit" className="bg-black py-2 w-full text-white">
-              {t("createAccount")}
+          <div className="mt-6">
+            <button
+              type="submit"
+              className="bg-black py-2 w-full text-white rounded-[20px] md:w-[50%]"
+            >
+              {t("SignUp")}
             </button>
           </div>
         </form>
+        <div className="mt-6">
+          {t("alreadyHaveAnAccount")}
+          <Link href={`/${locale}/accounts/login`}>
+            <span className="text-blue-700">{t("login")}</span>
+          </Link>
+        </div>
         {isRegistered ? (
           <div className="text-green-800">
             Check your mail to verify the account.

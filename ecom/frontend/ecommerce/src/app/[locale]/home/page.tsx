@@ -3,7 +3,7 @@ import ProductList from "@/components/products/ProductList";
 import Filter from "@/components/filtering/Filter";
 
 const fetchData = async () => {
-  const response = await axios.get("http://ecom-django-app:8000/products/");
+  const response = await axios.get("http://django-app:8000/products/");
   const products = response.data;
   return products;
 };

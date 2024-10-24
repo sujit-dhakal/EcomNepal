@@ -49,11 +49,11 @@ const page = () => {
     });
   const [data, setData] = useState<loginUserType>(initialValues);
   return (
-    <div className="flex justify-center h-screen my-[50px]">
+    <div className="h-[calc(100vh-265px)] w-[90%] md:w-[700px] text-center m-auto mt-[100px]">
       <div className="">
         <form onSubmit={handleSubmit}>
           <div className="text-center">
-            <h1 className="text-3xl mb-4">{t("heading")}</h1>
+            <h1 className="text-3xl text-bold mb-4">{t("heading")}</h1>
           </div>
           {/* email */}
           <div className="mt-6">
@@ -63,7 +63,7 @@ const page = () => {
               placeholder="email"
               onChange={handleChange}
               value={values.email}
-              className="border-0 border-b-2 p-1"
+              className="w-full py-1 px-2 border-2 border-black rounded-[20px] md:w-[50%]"
             />
             {errors.email && (
               <div className="text-red-900 text-sm">{errors.email}</div>
@@ -77,22 +77,25 @@ const page = () => {
               placeholder="password"
               onChange={handleChange}
               value={values.password}
-              className="border-0 border-b-2 p-1"
+              className="w-full py-1 px-2 border-2 border-black rounded-[20px] md:w-[50%]"
             />
             {errors.password && (
               <div className="text-red-900 text-sm">{errors.password}</div>
             )}
+          </div>
+          <div className="mt-6 flex justify-center">
+            <button
+              type="submit"
+              className="bg-black py-2 w-full text-white rounded-[20px] md:w-[50%]"
+            >
+              {t("login")}
+            </button>
           </div>
           <div className="mt-6">
             {t("notAUser")}
             <Link href={`/${locale}/accounts/signup`}>
               <span className="text-blue-700">{t("createAccount")}</span>
             </Link>
-          </div>
-          <div className="mt-6 flex justify-center">
-            <button type="submit" className="bg-black py-2 w-full text-white">
-              {t("login")}
-            </button>
           </div>
           <div>
             {!loginSuccess && (

@@ -6,10 +6,11 @@
     "SignUp": "SignUp"
   },
   "SignUp": {
-    "heading": "Sign Up",
+    "SignUp": "SignUp",
+    "heading": "Create an account",
+    "subheading": "Enter your details below",
     "alreadyHaveAnAccount": "Already have an account?",
-    "login": "Login",
-    "createAccount": "Create Account"
+    "login": "Login"
   },
   "login": {
     "heading": "Login",

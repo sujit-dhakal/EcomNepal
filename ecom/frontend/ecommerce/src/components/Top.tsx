@@ -19,14 +19,16 @@ const Top = () => {
   };
 
   return (
-    <div className="w-full bg-black text-white items-center h-[48px] flex justify-between">
+    <div className="w-full text-[15px] md:text-[20px] lg:text-[20px] bg-black text-white h-[48px] flex items-center justify-between px-10">
       <div className="flex-grow text-center">
-        Summer Sale for All Swim Suits And Free Express Delivery - OFF 50%!
-        <Link href="/swim-suits-link">
-          <span className="font-medium">ShopNow</span>
-        </Link>
+        <p>
+          Dashain Offer - OFF 50%!{" "}
+          <Link href="/swim-suits-link">
+            <span className="font-medium">ShopNow</span>
+          </Link>
+        </p>
       </div>
-      <div className="mr-[100px]">
+      <div>
         <select
           defaultValue={localActive}
           className="border-0 bg-black text-white"

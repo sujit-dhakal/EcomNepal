@@ -1,5 +1,5 @@
 services:
-  ecom-django-app:
+  django-app:
     container_name: django-app
     build:
       dockerfile: Dockerfile
@@ -10,11 +10,11 @@ services:
       - .env
     command: python manage.py runserver 0.0.0.0:8000
     depends_on:
-      - ecom-postgres
+      - postgres
     volumes:
       - ./backend:/app
 
-  ecom-next-app:
+  next-app:
     container_name: next-app
     build:
       context: ./frontend/ecommerce
@@ -25,7 +25,7 @@ services:
       - ./frontend/ecommerce/.env
     command: npm run dev
 
-  ecom-postgres:
+  postgres:
     container_name: postgres
     image: postgres:latest
     environment:
