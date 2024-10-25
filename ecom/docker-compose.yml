@@ -24,6 +24,9 @@ services:
     env_file:
       - ./frontend/ecommerce/.env
     command: npm run dev
+    volumes:
+      - ./frontend/ecommerce:/app
+      - /app/node_modules
 
   postgres:
     container_name: postgres
