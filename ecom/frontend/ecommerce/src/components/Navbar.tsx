@@ -22,7 +22,7 @@ const Navbar = () => {
   return (
     <>
       <div className="top-0 left-0 w-full">
-        <div className="flex justify-between items-center md:flex py-4 px-2 md:px-4">
+        <div className="flex justify-between items-center py-4 px-2 md:px-4">
           <div className="font-bold text-3xl cursor-pointer">
             <Link href="/">EcomNepal</Link>
           </div>

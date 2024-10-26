@@ -33,7 +33,7 @@ const NavItems = () => {
   };
   return (
     <nav>
-      <ul className="">
+      <ul className="md:flex md:gap-8">
         <li className="pb-4">
           <Link href={`/${locale}/home`}>{t("Home")}</Link>
         </li>

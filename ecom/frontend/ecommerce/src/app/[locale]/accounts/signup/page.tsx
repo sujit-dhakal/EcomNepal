@@ -67,7 +67,7 @@ const page = () => {
     },
   });
   return (
-    <div className="h-[calc(100vh-265px)] w-[90%] md:w-[700px] text-center m-auto mt-[25px]">
+    <div className="h-[calc(100vh-265px)] w-[90%] md:w-[700px] md:text-center m-auto mt-[25px]">
       {/* side image */}
       {/* signup form */}
       <div className="w-full">
