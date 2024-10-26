@@ -22,65 +22,63 @@ const page = () => {
   const [loginSuccess, setLoginSuccess] = useState<boolean>(true); // for invalid email or password error
   const dispatch = useAppDispatch();
   const router = useRouter();
-  const { values, errors, handleChange, handleSubmit } =
-    useFormik<loginUserType>({
-      initialValues,
-      onSubmit: async (values) => {
-        console.log(values);
-        try {
-          const response: any = await dispatch(loginUser(values));
-          console.log(response);
-          if (response.payload.status == 200) {
-            console.log("login successful");
-            dispatch(actions.login());
-            Cookies.set("accessToken", response.payload.data.access);
-            Cookies.set("refreshToken", response.payload.data.refresh);
-            router.push(`/${locale}/profile`);
-          } else {
-            console.log("login failed");
-            setLoginSuccess(false);
-          }
-          return response;
-        } catch (error: any) {
-          console.log(error.response.data);
+  const formik = useFormik<loginUserType>({
+    initialValues,
+    validationSchema: toFormikValidationSchema(loginSchema),
+    onSubmit: async (values) => {
+      console.log(values);
+      try {
+        const response: any = await dispatch(loginUser(values));
+        console.log(response);
+        if (response.payload.status == 200) {
+          console.log("login successful");
+          dispatch(actions.login());
+          Cookies.set("accessToken", response.payload.data.access);
+          Cookies.set("refreshToken", response.payload.data.refresh);
+          router.push(`/${locale}/profile`);
+        } else {
+          console.log("login failed");
+          setLoginSuccess(false);
         }
-      },
-      validationSchema: toFormikValidationSchema(loginSchema),
-    });
-  const [data, setData] = useState<loginUserType>(initialValues);
+        return response;
+      } catch (error: any) {
+        console.log(error.response.data);
+      }
+    },
+  });
   return (
     <div className="h-[calc(100vh-265px)] w-[90%] md:w-[700px] text-center m-auto mt-[100px]">
       <div className="">
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={formik.handleSubmit}>
           <div className="text-center">
             <h1 className="text-3xl text-bold mb-4">{t("heading")}</h1>
           </div>
           {/* email */}
           <div className="mt-6">
             <input
-              type="email"
-              name="email"
+              {...formik.getFieldProps("email")}
+              type="text"
               placeholder="email"
-              onChange={handleChange}
-              value={values.email}
               className="w-full py-1 px-2 border-2 border-black rounded-[20px] md:w-[50%]"
             />
-            {errors.email && (
-              <div className="text-red-900 text-sm">{errors.email}</div>
+            {formik.touched.email && formik.errors.email && (
+              <div className="text-red-900 text-sm mb-[-20px] text-left pl-3">
+                {formik.errors.email}
+              </div>
             )}
           </div>
           {/* password */}
           <div className="mt-6">
             <input
+              {...formik.getFieldProps("password")}
               type="password"
-              name="password"
               placeholder="password"
-              onChange={handleChange}
-              value={values.password}
               className="w-full py-1 px-2 border-2 border-black rounded-[20px] md:w-[50%]"
             />
-            {errors.password && (
-              <div className="text-red-900 text-sm">{errors.password}</div>
+            {formik.touched.password && formik.errors.password && (
+              <div className="text-red-900 text-sm mb-[-20px] text-left pl-3">
+                {formik.errors.password}
+              </div>
             )}
           </div>
           <div className="mt-6 flex justify-center">

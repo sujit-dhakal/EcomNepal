@@ -67,7 +67,7 @@ const page = () => {
     },
   });
   return (
-    <div className="h-[calc(100vh-265px)] w-[90%] md:w-[700px] md:text-center m-auto mt-[25px]">
+    <div className="h-[calc(100vh-265px)] w-[90%] md:w-[700px] text-center m-auto mt-[25px]">
       {/* side image */}
       {/* signup form */}
       <div className="w-full">
@@ -85,12 +85,12 @@ const page = () => {
               className="w-full py-1 px-2 border-2 border-black rounded-[20px] md:w-[50%]"
             />
             {formik.touched.email && formik.errors.email && (
-              <div className="text-red-900 text-sm mb-[-20px]">
+              <div className="text-red-900 text-sm mb-[-20px] text-left pl-3">
                 {formik.errors.email}
               </div>
             )}
             {emailAlreadyExist ? (
-              <div className="text-red-900 text-sm mb-[-20px]">
+              <div className="text-red-900 text-sm mb-[-20px] text-left pl-3">
                 Email already exists..
               </div>
             ) : (
@@ -106,7 +106,7 @@ const page = () => {
               className="w-full py-1 px-2 border-2 border-black rounded-[20px] md:w-[50%]"
             />
             {formik.touched.first_name && formik.errors.first_name && (
-              <div className="text-red-900 text-sm mb-[-20px]">
+              <div className="text-red-900 text-sm mb-[-20px] text-left pl-3">
                 {formik.errors.first_name}
               </div>
             )}
@@ -120,7 +120,7 @@ const page = () => {
               className="w-full py-1 px-2 border-2 border-black rounded-[20px] md:w-[50%]"
             />
             {formik.touched.last_name && formik.errors.last_name && (
-              <div className="text-red-900 text-sm mb-[-20px]">
+              <div className="text-red-900 text-sm mb-[-20px] text-left pl-3">
                 {formik.errors.last_name}
               </div>
             )}
@@ -134,12 +134,12 @@ const page = () => {
               className="w-full py-1 px-2 border-2 border-black rounded-[20px] md:w-[50%]"
             />
             {formik.touched.username && formik.errors.username && (
-              <div className="text-red-900 text-sm mb-[-20px]">
+              <div className="text-red-900 text-sm mb-[-20px] text-left pl-3">
                 {formik.errors.username}
               </div>
             )}
             {userNameAlreadyExist ? (
-              <div className="text-red-900 text-sm mb-[-20px]">
+              <div className="text-red-900 text-sm mb-[-20px] text-left pl-3">
                 UserNameAlreadyExists.
               </div>
             ) : (
@@ -155,7 +155,7 @@ const page = () => {
               className="w-full py-1 px-2 border-2 border-black rounded-[20px] md:w-[50%]"
             />
             {formik.touched.password && formik.errors.password && (
-              <div className="text-red-900 text-sm mb-[-20px]">
+              <div className="text-red-900 text-sm mb-[-20px] text-left pl-3">
                 {formik.errors.password}
               </div>
             )}
@@ -170,7 +170,7 @@ const page = () => {
             />
             {formik.touched.confirm_password &&
               formik.errors.confirm_password && (
-                <div className="text-red-900 text-sm mb-[-20px]">
+                <div className="text-red-900 text-sm mb-[-20px] text-left pl-3">
                   {formik.errors.confirm_password}
                 </div>
               )}
