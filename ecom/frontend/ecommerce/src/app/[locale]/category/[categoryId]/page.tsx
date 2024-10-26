@@ -20,12 +20,14 @@ const page = ({
     fetchCategoryProducts();
   }, []);
   return (
-    <div>
-      {products.map((product: Product) => (
-        <div key={product.id}>
-          <ProductCard product={product} />
-        </div>
-      ))}
+    <div className="flex justify-center">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
+        {products.map((product: Product) => (
+          <div key={product.id}>
+            <ProductCard product={product} />
+          </div>
+        ))}
+      </div>
     </div>
   );
 };

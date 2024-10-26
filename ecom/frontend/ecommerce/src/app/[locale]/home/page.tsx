@@ -14,7 +14,7 @@ const page = async () => {
       <div>
         <Filter />
       </div>
-      <div>
+      <div className="flex justify-center">
         <ProductList products={products} />
       </div>
     </>
