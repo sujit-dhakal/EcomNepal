@@ -13,8 +13,30 @@ const config: Config = {
         "gradient-conic":
           "conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))",
       },
+      // Add scroll snap types and alignment for carousel
+      scrollSnapType: {
+        x: "x mandatory",
+      },
+      scrollSnapAlign: {
+        start: "start",
+        center: "center",
+      },
     },
   },
-  plugins: [],
+  plugins: [
+    // Add custom scrollbar-hide plugin
+    function ({ addUtilities }) {
+      addUtilities({
+        ".scrollbar-hide": {
+          /* Hide scrollbar for all browsers */
+          "-ms-overflow-style": "none", // IE and Edge
+          "scrollbar-width": "none", // Firefox
+        },
+        ".scrollbar-hide::-webkit-scrollbar": {
+          display: "none", // Chrome, Safari and Opera
+        },
+      });
+    },
+  ],
 };
 export default config;
