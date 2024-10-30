@@ -3,6 +3,7 @@ import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import { useEffect, useState } from "react";
 import { getProductDetail } from "@/lib/store";
 import { client } from "@/api/baseConfig";
+import Image from "next/image";
 
 const page = ({
   params,
@@ -32,28 +33,12 @@ const page = ({
   return (
     <div>
       <div className="flex flex-col justify-center lg:flex-row gap-16 px-3.5">
-        <div className="flex flex-col justify-center items-center lg:flex-row-reverse gap-5">
-          <div className="flex justify-center items-center bg-[#F5F5F5] w-fit lg:w-[500px] h-[400px] lg:h-[600px]">
-            <img src="/images/products/joystick.svg"></img>
-          </div>
-          <div className="flex lg:flex-col gap-3.5">
-            <div className="flex justify-center items-center w-[90px] lg:w-[170px] h-[90px] lg:h-[138px] bg-[#F5F5F5]">
-              <img src="/images/products/joystick.svg" className="w-20 lg:w-fit h-20"></img>
-            </div>
-            <div className="flex justify-center items-center w-[90px] lg:w-[170px] h-[90px] lg:h-[138px] bg-[#F5F5F5]">
-              <img src="/images/products/joystick.svg" className="w-20 lg:w-fit h-20"></img>
-            </div>
-            <div className="flex justify-center items-center w-[90px] lg:w-[170px] h-[90px] lg:h-[138px] bg-[#F5F5F5]">
-              <img src="/images/products/joystick.svg" className="w-20 lg:w-fit h-20"></img>
-            </div>
-            <div className="flex justify-center items-center w-[90px] lg:w-[170px] h-[90px] lg:h-[138px] bg-[#F5F5F5]">
-              <img src="/images/products/joystick.svg" className="w-20 lg:w-fit h-20"></img>
-            </div>
-          </div>
-        </div>
+        <img src={product.image} alt="product image" className="w-64 h-64" />
         <div className="flex justify-center">
           <div className="flex flex-col gap-5 max-w-[420px]">
-            <h1 className="text-2xl font-semibold text-black">{product.name}</h1>
+            <h1 className="text-2xl font-semibold text-black">
+              {product.name}
+            </h1>
             <h1 className="text-2xl text-black">{product.price}</h1>
             <p className="text-sm text-black">{product.description}</p>
             {isAuth && (
@@ -72,12 +57,6 @@ const page = ({
           </div>
         </div>
       </div>
-
-
-
-
-
-
     </div>
   );
 };
