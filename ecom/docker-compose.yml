@@ -21,8 +21,8 @@ services:
       dockerfile: Dockerfile
     ports:
       - 3000:3000
-    env_file:
-      - ./frontend/ecommerce/.env
+    environment:
+      - NEXT_PUBLIC_CLIENT_ID=${NEXT_PUBLIC_CLIENT_ID}
     command: npm run dev
     volumes:
       - ./frontend/ecommerce:/app

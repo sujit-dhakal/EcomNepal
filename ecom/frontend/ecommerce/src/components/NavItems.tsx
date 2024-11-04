@@ -6,7 +6,6 @@ import { useAppSelector, useAppDispatch } from "@/lib/hooks";
 import { actions, logoutUser } from "@/lib/store";
 import Cookies from "js-cookie";
 import { useRouter } from "next/navigation";
-import SearchBar from "./search/SearchBar";
 
 const NavItems = () => {
   const t = useTranslations("NavBar");
@@ -32,38 +31,38 @@ const NavItems = () => {
     }
   };
   return (
-    <nav>
-      <ul className="md:flex md:gap-8">
-        <li className="pb-4">
+    <>
+      <ul className="flex gap-6">
+        <li className="sm:pb-4 md:p-0">
           <Link href={`/${locale}/home`}>{t("Home")}</Link>
         </li>
-        <li className="pb-4">
+        <li className="sm:pb-4 md:p-0">
           <Link href={`/${locale}/contact`}>{t("Contact")}</Link>
         </li>
         {isAuth ? (
           <>
-            <li className="pb-4">
+            <li className="sm:pb-4 md:p-0">
               <Link href={`/${locale}/profile`}>Profile</Link>
             </li>
-            <li className="pb-4">
+            <li className="sm:pb-4 md:p-0">
               <button onClick={handlelogout}>Logout</button>
             </li>
-            <li className="pb-4">
+            <li className="sm:pb-4 md:p-0">
               <Link href={`/${locale}/cart`}>Cart</Link>
             </li>
           </>
         ) : (
           <>
-            <li className="pb-4">
+            <li className="sm:pb-4 md:p-0">
               <Link href={`/${locale}/accounts/signup`}>{t("SignUp")}</Link>
             </li>
-            <li className="pb-4">
+            <li className="sm:pb-4 md:p-0">
               <Link href={`/${locale}/accounts/login`}>{t("Login")}</Link>
             </li>
           </>
         )}
       </ul>
-    </nav>
+    </>
   );
 };
 
