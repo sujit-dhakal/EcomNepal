@@ -12,10 +12,10 @@ export interface ProductCard {
 const ProductCard: React.FC<ProductCard> = ({ product, imageUrl }) => {
   const locale = useLocale();
   return (
-    <div className="w-64 flex flex-col gap-2">
+    <div className="w-64 lg:w-[375px] flex flex-col gap-2">
       <div className="relative bg-[#F5F5F5]">
         <div className="">
-          <Image src={imageUrl} alt="product image" width={256} height={200} />
+          <Image src={imageUrl} alt="product image" width={500} height={500} />
         </div>
         <div className="w-9 flex flex-col gap-2 absolute top-2 right-4">
           <div className="flex justify-center items-center w-9 h-9 bg-white rounded-full">

@@ -6,8 +6,11 @@ import { FaBars } from "react-icons/fa";
 import { IoMdClose } from "react-icons/io";
 import NavItems from "./NavItems";
 import SearchBar from "./search/SearchBar";
+import { useTranslations, useLocale } from "next-intl";
 
 const Navbar = () => {
+  const t = useTranslations("NavBar");
+  const locale = useLocale();
   const [toggle, setToggle] = useState<boolean>(false);
   const handleToggle = () => {
     setToggle(!toggle);
@@ -21,12 +24,12 @@ const Navbar = () => {
   }, [toggle]);
   return (
     <>
-      <div className="top-0 left-0 w-full">
-        <div className="flex justify-between items-center py-4 px-2 md:px-4">
+      <div className="top-0 left-0 w-[75%] m-auto">
+        <div className="flex justify-between items-center py-8">
           <div className="font-bold text-3xl cursor-pointer">
-            <Link href="/">EcomNepal</Link>
+            <Link href={`/${locale}/home`}>EcomNepal</Link>
           </div>
-          <div className="md:hidden">
+          <div className="xl:hidden">
             <button onClick={handleToggle}>
               {toggle ? (
                 <div
@@ -45,10 +48,10 @@ const Navbar = () => {
               )}
             </button>
           </div>
-          <div className="hidden md:block">
+          <div className="hidden xl:block">
             <SearchBar />
           </div>
-          <div className="hidden md:block">
+          <div className="hidden xl:block">
             <NavItems />
           </div>
         </div>

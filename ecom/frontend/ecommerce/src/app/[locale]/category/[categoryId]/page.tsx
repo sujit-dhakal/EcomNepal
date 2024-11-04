@@ -1,6 +1,7 @@
 import axios from "axios";
 import ProductCard from "@/components/products/ProductCard";
 import { Product } from "@/types/productTypes";
+import Filter from "@/components/filtering/Filter";
 
 const fetchCategoryProducts = async (categoryId: string) => {
   const response = await axios.get(
@@ -19,14 +20,19 @@ const page = async ({
   const products = await fetchCategoryProducts(params.categoryId);
   console.log(products);
   return (
-    <div className="flex justify-center">
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
-        {products.map((product: Product) => (
-          <ProductCard
-            product={product}
-            imageUrl={`http://django-app:8000${product.image}`}
-          />
-        ))}
+    <div className="">
+      <Filter />
+      <div className="mb-12 w-[75%] m-auto">
+        <div className="flex justify-center">
+          <div className="md:flex flex-wrap justify-between">
+            {products.map((product: Product) => (
+              <ProductCard
+                product={product}
+                imageUrl={`http://django-app:8000${product.image}`}
+              />
+            ))}
+          </div>
+        </div>
       </div>
     </div>
   );

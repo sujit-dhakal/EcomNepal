@@ -16,12 +16,14 @@ const Filter = () => {
     fetchCategories();
   }, []);
   return (
-    <div>
-      <div>
+    <div className="mb-12 w-[75%] m-auto">
+      <div className="flex justify-between">
         {categoreis.map((category: any) => (
           <div key={category.id}>
             <Link href={`/${locale}/category/${category.name}`}>
-              {category.name}
+              <div className="border border-1 border-gray-600 p-4 hover:bg-black hover:text-white">
+                {category.name}
+              </div>
             </Link>
           </div>
         ))}

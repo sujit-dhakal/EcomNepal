@@ -11,14 +11,27 @@ const page = async () => {
   const products = await fetchData();
   return (
     <>
-      <div>
+      <div className="mb-12">
+        <img
+          src="/ecommerce.jpg"
+          alt="ecommerce image"
+          className="w-[400px] md:[700px] lg:w-[75%] m-auto h-[50vh] lg:h-[80vh]"
+        />
+      </div>
+      <div className="">
+        <div className="mb-12 w-[75%] m-auto">
+          <h1 className="text-3xl mb-12">Browse by Category</h1>
+        </div>
         <Filter />
       </div>
-      <div className="flex justify-center">
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
-          {products.map((product: Product) => (
-            <ProductCard product={product} imageUrl={product.image} />
-          ))}
+      <div className="mb-12 w-[75%] m-auto">
+        <h1 className="text-3xl mb-12">Our Products</h1>
+        <div className="flex justify-center">
+          <div className="md:flex flex-wrap justify-between">
+            {products.map((product: Product) => (
+              <ProductCard product={product} imageUrl={product.image} />
+            ))}
+          </div>
         </div>
       </div>
     </>
