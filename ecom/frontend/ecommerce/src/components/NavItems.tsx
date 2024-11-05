@@ -5,13 +5,14 @@ import { useTranslations, useLocale } from "next-intl";
 import { useAppSelector, useAppDispatch } from "@/lib/hooks";
 import { actions, logoutUser } from "@/lib/store";
 import Cookies from "js-cookie";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 
 const NavItems = () => {
   const t = useTranslations("NavBar");
   const locale = useLocale();
   const dispatch = useAppDispatch();
   const router = useRouter();
+  const pathName = usePathname();
   let isAuth = useAppSelector((state) => state.user.isAuthenticated);
   const handlelogout = async () => {
     const token = Cookies.get("refreshToken");
@@ -30,36 +31,38 @@ const NavItems = () => {
       }
     }
   };
+  const navItems = [
+    { path: `/${locale}/home`, label: t("Home") },
+    { path: `/${locale}/contact`, label: t("Contact") },
+    ...(isAuth
+      ? [
+          { path: `/${locale}/profile`, label: "Profile" },
+          { path: `/${locale}/cart`, label: "Cart" },
+        ]
+      : [
+          { path: `/${locale}/accounts/signup`, label: t("SignUp") },
+          { path: `/${locale}/accounts/login`, label: t("Login") },
+        ]),
+  ];
   return (
     <>
       <ul className="flex gap-6">
-        <li className="sm:pb-4 md:p-0">
-          <Link href={`/${locale}/home`}>{t("Home")}</Link>
-        </li>
-        <li className="sm:pb-4 md:p-0">
-          <Link href={`/${locale}/contact`}>{t("Contact")}</Link>
-        </li>
-        {isAuth ? (
-          <>
-            <li className="sm:pb-4 md:p-0">
-              <Link href={`/${locale}/profile`}>Profile</Link>
-            </li>
-            <li className="sm:pb-4 md:p-0">
-              <button onClick={handlelogout}>Logout</button>
-            </li>
-            <li className="sm:pb-4 md:p-0">
-              <Link href={`/${locale}/cart`}>Cart</Link>
-            </li>
-          </>
-        ) : (
-          <>
-            <li className="sm:pb-4 md:p-0">
-              <Link href={`/${locale}/accounts/signup`}>{t("SignUp")}</Link>
-            </li>
-            <li className="sm:pb-4 md:p-0">
-              <Link href={`/${locale}/accounts/login`}>{t("Login")}</Link>
-            </li>
-          </>
+        {navItems.map((item) => (
+          <li
+            key={item.path}
+            className={`font-medium px-2 py-1 hover:bg-black hover:text-white hover:px-2 hover:py-1 hover:rounded-md ${
+              pathName == item.path
+                ? "bg-black text-white px-2 py-1 rounded-lg"
+                : ""
+            }`}
+          >
+            <Link href={item.path}>{item.label}</Link>
+          </li>
+        ))}
+        {isAuth && (
+          <li className="font-medium px-2 py-1 hover:bg-black hover:text-white hover:px-2 hover:py-1 hover:rounded-md">
+            <button onClick={handlelogout}>Logout</button>
+          </li>
         )}
       </ul>
     </>
