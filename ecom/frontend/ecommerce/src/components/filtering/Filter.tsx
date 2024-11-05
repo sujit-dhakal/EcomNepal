@@ -17,7 +17,7 @@ const Filter = () => {
   }, []);
   return (
     <div className="mb-12 w-[75%] m-auto">
-      <div className="flex justify-between">
+      <div className="flex flex-wrap justify-between gap-2">
         {categoreis.map((category: any) => (
           <div key={category.id}>
             <Link href={`/${locale}/category/${category.name}`}>

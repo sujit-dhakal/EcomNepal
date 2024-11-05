@@ -15,7 +15,7 @@ const page = async () => {
         <img
           src="/ecommerce.jpg"
           alt="ecommerce image"
-          className="w-[400px] md:[700px] lg:w-[75%] m-auto h-[50vh] lg:h-[80vh]"
+          className="w-[75%] m-auto h-[50vh] lg:h-[80vh]"
         />
       </div>
       <div className="">
@@ -27,7 +27,7 @@ const page = async () => {
       <div className="mb-12 w-[75%] m-auto">
         <h1 className="text-3xl mb-12">Our Products</h1>
         <div className="flex justify-center">
-          <div className="md:flex flex-wrap justify-between">
+          <div className="flex flex-wrap justify-center md:justify-between gap-4 lg:gap-8">
             {products.map((product: Product) => (
               <ProductCard product={product} imageUrl={product.image} />
             ))}

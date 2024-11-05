@@ -29,9 +29,14 @@ const SearchBar = () => {
           type="text"
           ref={searchRef}
           placeholder="what are you looking for?"
-          className="bg-gray-100 h-[38px] text-center text-[13px] w-[243px]"
+          className="bg-gray-200 h-[32px] text-center text-[13px] w-[243px] lg:w-[400px] rounded-lg"
         />
-        <button type="submit">Search</button>
+        <button
+          type="submit"
+          className="ml-2 bg-black text-white px-2 py-1 rounded-md"
+        >
+          Search
+        </button>
       </form>
     </div>
   );
