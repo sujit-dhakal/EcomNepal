@@ -1,4 +1,5 @@
 export interface User {
+  user_id: string;
   email: string;
   first_name: string;
   last_name: string;
@@ -17,6 +18,8 @@ export interface userState {
     username: string;
     first_name: string;
     last_name: string;
+    user_id: string;
+    email: string;
   };
   isLoading: boolean;
   isError: boolean;

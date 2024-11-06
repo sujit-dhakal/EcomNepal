@@ -9,6 +9,7 @@ import { checkEmail, registerUser, checkUserName } from "@/lib/store";
 import { useTranslations, useLocale } from "next-intl";
 
 interface RegistrationFormValues {
+  user_id: "";
   email: string;
   first_name: string;
   last_name: string;
@@ -18,6 +19,7 @@ interface RegistrationFormValues {
 }
 
 const initialValues: RegistrationFormValues = {
+  user_id: "",
   email: "",
   first_name: "",
   last_name: "",
