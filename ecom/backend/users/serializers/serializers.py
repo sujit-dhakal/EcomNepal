@@ -267,4 +267,4 @@ class UserResetPasswordSerializer(serializers.Serializer):
 class UserProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = CustomUser
-        fields = ['username','first_name','last_name']
+        fields = ['username','first_name','last_name','user_id','email']
