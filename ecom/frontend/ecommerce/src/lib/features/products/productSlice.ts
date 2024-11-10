@@ -12,6 +12,7 @@ const initialState: ProductState = {
     price: 0,
     stock: 0,
     description: "",
+    image: "",
   },
 };
 
