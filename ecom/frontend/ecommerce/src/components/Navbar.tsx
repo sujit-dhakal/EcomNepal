@@ -24,7 +24,7 @@ const Navbar = () => {
   }, [toggle]);
   return (
     <>
-      <div className="top-0 left-0 w-[75%] m-auto">
+      <div className="top-0 left-0 container px-2 m-auto">
         <div className="flex justify-between items-center py-8">
           <div className="font-bold text-3xl cursor-pointer">
             <Link href={`/${locale}/home`}>EcomNepal</Link>
@@ -33,7 +33,7 @@ const Navbar = () => {
             <button onClick={handleToggle}>
               {toggle ? (
                 <div
-                  className={`fixed p-4 text-left left-0 top-[48px] w-full h-full bg-black text-white`}
+                  className={`fixed p-4 text-left left-0 top-[48px] w-full h-full bg-black text-white z-10`}
                 >
                   <IoMdClose />
                   <div className="mt-10 flex flex-col items-start h-full overflow-y-auto p-4">

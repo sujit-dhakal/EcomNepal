@@ -26,7 +26,7 @@ const products = await fetchData();
 
 export default function HomePage() {
   return (
-    <div className="container mx-auto">
+    <div className="container md:px-2 mx-auto">
       <main className="flex flex-col items-center justify-center gap-14">
         {/* Carousel */}
         <section className="w-full">
