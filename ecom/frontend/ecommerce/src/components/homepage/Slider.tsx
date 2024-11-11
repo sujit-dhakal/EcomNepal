@@ -27,27 +27,25 @@ export const scrollRight = (sliderRef: React.RefObject<HTMLDivElement>) => {
 const Slider: React.FC<SliderProps> = ({ items, sliderRef }) => {
   return (
     <div className="relative w-full">
-      <div className="flex items-center">
-        <div
-          ref={sliderRef}
-          className="flex overflow-x-auto scrollbar-hide snap-x snap-mandatory scroll-smooth"
-        >
-          {items.map((item, index) => (
-            <div
-              key={index}
-              className="
-                flex justify-center
-                min-w-[100%] 
-                sm:min-w-[33.33%] 
-                xl:min-w-[20%]
-                2xl:min-w-[17%]
-                snap-center
-              "
-            >
-              {item}
-            </div>
-          ))}
-        </div>
+      <div
+        ref={sliderRef}
+        className="flex justify-between overflow-x-auto scrollbar-hide snap-x snap-mandatory scroll-smooth"
+      >
+        {items.map((item, index) => (
+          <div
+            key={index}
+            className="
+              flex justify-center
+              min-w-[100%] 
+              sm:min-w-[33.33%] 
+              xl:min-w-[20%]
+              2xl:min-w-[17%]
+              snap-center
+            "
+          >
+            {item}
+          </div>
+        ))}
       </div>
     </div>
   );
