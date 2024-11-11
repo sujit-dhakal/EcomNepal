@@ -53,7 +53,7 @@ export default function HomePage() {
             ]}
           />
           <div className="flex justify-center">
-            <ProductList products={products} />
+            <ProductList products={products.slice(0, 5)} />
           </div>
         </section>
       </main>
