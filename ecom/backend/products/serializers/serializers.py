@@ -14,6 +14,7 @@ class CategorySerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 class CommentSerializer(serializers.ModelSerializer):
+    user = serializers.CharField(source='user.username', read_only=True)
     class Meta:
         model = Comment
         fields = ['id','product','user','content','rating']
