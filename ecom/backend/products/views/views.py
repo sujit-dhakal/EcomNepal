@@ -7,6 +7,8 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.views import status
+from rest_framework import viewsets
+from rest_framework.decorators import action
 class ProductView(generics.ListAPIView):
     serializer_class = ProductSerializer
     queryset = Product.objects.all()
@@ -28,9 +30,25 @@ class ProductFilterView(APIView):
         serializer = ProductSerializer(products,many=True)
         return Response(serializer.data)
 
-class CommentListView(generics.ListAPIView):
+class CommentListView(viewsets.ModelViewSet):
     serializer_class = CommentSerializer
-    queryset = Comment.objects.all()
+
+    def get_queryset(self):
+        return Comment.objects.all()
+
+    @action(detail=False,methods=['GET'],url_path='average_rating/(?P<product_id>\d+)')
+    def average_rating(self,request,product_id=None):
+        comments = Comment.objects.filter(product=product_id)
+        if comments:
+            count = len(comments)
+            average_rating = sum(comment.rating for comment in comments)/count
+            return Response({
+                'rating': average_rating, 'count': count
+            })
+        else:
+            return Response({
+                'msg': 'No comments found.'
+            })
 
 class CommentPostView(APIView):
     permission_classes = [IsAuthenticated]
