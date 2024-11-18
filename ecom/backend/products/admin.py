@@ -1,7 +1,7 @@
 from django.contrib import admin
 from admin_extra_buttons.api import ExtraButtonsMixin, button
 from faker import Faker
-from .models import Category, Product
+from .models import Category, Product, Comment
 import random
 
 fake = Faker()
@@ -39,3 +39,4 @@ class ProductAdmin(ExtraButtonsMixin, admin.ModelAdmin):
 
 admin.site.register(Category, CategoryAdmin)
 admin.site.register(Product, ProductAdmin)
+admin.site.register(Comment)
