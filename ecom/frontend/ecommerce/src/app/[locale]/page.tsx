@@ -2,29 +2,32 @@ import Carousel from "@/components/homepage/Carousel";
 import SectionHeader from "@/components/homepage/SectionHeader";
 import Button from "@/components/Button";
 import Filter from "@/components/filtering/Filter";
-import ProductList from "@/components/products/ProductList";
 import axios from "axios";
+import ProductCard from "@/components/products/ProductCard";
+import { Product } from "@/types/productTypes";
 
-const images = [  // Carousel Images for small devices
-  '/images/homepage/carousel/small-iphone.png',
-  '/images/products/joystick.svg',
-  '/images/heart small.svg',
-]
+const images = [
+  // Carousel Images for small devices
+  "/images/homepage/carousel/small-iphone.png",
+  "/images/products/joystick.svg",
+  "/images/heart small.svg",
+];
 
-const largeImages = [   // Carousel Images for large devices
-  '/images/homepage/carousel/large-iphone.png',
-  '/images/homepage/carousel/ecommerce.jpeg',
-  '/images/homepage/carousel/cycle.png',
-]
+const largeImages = [
+  // Carousel Images for large devices
+  "/images/homepage/carousel/large-iphone.png",
+  "/images/homepage/carousel/ecommerce.jpeg",
+  "/images/homepage/carousel/cycle.png",
+];
 
 const fetchData = async () => {
   const response = await axios.get("http://django-app:8000/products/");
   return response.data;
 };
 
-const products = await fetchData();
-
-export default function HomePage() {
+export default async function HomePage() {
+  let products = await fetchData();
+  products = products.slice(0, 5);
   return (
     <div className="container md:px-2 mx-auto">
       <main className="flex flex-col items-center justify-center gap-14">
@@ -49,14 +52,21 @@ export default function HomePage() {
             topHeading="This Month"
             heading="Best Selling Products"
             buttons={[
-              <Button text="View All" className="md:w-40 md:h-14 md:text-base" />,
+              <Button
+                text="View All"
+                className="md:w-40 md:h-14 md:text-base"
+              />,
             ]}
           />
           <div className="flex justify-center">
-            <ProductList products={products.slice(0, 5)} />
+            <div className="flex flex-wrap justify-center md:justify-between gap-4 lg:gap-8">
+              {products.map((product: Product) => (
+                <ProductCard product={product} imageUrl={product.image} />
+              ))}
+            </div>
           </div>
         </section>
       </main>
     </div>
-  )
+  );
 }

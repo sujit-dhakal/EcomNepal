@@ -19,6 +19,9 @@ const page = ({
   const dispatch = useAppDispatch();
   const product = useAppSelector((state) => state.product.product);
   const isAuth = useAppSelector((state) => state.user.isAuthenticated);
+  const [comments, setComments] = useState<any[]>([]);
+  const [averageRating, setAverageRating] = useState({ rating: 0, count: 0 });
+
   const addToCart = async (productId: number) => {
     const response = await client.post(
       "http://127.0.0.1:8000/cart/add_to_cart/",
@@ -41,8 +44,36 @@ const page = ({
     router.push(`/${locale}/cart`);
     console.log(response.data);
   };
+
+  const fetchComments = async (productId: string) => {
+    try {
+      const response = await client.get(
+        `http://127.0.0.1:8000/comments/product_comments/${productId}`
+      );
+      const fetchedComments = Array.isArray(response.data)
+        ? response.data
+        : [];
+      setComments(fetchedComments);
+    } catch (error) {
+      console.error("Error fetching comments:", error);
+    }
+  };
+
+  const fetchAverageRating = async (productId: string) => {
+    try {
+      const response = await client.get(
+        `http://127.0.0.1:8000/comments/average_rating/${productId}`
+      );
+      setAverageRating(response.data);
+    } catch (error) {
+      console.error("Error fetching average rating:", error);
+    }
+  };
+
   useEffect(() => {
     dispatch(getProductDetail(params.productId));
+    fetchComments(params.productId);
+    fetchAverageRating(params.productId);
   }, [dispatch, params.productId]);
   return (
     <div className="mt-[100px]">
@@ -81,6 +112,43 @@ const page = ({
           </div>
         </div>
       </div>
+
+
+      {/* Comments Section */}
+      {comments.length > 0 && (
+        <div className="container mx-auto mt-20 px-4">
+          <div className="flex items-center gap-2 text-2xl font-semibold mb-4">
+            <div className="text-yellow-500">★</div>
+            <div>{averageRating.rating.toFixed(2)} product rating</div>
+            <div className="w-2 h-2 bg-gray-500 rounded-full"></div>
+            <div>{averageRating.count} ratings</div>
+          </div>
+          <div className="grid grid-col-1 md:grid-cols-2 xl:grid-cols-3 gap-6 mx-auto">
+            {comments.map((comment) => (
+              <div
+                key={comment.id}
+                className="py-4 border-t w-full md:w-[350px] lg:w-[480px] xl:w-[400px] 2xl:w-[480px] justify-self-center"
+              >
+                <div className="flex flex-col">
+                  <p className="font-semibold">{comment.user}</p>
+                  <div className="flex items-center">
+                    {Array.from({ length: 5 }, (_, index) => (
+                      <span
+                        key={index}
+                        className={`text-lg ${index < Math.round(comment.rating) ? "text-yellow-500" : "text-gray-300"
+                          }`}
+                      >
+                        ★
+                      </span>
+                    ))}
+                  </div>
+                </div>
+                <p className="mt-2 text-sm text-justify">{comment.content}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      )}
     </div>
   );
 };
