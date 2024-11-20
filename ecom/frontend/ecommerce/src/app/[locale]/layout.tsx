@@ -20,13 +20,13 @@ export default async function LocaleLayout({
   const messages = await getMessages();
 
   return (
-    <html lang={locale}>
-      <body>
+    <html lang={locale} className="h-full">
+      <body className="h-full flex flex-col">
         <NextIntlClientProvider messages={messages}>
           <StoreProvider>
             <Top />
             <Navbar />
-            {children}
+            <main className="flex-grow">{children}</main>
             <Footer />
           </StoreProvider>
         </NextIntlClientProvider>

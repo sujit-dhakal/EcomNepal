@@ -19,7 +19,7 @@ const Top = () => {
   };
 
   return (
-    <div className="w-full text-[15px] md:text-[20px] lg:text-[20px] bg-black text-white h-[48px] flex items-center justify-between px-10">
+    <div className="w-full text-[15px] md:text-[20px] lg:text-[20px] bg-black text-white flex items-center justify-between px-10 py-2.5">
       <div className="flex-grow text-center">
         <p>
           Dashain Offer - OFF 50%!{" "}

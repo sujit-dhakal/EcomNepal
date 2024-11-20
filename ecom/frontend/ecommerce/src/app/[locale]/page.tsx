@@ -31,7 +31,7 @@ export default async function HomePage() {
   products = products.slice(0, 5);
   return (
     <div className="container md:px-2 mx-auto">
-      <main className="flex flex-col items-center justify-center gap-14">
+      <div className="flex flex-col items-center justify-center gap-14">
         {/* Carousel */}
         <section className="w-full">
           <Carousel images={images} largeImages={largeImages} />
@@ -67,7 +67,7 @@ export default async function HomePage() {
             </div>
           </div>
         </section>
-      </main>
+      </div>
     </div>
   );
 }
