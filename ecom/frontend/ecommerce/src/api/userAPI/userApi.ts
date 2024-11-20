@@ -44,4 +44,18 @@ export class UserApi implements IUserApi {
       data: response.data,
     };
   }
+  async forgotPassword(email: string) {
+    const response = await client.post("reset-password-email/", { email });
+    return {
+      data: response.data,
+    };
+  }
+  async resetPassword(uid: string, token: string, data: { new_password: string, new_password_confirm: string }) {
+    const response = await client.post(`reset-password/${uid}/${token}/`,
+      data
+    );
+    return {
+      data: response.data,
+    };
+  }
 }

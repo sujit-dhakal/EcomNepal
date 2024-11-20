@@ -8,4 +8,10 @@ export interface IUserApi {
   checkEmail(email: string): any;
   checkUserName(name: string): any;
   userProfile(): Promise<User>;
+  forgotPassword(email: string): any;
+  resetPassword(
+    uid: string,
+    token: string,
+    data: { new_password: string; new_password_confirm: string }
+  ): any;
 }

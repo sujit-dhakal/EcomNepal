@@ -47,7 +47,7 @@ const page = () => {
     },
   });
   return (
-    <div className="h-[calc(100vh-265px)] w-[90%] md:w-[700px] text-center m-auto mt-[100px]">
+    <div className="h-[calc(60vh-265px)] w-[90%] md:w-[370px] text-center m-auto mt-[100px]">
       <div className="">
         <form onSubmit={formik.handleSubmit}>
           <div className="text-center">
@@ -59,7 +59,7 @@ const page = () => {
               {...formik.getFieldProps("email")}
               type="text"
               placeholder="email"
-              className="w-full py-1 px-2 border-2 border-black rounded-[20px] md:w-[50%]"
+              className="w-full py-1 px-2 ring-2 ring-black focus:ring-transparent rounded-[20px]"
             />
             {formik.touched.email && formik.errors.email && (
               <div className="text-red-900 text-sm mb-[-20px] text-left pl-3">
@@ -73,7 +73,7 @@ const page = () => {
               {...formik.getFieldProps("password")}
               type="password"
               placeholder="password"
-              className="w-full py-1 px-2 border-2 border-black rounded-[20px] md:w-[50%]"
+              className="w-full py-1 px-2 ring-2 ring-black focus:ring-transparent rounded-[20px]"
             />
             {formik.touched.password && formik.errors.password && (
               <div className="text-red-900 text-sm mb-[-20px] text-left pl-3">
@@ -81,10 +81,15 @@ const page = () => {
               </div>
             )}
           </div>
+          <div className="px-3 text-sm text-right text-red-900 hover:underline">
+            <Link href={`/${locale}/accounts/forgotpassword`}>
+              Forgot Password?
+            </Link>            
+          </div>
           <div className="mt-6 flex justify-center">
             <button
               type="submit"
-              className="bg-black py-2 w-full text-white rounded-[20px] md:w-[50%]"
+              className="bg-black hover:bg-opacity-70 py-2 w-full text-white rounded-[20px]"
             >
               {t("login")}
             </button>
@@ -92,7 +97,7 @@ const page = () => {
           <div className="mt-6">
             {t("notAUser")}
             <Link href={`/${locale}/accounts/signup`}>
-              <span className="text-blue-700">{t("createAccount")}</span>
+              <span className="text-blue-700 hover:underline">{t("createAccount")}</span>
             </Link>
           </div>
           <div>

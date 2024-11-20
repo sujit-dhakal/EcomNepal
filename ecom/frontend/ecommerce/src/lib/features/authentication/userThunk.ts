@@ -75,3 +75,34 @@ export const userProfileThunk = () => {
     }
   });
 };
+
+export const forgotPasswordThunk = () => {
+  return createAsyncThunk("user/forgotPassword", async (email: string) => {
+    try {
+      const response = await userApi.forgotPassword(email);
+      return response.data;
+    } catch (error: any) {
+      return error.response?.data;
+    }
+  });
+};
+
+export const resetPasswordThunk = () => {
+  return createAsyncThunk(
+    "user/resetPassword",
+    async (
+      { uid, token, newPassword, newPasswordConfirm }: { uid: string; token: string; newPassword: string; newPasswordConfirm: string },
+      { rejectWithValue }
+    ) => {
+      try {
+        const response = await userApi.resetPassword(uid, token, {
+          new_password: newPassword,
+          new_password_confirm: newPasswordConfirm,
+        });
+        return response.data;
+      } catch (error: any) {
+        return rejectWithValue(error.response?.data);
+      }
+    }
+  );
+};
