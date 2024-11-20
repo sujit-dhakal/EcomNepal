@@ -3,8 +3,9 @@ import SectionHeader from "@/components/homepage/SectionHeader";
 import Button from "@/components/Button";
 import Filter from "@/components/filtering/Filter";
 import axios from "axios";
-import ProductCard from "@/components/products/ProductCard";
 import { Product } from "@/types/productTypes";
+import ProductCard from "@/components/products/ProductCard";
+
 
 const images = [
   // Carousel Images for small devices
