@@ -1,5 +1,6 @@
 from django.db import models
 from users.models import CustomUser
+from taggit.managers import TaggableManager
 class Category(models.Model):
     name = models.CharField(max_length=255)
 
@@ -10,9 +11,10 @@ class Product(models.Model):
     category = models.ForeignKey(Category,on_delete=models.CASCADE)
     name = models.CharField(max_length=255)
     description = models.TextField()
-    image = models.ImageField(upload_to='media/images',default='media/images/tshirt.jpg')
+    image = models.ImageField(upload_to='images',default='/images/tshirt.jpg')
     price = models.DecimalField(decimal_places=2,max_digits=5)
     stock = models.IntegerField()
+    tags = TaggableManager()
 
     def __str__(self):
         return self.name

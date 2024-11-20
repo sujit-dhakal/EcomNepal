@@ -27,7 +27,7 @@ const Navbar = () => {
       <div className="top-0 left-0 container px-2 m-auto">
         <div className="flex justify-between items-center py-8">
           <div className="font-bold text-3xl cursor-pointer">
-            <Link href={`/${locale}/home`}>EcomNepal</Link>
+            <Link href={`/${locale}`}>EcomNepal</Link>
           </div>
           <div className="xl:hidden">
             <button onClick={handleToggle}>

@@ -9,11 +9,23 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.views import status
 from rest_framework import viewsets
 from rest_framework.decorators import action
+from django.db.models import Q
 class ProductView(generics.ListAPIView):
     serializer_class = ProductSerializer
     queryset = Product.objects.all()
-    filter_backends = (filters.DjangoFilterBackend,)
-    filterset_class = ProductFilter
+
+    def get_queryset(self):
+        queryset = Product.objects.all()
+        user_query = self.request.query_params.get('query', None)
+
+        if user_query:
+            # Combine all filters using Q objects
+            queryset = queryset.filter(
+                Q(name__icontains=user_query) |
+                Q(category__name__icontains=user_query) |
+                Q(tags__name__icontains=user_query)
+            ).distinct()
+        return queryset
 
 class ProductDetailView(generics.RetrieveAPIView):
     serializer_class = ProductSerializer
