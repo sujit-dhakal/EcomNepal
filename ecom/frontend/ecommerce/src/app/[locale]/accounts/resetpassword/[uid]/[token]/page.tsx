@@ -4,6 +4,7 @@ import { useRouter } from "next/navigation";
 import { useParams } from 'next/navigation';
 import { useLocale } from "next-intl";
 import { UserApi } from "@/api/userAPI/userApi";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 const PasswordReset: FC = () => {
   const locale = useLocale();
@@ -14,6 +15,8 @@ const PasswordReset: FC = () => {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
+  const [showPassword, setShowPassword] = useState(false); 
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false); 
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -47,9 +50,9 @@ const PasswordReset: FC = () => {
         </p>
         <form onSubmit={handleSubmit} className="mt-6">
           {/* New Password Input */}
-          <div className="mb-4">
+          <div className="mb-4 relative">
             <input
-              type="password"
+              type={showPassword ? "text" : "password"}
               id="password"
               value={password}
               onChange={(e) => setPassword(e.target.value)}
@@ -57,11 +60,17 @@ const PasswordReset: FC = () => {
               placeholder="Enter new password"
               required
             />
+            <div
+              onClick={() => setShowPassword(!showPassword)}
+              className="absolute right-3 top-[25px] transform -translate-y-1/2 cursor-pointer"
+            >
+              {showPassword ? <FaEyeSlash /> : <FaEye />}
+            </div>
           </div>
           {/* Confirm Password Input */}
-          <div className="mb-4">
+          <div className="mb-4 relative">
             <input
-              type="password"
+              type={showConfirmPassword ? "text" : "password"}
               id="confirmPassword"
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
@@ -69,6 +78,12 @@ const PasswordReset: FC = () => {
               placeholder="Confirm new password"
               required
             />
+            <div
+              onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+              className="absolute right-3 top-[25px] transform -translate-y-1/2 cursor-pointer"
+            >
+              {showConfirmPassword ? <FaEyeSlash /> : <FaEye />}
+            </div>
           </div>
           {/* Submit Button */}
           <div className="mt-6">
