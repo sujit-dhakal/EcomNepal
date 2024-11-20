@@ -69,7 +69,7 @@ const page = () => {
     },
   });
   return (
-    <div className="h-[calc(100vh-265px)] w-[90%] md:w-[700px] text-center m-auto mt-[25px]">
+    <div className="h-[calc(75vh-265px)] w-[90%] md:w-[370px] text-center m-auto mt-[25px]">
       {/* side image */}
       {/* signup form */}
       <div className="w-full">
@@ -84,7 +84,7 @@ const page = () => {
               {...formik.getFieldProps("email")}
               type="text"
               placeholder="email"
-              className="w-full py-1 px-2 border-2 border-black rounded-[20px] md:w-[50%]"
+              className="w-full py-1 px-2 ring-2 ring-black focus:ring-transparent rounded-[20px]"
             />
             {formik.touched.email && formik.errors.email && (
               <div className="text-red-900 text-sm mb-[-20px] text-left pl-3">
@@ -105,7 +105,7 @@ const page = () => {
               {...formik.getFieldProps("first_name")}
               type="text"
               placeholder="firstname"
-              className="w-full py-1 px-2 border-2 border-black rounded-[20px] md:w-[50%]"
+              className="w-full py-1 px-2 ring-2 ring-black focus:ring-transparent rounded-[20px]"
             />
             {formik.touched.first_name && formik.errors.first_name && (
               <div className="text-red-900 text-sm mb-[-20px] text-left pl-3">
@@ -119,7 +119,7 @@ const page = () => {
               {...formik.getFieldProps("last_name")}
               type="text"
               placeholder="last_name"
-              className="w-full py-1 px-2 border-2 border-black rounded-[20px] md:w-[50%]"
+              className="w-full py-1 px-2 ring-2 ring-black focus:ring-transparent rounded-[20px]"
             />
             {formik.touched.last_name && formik.errors.last_name && (
               <div className="text-red-900 text-sm mb-[-20px] text-left pl-3">
@@ -133,7 +133,7 @@ const page = () => {
               {...formik.getFieldProps("username")}
               type="text"
               placeholder="username"
-              className="w-full py-1 px-2 border-2 border-black rounded-[20px] md:w-[50%]"
+              className="w-full py-1 px-2 ring-2 ring-black focus:ring-transparent rounded-[20px]"
             />
             {formik.touched.username && formik.errors.username && (
               <div className="text-red-900 text-sm mb-[-20px] text-left pl-3">
@@ -154,7 +154,7 @@ const page = () => {
               {...formik.getFieldProps("password")}
               type="password"
               placeholder="password"
-              className="w-full py-1 px-2 border-2 border-black rounded-[20px] md:w-[50%]"
+              className="w-full py-1 px-2 ring-2 ring-black focus:ring-transparent rounded-[20px]"
             />
             {formik.touched.password && formik.errors.password && (
               <div className="text-red-900 text-sm mb-[-20px] text-left pl-3">
@@ -168,7 +168,7 @@ const page = () => {
               {...formik.getFieldProps("confirm_password")}
               type="password"
               placeholder="confirm password"
-              className="w-full py-1 px-2 border-2 border-black rounded-[20px] md:w-[50%]"
+              className="w-full py-1 px-2 ring-2 ring-black focus:ring-transparent rounded-[20px]"
             />
             {formik.touched.confirm_password &&
               formik.errors.confirm_password && (
@@ -180,7 +180,7 @@ const page = () => {
           <div className="mt-6">
             <button
               type="submit"
-              className="bg-black py-2 w-full text-white rounded-[20px] md:w-[50%]"
+              className="bg-black hover:bg-opacity-70 py-2 w-full text-white rounded-[20px]"
             >
               {t("SignUp")}
             </button>
@@ -189,7 +189,7 @@ const page = () => {
         <div className="mt-6">
           {t("alreadyHaveAnAccount")}
           <Link href={`/${locale}/accounts/login`}>
-            <span className="text-blue-700">{t("login")}</span>
+            <span className="text-blue-700 hover:underline">{t("login")}</span>
           </Link>
         </div>
         {isRegistered ? (
