@@ -7,6 +7,8 @@ import {
   checkEmailThunk,
   checkUserNameThunk,
   userProfileThunk,
+  forgotPasswordThunk,
+  resetPasswordThunk,
 } from "./userThunk";
 
 const initialState: userState = {
@@ -29,6 +31,8 @@ export const buildUserSlice = () => {
   const checkEmail = checkEmailThunk();
   const checkUserName = checkUserNameThunk();
   const userProfile = userProfileThunk();
+  const forgotPassword = forgotPasswordThunk();
+  const resetPassword = resetPasswordThunk();
   const userSlice = createSlice({
     name: "user",
     initialState: initialState,
@@ -90,6 +94,30 @@ export const buildUserSlice = () => {
         )
         .addCase(userProfile.rejected, (state) => {
           state.isError = true;
+        })
+        .addCase(forgotPassword.pending, (state) => {
+          state.isLoading = true;
+          state.isError = false;
+        })
+        .addCase(forgotPassword.fulfilled, (state, action) => {
+          state.isLoading = false;
+          state.isError = false;
+        })
+        .addCase(forgotPassword.rejected, (state, action) => {
+          state.isLoading = false;
+          state.isError = true;
+        })
+        .addCase(resetPassword.pending, (state) => {
+          state.isLoading = true;
+          state.isError = false;
+        })
+        .addCase(resetPassword.fulfilled, (state, action) => {
+          state.isLoading = false;
+          state.isError = false;
+        })
+        .addCase(resetPassword.rejected, (state, action) => {
+          state.isLoading = false;
+          state.isError = true;
         });
     },
   });
@@ -102,5 +130,7 @@ export const buildUserSlice = () => {
     checkEmail,
     checkUserName,
     userProfile,
+    forgotPassword,
+    resetPassword,
   };
 };

@@ -32,7 +32,7 @@ const NavItems = () => {
     }
   };
   const navItems = [
-    { path: `/${locale}/home`, label: t("Home") },
+    { path: `/${locale}`, label: t("Home") },
     { path: `/${locale}/contact`, label: t("Contact") },
     ...(isAuth
       ? [

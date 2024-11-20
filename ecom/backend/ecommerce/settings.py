@@ -49,7 +49,8 @@ INSTALLED_APPS = [
     'cart',
     'shipping',
     'order',
-    'admin_extra_buttons'
+    'admin_extra_buttons',
+    'taggit'
 ]
 
 MIDDLEWARE = [

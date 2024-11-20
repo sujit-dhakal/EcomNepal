@@ -6,6 +6,7 @@ import axios from "axios";
 import { Product } from "@/types/productTypes";
 import ProductCard from "@/components/products/ProductCard";
 
+
 const images = [
   // Carousel Images for small devices
   "/images/homepage/carousel/small-iphone.png",
@@ -58,10 +59,12 @@ export default async function HomePage() {
               />,
             ]}
           />
-          <div className="flex flex-col justify-center items-center lg:flex-row">
-            {products.map((product: Product) => (
-              <ProductCard product={product} imageUrl={product.image} />
-            ))}
+          <div className="flex justify-center">
+            <div className="flex flex-wrap justify-center md:justify-between gap-4 lg:gap-8">
+              {products.map((product: Product) => (
+                <ProductCard product={product} imageUrl={product.image} />
+              ))}
+            </div>
           </div>
         </section>
       </main>

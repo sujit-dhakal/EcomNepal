@@ -9,7 +9,7 @@ export class ProductApi implements IProductApi {
   }
   async getProducts(query: string): Promise<Product[]> {
     const response = await client.get("products/", {
-      params: { name: query },
+      params: { query },
     });
     return response.data;
   }

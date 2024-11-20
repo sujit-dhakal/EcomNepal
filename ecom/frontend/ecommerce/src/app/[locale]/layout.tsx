@@ -4,6 +4,7 @@ import "./globals.css";
 import StoreProvider from "../StoreProvider";
 import { NextIntlClientProvider } from "next-intl";
 import { getMessages } from "next-intl/server";
+import Footer from "@/components/Footer";
 export const metadata = {
   title: "EcomNepal",
   description: "A ecommerce website.",
@@ -26,6 +27,7 @@ export default async function LocaleLayout({
             <Top />
             <Navbar />
             {children}
+            <Footer />
           </StoreProvider>
         </NextIntlClientProvider>
       </body>
