@@ -10,3 +10,4 @@ django-admin-extra-buttons==1.5.8
 factory-boy
 pillow==11.0.0
 scikit-learn==1.5.2
+django-taggit==6.1.0
