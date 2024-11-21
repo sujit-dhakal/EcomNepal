@@ -11,4 +11,8 @@ export class ShippingApi implements IShippingApi {
     const response = await client.get("shipping-address/get_by_is_default/");
     return response.data;
   }
+  async getAddresses(): Promise<ShippingAddress[]> {
+    const response = await client.get("shipping-address/");
+    return response.data;
+  }
 }

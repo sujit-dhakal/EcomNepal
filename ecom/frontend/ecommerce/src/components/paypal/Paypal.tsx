@@ -49,11 +49,11 @@ const Paypal: React.FC<createOrderProps> = ({ cartItems, sum }) => {
     }
   };
   return (
-    <div>
+    <>
       <PayPalScriptProvider options={initialOptions}>
         <PayPalButtons createOrder={createOrder} onApprove={onApprove} />
       </PayPalScriptProvider>
-    </div>
+    </>
   );
 };
 
