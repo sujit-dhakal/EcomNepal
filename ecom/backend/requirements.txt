@@ -11,3 +11,6 @@ factory-boy
 pillow==11.0.0
 scikit-learn==1.5.2
 django-taggit==6.1.0
+celery==5.4.0
+redis==5.2.0
+django-celery-results==2.5.1

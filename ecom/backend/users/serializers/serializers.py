@@ -8,6 +8,8 @@ from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
 from django.core.mail import send_mail
 import os
 from django.urls import reverse
+from users.tasks import send_mail_task
+
 class UserSerializer(serializers.ModelSerializer):
     """
     Serializer for the CustomUser model.
@@ -89,13 +91,14 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
         uid = urlsafe_base64_encode(force_bytes(user.user_id))
         verification_link = reverse('email-verify', kwargs={'uid':uid,'token':token})
         verification_url = f"http://127.0.0.1:8000{verification_link}".strip()
-        send_mail(
-            "Verify your email",
-            verification_url,
-             os.getenv('EMAIL_HOST_USER'),
-            [user.email],
-            fail_silently=False
-        )
+        # send_mail(
+        #     "Verify your email",
+        #     verification_url,
+        #      os.getenv('EMAIL_HOST_USER'),
+        #     [user.email],
+        #     fail_silently=False
+        # )
+        send_mail_task.delay(subject="Verify your email",message=verification_url,recipient_list=[user.email])
 
 
 class UserLoginSerializer(serializers.Serializer):
@@ -205,13 +208,14 @@ class SendResetPasswordEmailSerializer(serializers.Serializer):
             uid = urlsafe_base64_encode(force_bytes(user.user_id))
             token = PasswordResetTokenGenerator().make_token(user)
             link = f"http://localhost:3000/{self.context.get('locale', 'en')}/accounts/resetpassword/{uid}/{token}"
-            send_mail(
-                "Reset Password",
-                link,
-                os.getenv('EMAIL_HOST_USER'),
-                [email],
-                fail_silently=False
-            )
+            # send_mail(
+            #     "Reset Password",
+            #     link,
+            #     os.getenv('EMAIL_HOST_USER'),
+            #     [email],
+            #     fail_silently=False
+            # )
+            send_mail_task.delay(subject="Reset Password",message=link,recipient_list=[email])
         else:
             raise ValidationError("You are not a registered user.")
         return attrs

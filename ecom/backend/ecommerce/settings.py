@@ -50,7 +50,8 @@ INSTALLED_APPS = [
     'shipping',
     'order',
     'admin_extra_buttons',
-    'taggit'
+    'taggit',
+    'django_celery_results'
 ]
 
 MIDDLEWARE = [
@@ -186,3 +187,10 @@ STATICFILES_DIRS = [
 
 MEDIA_URL='media/'
 MEDIA_ROOT = BASE_DIR /'media'
+
+CELERY_BROKER_URL = 'redis://redis:6379/0'
+CELERY_RESULT_BACKEND = 'redis://redis:6379/0'
+CELERY_BROKER_CONNECTION_RETRY_ON_STARTUP = True
+CELERY_ACCEPT_CONTENT = ['application/json']
+CELERY_RESULT_SERIALIZER = 'json'
+CELERY_TASK_SERIALIZER = 'json'
