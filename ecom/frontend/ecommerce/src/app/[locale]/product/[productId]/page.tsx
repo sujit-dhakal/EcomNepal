@@ -1,10 +1,13 @@
 "use client";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 import { getProductDetail } from "@/lib/store";
 import { client } from "@/api/baseConfig";
 import { useRouter } from "next/navigation";
 import { useLocale } from "next-intl";
+import { Product } from "@/types/productTypes";
+import ProductCard from "@/components/products/ProductCard";
+import axios from "axios";
 
 const page = ({
   params,
@@ -13,6 +16,7 @@ const page = ({
     productId: string;
   };
 }) => {
+  const [similarProducts, setSimilarProducts] = useState([]);
   const router = useRouter();
   const locale = useLocale();
   const [addToCartValue, setAddToCartValue] = useState("Add to cart");
@@ -50,9 +54,7 @@ const page = ({
       const response = await client.get(
         `http://127.0.0.1:8000/comments/product_comments/${productId}`
       );
-      const fetchedComments = Array.isArray(response.data)
-        ? response.data
-        : [];
+      const fetchedComments = Array.isArray(response.data) ? response.data : [];
       setComments(fetchedComments);
     } catch (error) {
       console.error("Error fetching comments:", error);
@@ -69,12 +71,22 @@ const page = ({
       console.error("Error fetching average rating:", error);
     }
   };
+  const fetchSimilarProducts = useCallback(async () => {
+    if (product.name) {
+      const response = await axios.get(
+        `http://127.0.0.1:8000/product-recommend/?q=${product.name}`
+      );
+      setSimilarProducts(response.data.results);
+      console.log(response.data);
+    }
+  }, [product.name]);
 
   useEffect(() => {
     dispatch(getProductDetail(params.productId));
     fetchComments(params.productId);
     fetchAverageRating(params.productId);
-  }, [dispatch, params.productId]);
+    fetchSimilarProducts();
+  }, [dispatch, params.productId, fetchSimilarProducts]);
   return (
     <div className="mt-[100px]">
       <div className="flex flex-col justify-center lg:flex-row gap-16 px-3.5">
@@ -113,7 +125,6 @@ const page = ({
         </div>
       </div>
 
-
       {/* Comments Section */}
       {comments.length > 0 && (
         <div className="container mx-auto mt-20 px-4">
@@ -135,8 +146,11 @@ const page = ({
                     {Array.from({ length: 5 }, (_, index) => (
                       <span
                         key={index}
-                        className={`text-lg ${index < Math.round(comment.rating) ? "text-yellow-500" : "text-gray-300"
-                          }`}
+                        className={`text-lg ${
+                          index < Math.round(comment.rating)
+                            ? "text-yellow-500"
+                            : "text-gray-300"
+                        }`}
                       >
                         ★
                       </span>
@@ -149,6 +163,16 @@ const page = ({
           </div>
         </div>
       )}
+      <div>
+        <h1>Related Items</h1>
+        <div className="flex flex-wrap justify-center md:justify-between gap-4 lg:gap-8">
+          {similarProducts.map((product: Product) => (
+            <div>
+              <ProductCard product={product} imageUrl={product.image} />
+            </div>
+          ))}
+        </div>
+      </div>
     </div>
   );
 };
