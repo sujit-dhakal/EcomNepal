@@ -133,6 +133,7 @@ class ProductRecommendView(APIView):
                 'name': result['product'].name,
                 'description': result['product'].description,
                 'price': result['product'].price,
+                'image': f"http://django-app:8000/media{result['product'].image}",
                 'stock': result['product'].stock,
                 'score': round(float(result['similarity_score']), 4)
             } for result in results]

@@ -71,22 +71,30 @@ const page = ({
       console.error("Error fetching average rating:", error);
     }
   };
-  const fetchSimilarProducts = useCallback(async () => {
-    if (product.name) {
+
+  const fetchSimilarProducts = async (productName: string) => {
+    try {
       const response = await axios.get(
-        `http://127.0.0.1:8000/product-recommend/?q=${product.name}`
+        `http://127.0.0.1:8000/product-recommend/?q=${productName}`
       );
       setSimilarProducts(response.data.results);
-      console.log(response.data);
+    } catch (error) {
+      console.error("Error fetching similar products:", error);
     }
-  }, [product.name]);
+  };
 
   useEffect(() => {
     dispatch(getProductDetail(params.productId));
     fetchComments(params.productId);
     fetchAverageRating(params.productId);
-    fetchSimilarProducts();
-  }, [dispatch, params.productId, fetchSimilarProducts]);
+  }, [dispatch, params.productId]);
+
+  useEffect(() => {
+    if (product.name) {
+      fetchSimilarProducts(product.name);
+    }
+  }, [product.name, fetchSimilarProducts]);
+
   return (
     <div className="mt-[100px]">
       <div className="flex flex-col justify-center lg:flex-row gap-16 px-3.5">
