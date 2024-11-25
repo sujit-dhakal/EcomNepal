@@ -1,14 +1,11 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import { getCartSum, getCartItems } from "@/lib/store";
-import Paypal from "@/components/paypal/Paypal";
 
 const CheckoutDetail: React.FC = () => {
-  const sum = useAppSelector((state) => state.cart.sum);
   const cartItems = useAppSelector((state) => state.cart.itemsInCart);
   const dispatch = useAppDispatch();
-  const [selectedPayment, setSelectedPayment] = useState<string>("Cash");
 
   const fetchSum = async () => {
     const response = await dispatch(getCartSum());
@@ -22,7 +19,6 @@ const CheckoutDetail: React.FC = () => {
     fetchCart();
     fetchSum();
   }, []);
-
 
   const subtotal = cartItems.reduce((total, item) => total + item.total_price, 0);
   const shipping = "Free";
@@ -63,43 +59,11 @@ const CheckoutDetail: React.FC = () => {
         <p>Total:</p>
         <p>${total}</p>
       </div>
-
-      {/* Payment Methods */}
-      <div>
-        <div className="space-y-2">
-          <label className="flex items-center space-x-2 cursor-pointer">
-            <input
-              type="radio"
-              name="payment"
-              value="Paypal"
-              checked={selectedPayment === "Paypal"}
-              onChange={(e) => setSelectedPayment(e.target.value)}
-              className="w-5 h-5"
-            />
-            <p className="flex items-center space-x-2">
-              Paypal
-            </p>
-          </label>
-
-          <label className="flex items-center space-x-2 cursor-pointer">
-            <input
-              type="radio"
-              name="payment"
-              value="Cash"
-              checked={selectedPayment === "Cash"}
-              onChange={(e) => setSelectedPayment(e.target.value)}
-              className="w-5 h-5"
-            />
-            <p>Cash on Delivery</p>
-          </label>
-        </div>
-      </div>
-      {/* <Paypal cartItems={cartItems} sum={sum} /> */}
-
+      
       {/* Place Order Button */}
       <div>
         <button
-          className="w-full sm:w-1/2 px-4 py-2 bg-black hover:bg-opacity-70 text-white font-semibold rounded"
+          className="w-full sm:w-1/3 px-4 py-2 bg-black hover:bg-opacity-70 text-white font-semibold rounded"
         >
           Place Order
         </button>
