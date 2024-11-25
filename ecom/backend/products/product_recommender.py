@@ -11,9 +11,9 @@ class ProductSearch:
 
     def fit(self, products):
         """Train the search engine with product data"""
-        self.products = list(products)  # Convert QuerySet to list
+        self.products = list(products)
         product_texts = [
-            f"{product.name} {product.description}" for product in self.products
+            f"{product.name} {product.tags} {product.description}" for product in self.products
         ]
         self.tfidf_matrix = self.vectorizer.fit_transform(product_texts)
 
@@ -33,7 +33,7 @@ class ProductSearch:
 
         results = []
         for idx in top_indices:
-            idx = int(idx)  # Convert numpy.int64 to Python int
+            idx = int(idx)
             if similarities[idx] > 0:
                 results.append({
                     'product': self.products[idx],

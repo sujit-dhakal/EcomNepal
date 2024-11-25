@@ -45,7 +45,6 @@ class ProductRecommendView(APIView):
 
     def get(self, request):
         try:
-            # Get and validate query parameter
             query = request.GET.get('q', '').strip()
 
             if not query:
@@ -59,11 +58,9 @@ class ProductRecommendView(APIView):
                     {'error': 'Query must be at least 2 characters long'},
                     status=status.HTTP_400_BAD_REQUEST
                 )
-
-            # Get number of results parameter (optional)
             try:
                 num_results = int(request.GET.get('limit', 5))
-                num_results = min(max(1, num_results), 20)  # Limit between 1 and 20
+                num_results = min(max(1, num_results), 20)
             except ValueError:
                 num_results = 5
 
@@ -87,7 +84,7 @@ class ProductRecommendView(APIView):
             })
 
         except Exception as e:
-            print(f"Search error: {str(e)}")  # For debugging
+            print(f"Search error: {str(e)}")
             return Response(
                 {'error': 'An error occurred while processing your search'},
                 status=status.HTTP_500_INTERNAL_SERVER_ERROR
