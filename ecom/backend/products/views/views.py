@@ -10,6 +10,7 @@ from rest_framework.views import status
 from rest_framework import viewsets
 from rest_framework.decorators import action
 from django.db.models import Q
+from products.product_recommender import ProductSearch
 class ProductView(generics.ListAPIView):
     serializer_class = ProductSerializer
     queryset = Product.objects.all()
@@ -86,3 +87,65 @@ class CommentPostView(APIView):
         return Response({
             'msg':'failed to create comment'
         },status=status.HTTP_400_BAD_REQUEST)
+
+class ProductRecommendView(APIView):
+    def __init__(self):
+        super().__init__()
+        self.search_engine = ProductSearch()
+        self.initialize_search_engine()
+
+    def initialize_search_engine(self):
+        try:
+            products = Product.objects.all()
+            if not products.exists():
+                print("Warning: No products found in database")
+            self.search_engine.fit(products)
+        except Exception as e:
+            print(f"Error initializing search engine: {str(e)}")
+
+    def get(self, request):
+        try:
+            query = request.GET.get('q', '').strip()
+
+            if not query:
+                return Response(
+                    {'error': 'Query parameter "q" is required'},
+                    status=status.HTTP_400_BAD_REQUEST
+                )
+
+            if len(query) < 2:
+                return Response(
+                    {'error': 'Query must be at least 2 characters long'},
+                    status=status.HTTP_400_BAD_REQUEST
+                )
+            try:
+                num_results = int(request.GET.get('limit', 5))
+                num_results = min(max(1, num_results), 20)
+            except ValueError:
+                num_results = 5
+
+            # Perform search
+            results = self.search_engine.search(query, num_results=num_results)
+
+            # Format response
+            response_data = [{
+                'id': result['product'].id,
+                'name': result['product'].name,
+                'description': result['product'].description,
+                'price': result['product'].price,
+                'stock': result['product'].stock,
+                'score': round(float(result['similarity_score']), 4)
+            } for result in results]
+
+            return Response({
+                'query': query,
+                'count': len(response_data),
+                'results': response_data
+            })
+
+        except Exception as e:
+            print(f"Search error: {str(e)}")
+            return Response(
+                {'error': 'An error occurred while processing your search'},
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR
+            )
