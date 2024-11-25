@@ -49,7 +49,7 @@ const page = () => {
   };
 
   const handleProceed = () => {
-    router.push(`/${locale}/payment/`);
+    router.push(`/${locale}/checkout/`);
   };
   useEffect(() => {
     fetchData();

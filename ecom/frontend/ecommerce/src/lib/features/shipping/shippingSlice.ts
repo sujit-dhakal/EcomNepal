@@ -1,11 +1,12 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import {
   addShippingAddressThunk,
-  getShippingAddressThunk,
+  getShippingAddressesThunk,
 } from "./shippingThunk";
 import { ShippingAddress, ShippingAddressState } from "@/types/shippingTypes";
 
 const initialState: ShippingAddressState = {
+  addresses: [],
   address: {
     city: "",
     country: "",
@@ -18,27 +19,27 @@ const initialState: ShippingAddressState = {
 };
 
 export const buildShippingSlice = () => {
-  const getShippingAddress = getShippingAddressThunk();
   const addShippingAddress = addShippingAddressThunk();
+  const getShippingAddresses = getShippingAddressesThunk();
   const shippingSlice = createSlice({
     name: "shipping",
     initialState: initialState,
     reducers: {},
     extraReducers: (builder) => {
-      builder.addCase(getShippingAddress.pending, (state) => {
+      builder.addCase(getShippingAddresses.pending, (state) => {
         state.isLoading = true;
         state.isError = false;
       });
       builder
         .addCase(
-          getShippingAddress.fulfilled,
+          getShippingAddresses.fulfilled,
           (state, action: PayloadAction<ShippingAddress>) => {
-            state.address = action.payload;
+            state.addresses = action.payload;
             state.isLoading = false;
             state.isError = false;
           }
         )
-        .addCase(getShippingAddress.rejected, (state) => {
+        .addCase(getShippingAddresses.rejected, (state) => {
           state.isError = true;
           state.isLoading = false;
         }),
@@ -63,7 +64,7 @@ export const buildShippingSlice = () => {
   });
   return {
     shippingSlice,
-    getShippingAddress,
     addShippingAddress,
+    getShippingAddresses,
   };
 };

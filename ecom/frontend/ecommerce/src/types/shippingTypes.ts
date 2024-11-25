@@ -3,10 +3,11 @@ export interface ShippingAddress {
   country: string;
   state: string;
   postal_code: string;
-  isdefault: false;
+  isdefault: boolean;
 }
 
 export interface ShippingAddressState {
+  addresses: ShippingAddress[];
   address: ShippingAddress;
   isLoading: boolean;
   isError: boolean;
