@@ -23,10 +23,8 @@ const page = () => {
   }, []);
   return (
     <div className="container mx-auto px-2 mt-[50px]">
-      <h2 className="text-2xl font-semibold">Pay Now</h2>
-      <div className="flex flex-col lg:flex-row justify-between gap-[60px]">
-        <Paypal cartItems={cartItems} sum={sum} />
-      </div>
+      <h2 className="text-2xl font-semibold mb-5">Payment</h2>
+      <Paypal cartItems={cartItems} sum={sum} />
     </div>
   );
 };
