@@ -8,6 +8,8 @@ import { useLocale } from "next-intl";
 import { Product } from "@/types/productTypes";
 import ProductCard from "@/components/products/ProductCard";
 import axios from "axios";
+import SectionHeader from "@/components/homepage/SectionHeader";
+import Button from "@/components/Button";
 
 const page = ({
   params,
@@ -96,13 +98,16 @@ const page = ({
   }, [product.name, fetchSimilarProducts]);
 
   return (
-    <div className="mt-[100px]">
+    <div className="mt-[50px]">
       <div className="flex flex-col justify-center lg:flex-row gap-16 px-3.5">
-        <img
-          src={product.image}
-          alt="product image"
-          className="w-[450px] h-[350px] rounded-lg"
-        />
+        <div className="flex justify-center">
+          <img
+            src={product.image}
+            alt="product image"
+            className="w-[450px] h-[350px] rounded-lg"
+          />
+        </div>
+
         <div className="flex justify-center">
           <div className="flex flex-col gap-5 max-w-[420px]">
             <h1 className="text-2xl font-semibold text-black">
@@ -112,16 +117,16 @@ const page = ({
             <p className="text-md text-black">{product.description}</p>
             {isAuth && (
               <>
-                <hr className="border-black" />
+                <hr className="border-black border-opacity-30" />
                 <button
-                  className="bg-orange-500 text-white rounded-lg py-2 px-4"
+                  className="bg-black hover:bg-opacity-70 text-white rounded-lg py-2 px-4"
                   type="button"
                   onClick={() => addToCart(product.id)}
                 >
                   {addToCartValue}
                 </button>
                 <button
-                  className="bg-blue-950 text-white text-md rounded-lg py-2 px-4"
+                  className="bg-black hover:bg-opacity-70 text-white text-md rounded-lg py-2 px-4"
                   type="button"
                   onClick={() => buyNow(product.id)}
                 >
@@ -146,7 +151,7 @@ const page = ({
             {comments.map((comment) => (
               <div
                 key={comment.id}
-                className="py-4 border-t w-full md:w-[350px] lg:w-[480px] xl:w-[400px] 2xl:w-[480px] justify-self-center"
+                className="py-4 border-t border-black border-opacity-30 w-full md:w-[350px] lg:w-[480px] xl:w-[400px] 2xl:w-[480px] justify-self-center"
               >
                 <div className="flex flex-col">
                   <p className="font-semibold">{comment.user}</p>
@@ -154,11 +159,10 @@ const page = ({
                     {Array.from({ length: 5 }, (_, index) => (
                       <span
                         key={index}
-                        className={`text-lg ${
-                          index < Math.round(comment.rating)
-                            ? "text-yellow-500"
-                            : "text-gray-300"
-                        }`}
+                        className={`text-lg ${index < Math.round(comment.rating)
+                          ? "text-yellow-500"
+                          : "text-gray-300"
+                          }`}
                       >
                         ★
                       </span>
@@ -171,15 +175,31 @@ const page = ({
           </div>
         </div>
       )}
-      <div>
-        <h1>Related Items</h1>
-        <div className="flex flex-wrap justify-center md:justify-between gap-4 lg:gap-8">
-          {similarProducts.map((product: Product) => (
-            <div>
-              <ProductCard product={product} imageUrl={product.image} />
-            </div>
-          ))}
+
+      <div className="container mx-auto mt-20 px-4">
+        <div className="w-full px-3.5 md:px-0">
+          <hr className="border-0.5 border-black border-opacity-30" />
         </div>
+
+        <section className="flex flex-col gap-10 md:gap-[60px] w-full mt-10 px-3.5 md:px-0">
+          <SectionHeader
+            topHeading="Related Items"
+            heading="You Might Also Like"
+            buttons={[
+              <Button
+                text="View All"
+                className="md:w-40 md:h-14 md:text-base"
+              />,
+            ]}
+          />
+          <div className="flex justify-center">
+            <div className="flex flex-wrap justify-center md:justify-between gap-4 lg:gap-8">
+              {similarProducts.map((product: Product) => (
+                <ProductCard product={product} imageUrl={product.image} />
+              ))}
+            </div>
+          </div>
+        </section>
       </div>
     </div>
   );
