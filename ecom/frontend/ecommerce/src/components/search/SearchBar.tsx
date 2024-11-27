@@ -1,8 +1,9 @@
 import React, { useRef } from "react";
 import { useRouter } from "next/navigation";
 import { useLocale } from "next-intl";
+import { FaSearch } from "react-icons/fa";
 
-const SearchBar = () => {
+const SearchBar = ({ onSearch }: { onSearch: () => void }) => {
   const locale = useLocale();
   const searchRef = useRef<HTMLInputElement>(null);
   const router = useRouter();
@@ -17,6 +18,7 @@ const SearchBar = () => {
           )}`
         );
         searchRef.current.value = "";
+        onSearch();
       } else {
         router.push("/");
       }
@@ -25,18 +27,17 @@ const SearchBar = () => {
   return (
     <div>
       <form onSubmit={handleSearch}>
-        <input
-          type="text"
-          ref={searchRef}
-          placeholder="what are you looking for?"
-          className="bg-gray-200 h-[32px] text-center text-[13px] w-[243px] lg:w-[400px] rounded-lg"
-        />
-        <button
-          type="submit"
-          className="ml-2 bg-black text-white px-2 py-1 rounded-md"
-        >
-          Search
-        </button>
+        <div className="relative">
+          <input
+            type="text"
+            ref={searchRef}
+            placeholder="What are you looking for?"
+            className="bg-gray-200 pr-9 h-[36px] text-center text-base w-full xl:w-[350px] rounded-lg"
+          />
+          <div className="absolute top-2 right-2 text-gray-500" aria-label="Search">
+            <FaSearch size={20} />
+          </div>
+        </div>
       </form>
     </div>
   );
