@@ -2,12 +2,14 @@
 
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
+import { useLocale } from "next-intl";
 
 const page = () => {
   const router = useRouter();
+  const locale = useLocale();
   useEffect(() => {
     setTimeout(() => {
-      router.push("/accounts/login");
+      router.push(`/${locale}/accounts/login`);
     }, 5000);
   }, []);
   return (

@@ -32,11 +32,13 @@ const initialValues: RegistrationFormValues = {
 const page = () => {
   const t = useTranslations("SignUp");
   const locale = useLocale();
-  const [userNameAlreadyExist, setUserNameAlreadyExist] = useState<boolean>(false);
+  const [userNameAlreadyExist, setUserNameAlreadyExist] =
+    useState<boolean>(false);
   const [emailAlreadyExist, setEmailAlreadyExist] = useState<boolean>(false);
   const [isRegistered, setIsRegistered] = useState<boolean>(false);
   const [showPassword, setShowPassword] = useState<boolean>(false);
-  const [showConfirmPassword, setShowConfirmPassword] = useState<boolean>(false);
+  const [showConfirmPassword, setShowConfirmPassword] =
+    useState<boolean>(false);
   const dispatch = useAppDispatch();
   const formik = useFormik<RegistrationFormValues>({
     initialValues,
@@ -48,7 +50,9 @@ const page = () => {
           setEmailAlreadyExist(true);
           return;
         }
-        const checkUserNameResponse = await dispatch(checkUserName(values.username));
+        const checkUserNameResponse = await dispatch(
+          checkUserName(values.username)
+        );
         if (checkUserNameResponse.payload.data.status == 400) {
           setUserNameAlreadyExist(true);
           return;
@@ -75,7 +79,7 @@ const page = () => {
             <h1 className="text-3xl">{t("heading")}</h1>
             <h2>{t("subheading")}</h2>
           </div>
-          
+
           {/* Email */}
           <div className="mt-6">
             <input
@@ -181,11 +185,12 @@ const page = () => {
             >
               {showConfirmPassword ? <FaEyeSlash /> : <FaEye />}
             </div>
-            {formik.touched.confirm_password && formik.errors.confirm_password && (
-              <div className="text-red-900 text-sm mb-[-20px] text-left pl-3">
-                {formik.errors.confirm_password}
-              </div>
-            )}
+            {formik.touched.confirm_password &&
+              formik.errors.confirm_password && (
+                <div className="text-red-900 text-sm mb-[-20px] text-left pl-3">
+                  {formik.errors.confirm_password}
+                </div>
+              )}
           </div>
 
           {/* Submit Button */}

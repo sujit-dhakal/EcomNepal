@@ -17,7 +17,7 @@ class ProductSearch:
         ]
         self.tfidf_matrix = self.vectorizer.fit_transform(product_texts)
 
-    def search(self, query, num_results=5):
+    def search(self, query,product_id=None, num_results=5):
         """Search for products similar to the query"""
         if not self.products:
             return []
@@ -35,8 +35,11 @@ class ProductSearch:
         for idx in top_indices:
             idx = int(idx)
             if similarities[idx] > 0:
+                product = self.products[idx]
+                if product_id is not None and product.id == product_id:
+                    continue
                 results.append({
-                    'product': self.products[idx],
+                    'product': product,
                     'similarity_score': float(similarities[idx])
                 })
 

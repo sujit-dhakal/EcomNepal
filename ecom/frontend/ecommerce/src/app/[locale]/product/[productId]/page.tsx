@@ -1,15 +1,16 @@
 "use client";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
-import { useEffect, useState, useCallback } from "react";
-import { getProductDetail } from "@/lib/store";
+import { useEffect, useState } from "react";
+import { getProductDetail, getComments, getAverageRating } from "@/lib/store";
 import { client } from "@/api/baseConfig";
 import { useRouter } from "next/navigation";
 import { useLocale } from "next-intl";
 import { Product } from "@/types/productTypes";
 import ProductCard from "@/components/products/ProductCard";
-import axios from "axios";
 import SectionHeader from "@/components/homepage/SectionHeader";
 import Button from "@/components/Button";
+import { RootState } from "@/lib/store";
+import axios from "axios";
 
 const page = ({
   params,
@@ -23,10 +24,19 @@ const page = ({
   const locale = useLocale();
   const [addToCartValue, setAddToCartValue] = useState("Add to cart");
   const dispatch = useAppDispatch();
-  const product = useAppSelector((state: RootState) => state.product.productState.product);
-  const isAuth = useAppSelector((state: RootState) => state.user.isAuthenticated);
-  const { comments, isLoading, isError } = useAppSelector((state: RootState) => state.product.commentState);
-  const { rating, count } = useAppSelector((state: RootState) => state.product.commentState.averageRating || { rating: 0, count: 0 });
+  const product = useAppSelector(
+    (state: RootState) => state.product.productState.product
+  );
+  const isAuth = useAppSelector(
+    (state: RootState) => state.user.isAuthenticated
+  );
+  const { comments, isLoading, isError } = useAppSelector(
+    (state: RootState) => state.product.commentState
+  );
+  const { rating, count } = useAppSelector(
+    (state: RootState) =>
+      state.product.commentState.averageRating || { rating: 0, count: 0 }
+  );
 
   const addToCart = async (productId: number) => {
     const response = await client.post(
@@ -50,12 +60,31 @@ const page = ({
     router.push(`/${locale}/cart`);
     console.log(response.data);
   };
+  const fetchSimilarProducts = async (
+    productName: string,
+    product_id: number
+  ) => {
+    try {
+      const response = await axios.get(
+        `http://127.0.0.1:8000/product-recommend/?q=${productName}&product_id=${product_id}`
+      );
+      setSimilarProducts(response.data.results);
+    } catch (error) {
+      console.error("Error fetching similar products:", error);
+    }
+  };
 
   useEffect(() => {
     dispatch(getProductDetail(params.productId));
     dispatch(getComments(params.productId));
     dispatch(getAverageRating(params.productId));
   }, [dispatch, params.productId]);
+
+  useEffect(() => {
+    if (product.name) {
+      fetchSimilarProducts(product.name, product.id);
+    }
+  }, [product.name, fetchSimilarProducts]);
 
   return (
     <div className="mt-[50px]">
@@ -103,41 +132,44 @@ const page = ({
         <p>Loading comments...</p>
       ) : isError ? (
         <p>Failed to load comments. Please try again.</p>
-      ) : comments.length > 0 && (
-        <div className="container mx-auto mt-20 px-4">
-          <div className="flex items-center gap-2 text-2xl font-semibold mb-4">
-            <div className="text-yellow-500">★</div>
-            <div>{rating.toFixed(2)} product rating</div>
-            <div className="w-2 h-2 bg-gray-500 rounded-full"></div>
-            <div>{count} ratings</div>
-          </div>
-          <div className="grid grid-col-1 md:grid-cols-2 xl:grid-cols-3 gap-6 mx-auto">
-            {comments.map((comment) => (
-              <div
-                key={comment.id}
-                className="py-4 border-t border-black border-opacity-30 w-full md:w-[350px] lg:w-[480px] xl:w-[400px] 2xl:w-[480px] justify-self-center"
-              >
-                <div className="flex flex-col">
-                  <p className="font-semibold">{comment.user}</p>
-                  <div className="flex items-center">
-                    {Array.from({ length: 5 }, (_, index) => (
-                      <span
-                        key={index}
-                        className={`text-lg ${index < Math.round(comment.rating)
-                          ? "text-yellow-500"
-                          : "text-gray-300"
+      ) : (
+        comments.length > 0 && (
+          <div className="container mx-auto mt-20 px-4">
+            <div className="flex items-center gap-2 text-2xl font-semibold mb-4">
+              <div className="text-yellow-500">★</div>
+              <div>{rating.toFixed(2)} product rating</div>
+              <div className="w-2 h-2 bg-gray-500 rounded-full"></div>
+              <div>{count} ratings</div>
+            </div>
+            <div className="grid grid-col-1 md:grid-cols-2 xl:grid-cols-3 gap-6 mx-auto">
+              {comments.map((comment) => (
+                <div
+                  key={comment.id}
+                  className="py-4 border-t border-black border-opacity-30 w-full md:w-[350px] lg:w-[480px] xl:w-[400px] 2xl:w-[480px] justify-self-center"
+                >
+                  <div className="flex flex-col">
+                    <p className="font-semibold">{comment.user}</p>
+                    <div className="flex items-center">
+                      {Array.from({ length: 5 }, (_, index) => (
+                        <span
+                          key={index}
+                          className={`text-lg ${
+                            index < Math.round(comment.rating)
+                              ? "text-yellow-500"
+                              : "text-gray-300"
                           }`}
-                      >
-                        ★
-                      </span>
-                    ))}
+                        >
+                          ★
+                        </span>
+                      ))}
+                    </div>
                   </div>
+                  <p className="mt-2 text-sm text-justify">{comment.content}</p>
                 </div>
-                <p className="mt-2 text-sm text-justify">{comment.content}</p>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
-        </div>
+        )
       )}
 
       <div className="container mx-auto mt-20 px-4">

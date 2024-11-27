@@ -144,7 +144,7 @@ class VerifyEmailView(APIView):
         if user is not None and default_token_generator.check_token(user,token):
             user.is_active = True
             user.save()
-            return redirect("http://localhost:3000/accounts/verify")
+            return redirect("http://localhost:3000/en/accounts/verify")
         else:
              return Response({
                 'msg': 'Email verification failed'

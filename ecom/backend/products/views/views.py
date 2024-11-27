@@ -59,7 +59,7 @@ class CommentListView(viewsets.ModelViewSet):
             return Response({
                 'msg': 'No comments found.'
             })
-    
+
     @action(detail=False,methods=['GET'],url_path='my_comments', permission_classes=[IsAuthenticated])
     def user_comments(self,request):
         user = request.user
@@ -135,8 +135,18 @@ class ProductRecommendView(APIView):
             except ValueError:
                 num_results = 5
 
+            product_id = request.GET.get('product_id')
+            if product_id is not None:
+                try:
+                    product_id = int(product_id)
+                except ValueError:
+                    return Response(
+                        {'error': 'Invalid product_id parameter'},
+                        status=status.HTTP_400_BAD_REQUEST
+                    )
+
             # Perform search
-            results = self.search_engine.search(query, num_results=num_results)
+            results = self.search_engine.search(query, product_id, num_results=num_results)
 
             # Format response
             response_data = [{

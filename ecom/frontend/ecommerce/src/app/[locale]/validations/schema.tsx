@@ -16,9 +16,14 @@ export const registrationSchema = z
         required_error: "Email is required.",
       })
       .email("Invalid email format."),
-    password: z.string({
-      required_error: "Password is required.",
-    }),
+    password: z
+      .string({
+        required_error: "Password is required.",
+      })
+      .regex(
+        /^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
+        "Password must be at least 8 characters long, include one uppercase letter, one number, and one special character."
+      ),
     confirm_password: z.string({
       required_error: "Confirm password is required.",
     }),
