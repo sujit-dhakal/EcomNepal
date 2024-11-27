@@ -23,10 +23,10 @@ const page = ({
   const locale = useLocale();
   const [addToCartValue, setAddToCartValue] = useState("Add to cart");
   const dispatch = useAppDispatch();
-  const product = useAppSelector((state) => state.product.product);
-  const isAuth = useAppSelector((state) => state.user.isAuthenticated);
-  const [comments, setComments] = useState<any[]>([]);
-  const [averageRating, setAverageRating] = useState({ rating: 0, count: 0 });
+  const product = useAppSelector((state: RootState) => state.product.productState.product);
+  const isAuth = useAppSelector((state: RootState) => state.user.isAuthenticated);
+  const { comments, isLoading, isError } = useAppSelector((state: RootState) => state.product.commentState);
+  const { rating, count } = useAppSelector((state: RootState) => state.product.commentState.averageRating || { rating: 0, count: 0 });
 
   const addToCart = async (productId: number) => {
     const response = await client.post(
@@ -51,51 +51,11 @@ const page = ({
     console.log(response.data);
   };
 
-  const fetchComments = async (productId: string) => {
-    try {
-      const response = await client.get(
-        `http://127.0.0.1:8000/comments/product_comments/${productId}`
-      );
-      const fetchedComments = Array.isArray(response.data) ? response.data : [];
-      setComments(fetchedComments);
-    } catch (error) {
-      console.error("Error fetching comments:", error);
-    }
-  };
-
-  const fetchAverageRating = async (productId: string) => {
-    try {
-      const response = await client.get(
-        `http://127.0.0.1:8000/comments/average_rating/${productId}`
-      );
-      setAverageRating(response.data);
-    } catch (error) {
-      console.error("Error fetching average rating:", error);
-    }
-  };
-
-  const fetchSimilarProducts = async (productName: string) => {
-    try {
-      const response = await axios.get(
-        `http://127.0.0.1:8000/product-recommend/?q=${productName}`
-      );
-      setSimilarProducts(response.data.results);
-    } catch (error) {
-      console.error("Error fetching similar products:", error);
-    }
-  };
-
   useEffect(() => {
     dispatch(getProductDetail(params.productId));
-    fetchComments(params.productId);
-    fetchAverageRating(params.productId);
+    dispatch(getComments(params.productId));
+    dispatch(getAverageRating(params.productId));
   }, [dispatch, params.productId]);
-
-  useEffect(() => {
-    if (product.name) {
-      fetchSimilarProducts(product.name);
-    }
-  }, [product.name, fetchSimilarProducts]);
 
   return (
     <div className="mt-[50px]">
@@ -139,13 +99,17 @@ const page = ({
       </div>
 
       {/* Comments Section */}
-      {comments.length > 0 && (
+      {isLoading ? (
+        <p>Loading comments...</p>
+      ) : isError ? (
+        <p>Failed to load comments. Please try again.</p>
+      ) : comments.length > 0 && (
         <div className="container mx-auto mt-20 px-4">
           <div className="flex items-center gap-2 text-2xl font-semibold mb-4">
             <div className="text-yellow-500">★</div>
-            <div>{averageRating.rating.toFixed(2)} product rating</div>
+            <div>{rating.toFixed(2)} product rating</div>
             <div className="w-2 h-2 bg-gray-500 rounded-full"></div>
-            <div>{averageRating.count} ratings</div>
+            <div>{count} ratings</div>
           </div>
           <div className="grid grid-col-1 md:grid-cols-2 xl:grid-cols-3 gap-6 mx-auto">
             {comments.map((comment) => (

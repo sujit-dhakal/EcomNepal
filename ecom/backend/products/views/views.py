@@ -59,7 +59,18 @@ class CommentListView(viewsets.ModelViewSet):
             return Response({
                 'msg': 'No comments found.'
             })
-
+    
+    @action(detail=False,methods=['GET'],url_path='my_comments', permission_classes=[IsAuthenticated])
+    def user_comments(self,request):
+        user = request.user
+        comments = Comment.objects.filter(user=user)
+        if comments.exists():
+            serializer = self.get_serializer(comments,many=True)
+            return Response(serializer.data)
+        else:
+            return Response({
+                'msg': 'No comments found.'
+            })
 
     @action(detail=False,methods=['GET'],url_path='average_rating/(?P<product_id>\d+)')
     def average_rating(self,request,product_id=None):

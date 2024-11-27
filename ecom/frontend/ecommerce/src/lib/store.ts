@@ -23,7 +23,15 @@ const {
   userProfile,
 } = buildUserSlice();
 
-const { productSlice, getProducts, getProductDetail } = buildProductSlice();
+const { 
+  productSlice, 
+  getProducts, 
+  getProductDetail, 
+  getComments, 
+  getAverageRating, 
+  addComment, 
+  getUserComments,
+} = buildProductSlice();
 
 const { cartSlice, getCartItems, getCartSum, updateCartItem, removeCartItem } =
   buildCartSlice();
@@ -58,6 +66,10 @@ export {
   userProfile,
   getProducts,
   getProductDetail,
+  getComments,
+  getAverageRating,
+  addComment,
+  getUserComments,
   getCartItems,
   getCartSum,
   updateCartItem,
