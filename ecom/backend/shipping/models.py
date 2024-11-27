@@ -10,4 +10,4 @@ class ShippingAddress(models.Model):
     is_default = models.BooleanField(default=False)
 
     def __str__(self):
-        return f"{self.user}-{self.address}-{self.city}-{self.country}"
+        return f"{self.user}-{self.state}-{self.city}-{self.country}"

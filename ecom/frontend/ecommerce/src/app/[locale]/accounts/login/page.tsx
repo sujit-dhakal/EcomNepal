@@ -10,6 +10,7 @@ import { actions, loginUser } from "@/lib/store";
 import Cookies from "js-cookie";
 import { loginUserType } from "@/types/userTypes";
 import { useTranslations, useLocale } from "next-intl";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 
 const initialValues: loginUserType = {
   email: "",
@@ -20,6 +21,7 @@ const page = () => {
   const t = useTranslations("login");
   const locale = useLocale();
   const [loginSuccess, setLoginSuccess] = useState<boolean>(true); // for invalid email or password error
+  const [showPassword, setShowPassword] = useState<boolean>(false);
   const dispatch = useAppDispatch();
   const router = useRouter();
   const formik = useFormik<loginUserType>({
@@ -68,20 +70,26 @@ const page = () => {
             )}
           </div>
           {/* password */}
-          <div className="mt-6">
+          <div className="mt-6 relative">
             <input
               {...formik.getFieldProps("password")}
-              type="password"
+              type={showPassword ? "text" : "password"}
               placeholder="password"
               className="w-full py-1 px-2 ring-2 ring-black focus:ring-transparent rounded-[20px]"
             />
+            <div 
+              onClick={() => setShowPassword(!showPassword)} 
+              className="absolute right-3 top-[8px] transform-translate-y-1/2 cursor-pointer"
+            >
+              {showPassword ? <FaEyeSlash /> : <FaEye />}
+            </div>
             {formik.touched.password && formik.errors.password && (
               <div className="text-red-900 text-sm mb-[-20px] text-left pl-3">
                 {formik.errors.password}
               </div>
             )}
           </div>
-          <div className="px-3 text-sm text-right text-red-900 hover:underline">
+          <div className="mt-6 px-3 text-sm text-left text-blue-700 hover:underline">
             <Link href={`/${locale}/accounts/forgotpassword`}>
               Forgot Password?
             </Link>            

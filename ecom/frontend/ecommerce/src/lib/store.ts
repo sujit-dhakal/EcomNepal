@@ -36,7 +36,7 @@ const {
 const { cartSlice, getCartItems, getCartSum, updateCartItem, removeCartItem } =
   buildCartSlice();
 
-const { shippingSlice, getShippingAddress, addShippingAddress } =
+const { shippingSlice, getShippingAddresses, addShippingAddress } =
   buildShippingSlice();
 
 const persistedUserReducer = persistReducer(persistConfig, userSlice.reducer);
@@ -74,7 +74,7 @@ export {
   getCartSum,
   updateCartItem,
   removeCartItem,
-  getShippingAddress,
+  getShippingAddresses,
   addShippingAddress,
 };
 export type AppStore = ReturnType<typeof makeStore>;

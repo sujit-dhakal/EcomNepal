@@ -44,7 +44,7 @@ export default async function HomePage() {
 
         {/* Horizontal line */}
         <div className="w-full px-3.5 md:px-0">
-          <hr className="border-0.5 border-black" />
+          <hr className="border-0.5 border-black border-opacity-30" />
         </div>
 
         {/* Best Selling Products */}
