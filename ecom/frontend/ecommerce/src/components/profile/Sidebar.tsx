@@ -1,12 +1,11 @@
 "use client";
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useAppDispatch } from "@/lib/hooks";
 import { userProfile, RootState } from "@/lib/store";
 import { useSelector } from "react-redux";
 import { useRouter, usePathname } from 'next/navigation';
-import { useEffect } from "react";
 import { useLocale } from "next-intl";
-import { FaUser, FaShoppingBag, FaStar, FaMapMarkerAlt } from 'react-icons/fa';
+import { FaUser, FaShoppingBag, FaStar, FaMapMarkerAlt, FaLock } from 'react-icons/fa';
 
 const Sidebar: React.FC = () => {
   const router = useRouter();
@@ -16,14 +15,15 @@ const Sidebar: React.FC = () => {
   const profile = useSelector((state: RootState) => state.user.user);
 
   useEffect(() => {
-    const data = dispatch(userProfile());
+    dispatch(userProfile());
   }, [dispatch]);
 
   const links = [
     { label: 'Personal Info', href: `/${locale}/profile/personal-info`, icon: <FaUser /> },
     { label: 'Orders', href: `/${locale}/profile/orders`, icon: <FaShoppingBag /> },
     { label: 'Reviews', href: `/${locale}/profile/reviews`, icon: <FaStar /> },
-    { label: 'Addresses', href: `/${locale}/profile/addresses`, icon: <FaMapMarkerAlt /> },
+    { label: 'Address Book', href: `/${locale}/profile/addresses`, icon: <FaMapMarkerAlt /> },
+    { label: 'Change Password', href: `/${locale}/profile/changepassword`, icon: <FaLock /> },
   ];
 
   return (

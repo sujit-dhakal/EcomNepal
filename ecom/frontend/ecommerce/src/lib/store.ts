@@ -21,6 +21,7 @@ const {
   checkUserName,
   actions,
   userProfile,
+  changePassword,
 } = buildUserSlice();
 
 const { 
@@ -64,6 +65,7 @@ export {
   checkUserName,
   actions,
   userProfile,
+  changePassword,
   getProducts,
   getProductDetail,
   getComments,

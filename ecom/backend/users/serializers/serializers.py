@@ -145,11 +145,12 @@ class UserChangePasswordSerializer(serializers.Serializer):
     Meta:
         fields (list): Fields to include in the serialization.
     """
+    old_password = serializers.CharField(style={'input_type':'password'})
     new_password = serializers.CharField(style={'input_type':'password'})
     new_password_confirm = serializers.CharField(style={'input_type':'password'})
 
     class Meta:
-        fields = ['new_password','new_password_confirm']
+        fields = ['old_password','new_password','new_password_confirm']
 
     def validate(self, attrs):
         """
@@ -165,8 +166,11 @@ class UserChangePasswordSerializer(serializers.Serializer):
             dict: The validated data.
         """
         user = self.context.get('user')
+        old_password = attrs['old_password']
         password1 = attrs['new_password']
         password2 = attrs['new_password_confirm']
+        if not user.check_password(old_password):
+            raise serializers.ValidationError("The old password is incorrect.")
         if password1 != password2:
             raise ValidationError("password doesn't match")
         user.set_password(password1)
