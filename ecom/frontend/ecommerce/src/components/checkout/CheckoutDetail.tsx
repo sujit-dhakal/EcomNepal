@@ -4,8 +4,10 @@ import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import { getCartSum, getCartItems } from "@/lib/store";
 import { useLocale } from "next-intl";
 import Link from "next/link";
+import Paypal from "../paypal/Paypal";
 
 const CheckoutDetail: React.FC = () => {
+  const sum = useAppSelector((state) => state.cart.sum);
   const locale = useLocale();
   const cartItems = useAppSelector((state) => state.cart.itemsInCart);
   const dispatch = useAppDispatch();
@@ -62,16 +64,7 @@ const CheckoutDetail: React.FC = () => {
         <p>Total:</p>
         <p>${total}</p>
       </div>
-      
-      {/* Place Order Button */}
-      <div>
-        <Link
-          href={`/${locale}/payment`}
-          className="w-full sm:w-1/3 px-4 py-2 bg-black hover:bg-opacity-70 text-white font-semibold rounded"
-        >
-          Place Order
-        </Link>
-      </div>
+      <Paypal cartItems={cartItems} sum={sum} />      
     </div>
   );
 };

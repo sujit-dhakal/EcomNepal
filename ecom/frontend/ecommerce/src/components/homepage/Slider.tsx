@@ -1,8 +1,7 @@
 import React from 'react';
 
 type SliderProps = {
-  items: React.ReactNode[]; // Array of elements (e.g., cards) to display in the carousel
-  // visibleItems?: number; // Number of items visible at once
+  items: React.ReactNode[];
   sliderRef?: React.RefObject<HTMLDivElement>;
 };
 

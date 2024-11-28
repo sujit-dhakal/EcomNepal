@@ -20,18 +20,16 @@ const page = async ({
   const products = await fetchCategoryProducts(params.categoryId);
   console.log(products);
   return (
-    <div className="">
-      <Filter />
-      <div className="mb-12 w-[75%] m-auto">
-        <div className="flex justify-center">
-          <div className="md:flex flex-wrap justify-between">
-            {products.map((product: Product) => (
-              <ProductCard
-                product={product}
-                imageUrl={`http://django-app:8000${product.image}`}
-              />
-            ))}
-          </div>
+    <div className="container mx-auto md:px-2">
+      {/* <Filter /> */}
+      <div className="flex justify-center">
+        <div className="flex flex-wrap justify-center xl:justify-between gap-4 lg:gap-8">
+          {products.map((product: Product) => (
+            <ProductCard
+              product={product}
+              imageUrl={`http://django-app:8000${product.image}`}
+            />
+          ))}
         </div>
       </div>
     </div>

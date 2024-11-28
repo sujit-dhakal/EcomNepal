@@ -15,15 +15,15 @@ const page: FC = () => {
             <div className="bg-white p-6 rounded-lg shadow-sm mb-6">
               <h2 className="text-xl font-semibold text-gray-800 mb-4">Our Address</h2>
               <p className="flex items-center text-gray-700 mb-2">
-                <FaMapMarkerAlt className="mr-2 text-[#DB4444]" />
+                <FaMapMarkerAlt className="mr-2 text-black" />
                 Hetauda, Makwanpur, Nepal
               </p>
               <p className="flex items-center text-gray-700 mb-2">
-                <FaPhone className="mr-2 text-[#DB4444]" />
+                <FaPhone className="mr-2 text-black" />
                 +977-1234567890
               </p>
               <p className="flex items-center text-gray-700 mb-2">
-                <FaEnvelope className="mr-2 text-[#DB4444]" />
+                <FaEnvelope className="mr-2 text-black" />
                 contact@ecomnepal.com
               </p>
             </div>
@@ -60,7 +60,7 @@ const page: FC = () => {
                 >
                 </textarea>
               </div>
-              <Button text="Send Message" className="w-56 h-14 text-[16px]" />
+              <Button text="Send Message" className="!w-56 !h-12 !text-[16px]" />
             </form>
           </div>
 

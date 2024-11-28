@@ -8,7 +8,6 @@ import { useLocale } from "next-intl";
 import { Product } from "@/types/productTypes";
 import ProductCard from "@/components/products/ProductCard";
 import SectionHeader from "@/components/homepage/SectionHeader";
-import Button from "@/components/Button";
 import { RootState } from "@/lib/store";
 import axios from "axios";
 
@@ -108,14 +107,14 @@ const page = ({
               <>
                 <hr className="border-black border-opacity-30" />
                 <button
-                  className="bg-black hover:bg-opacity-70 text-white rounded-lg py-2 px-4"
+                  className="bg-orange-500 hover:bg-opacity-70 text-white font-semibold rounded-lg py-2 px-4"
                   type="button"
                   onClick={() => addToCart(product.id)}
                 >
                   {addToCartValue}
                 </button>
                 <button
-                  className="bg-black hover:bg-opacity-70 text-white text-md rounded-lg py-2 px-4"
+                  className="bg-blue-950 hover:bg-opacity-70 text-white font-semibold text-md rounded-lg py-2 px-4"
                   type="button"
                   onClick={() => buyNow(product.id)}
                 >
@@ -153,11 +152,10 @@ const page = ({
                       {Array.from({ length: 5 }, (_, index) => (
                         <span
                           key={index}
-                          className={`text-lg ${
-                            index < Math.round(comment.rating)
+                          className={`text-lg ${index < Math.round(comment.rating)
                               ? "text-yellow-500"
                               : "text-gray-300"
-                          }`}
+                            }`}
                         >
                           ★
                         </span>
@@ -172,31 +170,27 @@ const page = ({
         )
       )}
 
-      <div className="container mx-auto mt-20 px-4">
-        <div className="w-full px-3.5 md:px-0">
-          <hr className="border-0.5 border-black border-opacity-30" />
-        </div>
-
-        <section className="flex flex-col gap-10 md:gap-[60px] w-full mt-10 px-3.5 md:px-0">
-          <SectionHeader
-            topHeading="Related Items"
-            heading="You Might Also Like"
-            buttons={[
-              <Button
-                text="View All"
-                className="md:w-40 md:h-14 md:text-base"
-              />,
-            ]}
-          />
-          <div className="flex justify-center">
-            <div className="flex flex-wrap justify-center md:justify-between gap-4 lg:gap-8">
-              {similarProducts.map((product: Product) => (
-                <ProductCard product={product} imageUrl={product.image} />
-              ))}
-            </div>
+      {similarProducts > 0 && (
+        <div className="container mx-auto mt-20 px-4">
+          <div className="w-full px-3.5 md:px-0">
+            <hr className="border-0.5 border-black border-opacity-30" />
           </div>
-        </section>
-      </div>
+
+          <section className="flex flex-col gap-10 md:gap-[60px] w-full mt-10 px-3.5 md:px-0">
+            <SectionHeader
+              topHeading="Related Items"
+              heading="You Might Also Like"
+            />
+            <div className="flex justify-center">
+              <div className="flex flex-wrap justify-center xl:justify-between gap-4 lg:gap-8">
+                {similarProducts.map((product: Product) => (
+                  <ProductCard product={product} imageUrl={product.image} />
+                ))}
+              </div>
+            </div>
+          </section>
+        </div>
+      )}
     </div>
   );
 };

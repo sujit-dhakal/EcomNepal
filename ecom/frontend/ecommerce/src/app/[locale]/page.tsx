@@ -60,7 +60,7 @@ export default async function HomePage() {
             ]}
           />
           <div className="flex justify-center">
-            <div className="flex flex-wrap justify-center md:justify-between gap-4 lg:gap-8">
+            <div className="flex flex-wrap justify-center xl:justify-between gap-4 lg:gap-8">
               {products.map((product: Product) => (
                 <ProductCard product={product} imageUrl={product.image} />
               ))}

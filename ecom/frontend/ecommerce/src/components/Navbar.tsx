@@ -34,16 +34,25 @@ const Navbar = () => {
 
   const handleLinkClick = () => setActiveOverlay(null);
 
-  const renderIconLink = (path: string, Icon: any) => (
-    <Link href={path} onClick={handleLinkClick}>
-      <div
-        className={`p-2 rounded-full text-gray-500 hover:text-white hover:bg-black cursor-pointer ${pathName === path ? "bg-black text-white" : ""
-          }`}
-      >
-        <Icon size={24} />
-      </div>
-    </Link>
-  );
+  const renderIconLink = (path: string, Icon: any, isProfile: boolean = false) => {
+    let isActive = false;
+    if (isProfile) {
+      isActive = pathName.startsWith(`/${locale}/profile`);
+    } else {
+      isActive = pathName === path;
+    }
+
+    return (
+      <Link href={path} onClick={handleLinkClick}>
+        <div
+          className={`p-2 rounded-full text-gray-500 hover:text-white hover:bg-black cursor-pointer ${isActive ? "bg-black text-white" : ""
+            }`}
+        >
+          <Icon size={24} />
+        </div>
+      </Link>
+    );
+  };
 
   return (
     <div className="relative border-b border-black border-opacity-30 mb-8">
@@ -70,7 +79,7 @@ const Navbar = () => {
             {isAuth && (
               <>
                 {renderIconLink(`/${locale}/cart`, FaShoppingCart)}
-                {renderIconLink(`/${locale}/profile`, FaUser)}
+                {renderIconLink(`/${locale}/profile`, FaUser, true)}
               </>
             )}
           </div>

@@ -27,7 +27,7 @@ const Filter: React.FC = () => {
     <Link href={`/${locale}/category/${category.name}`}>
       <div
         key={category.id}
-        className="flex justify-center items-center w-32 md:w-44 h-32 md:h-36 text-base text-black hover:text-white border border-black border-opacity-30 hover:border-opacity-0 rounded hover:bg-[#DB4444]"
+        className="flex justify-center items-center w-32 md:w-44 h-32 md:h-36 text-base text-black hover:text-white border border-black border-opacity-30 hover:border-opacity-0 rounded hover:bg-black"
       >
         {category.name}
       </div>
