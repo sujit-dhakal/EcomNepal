@@ -91,7 +91,17 @@ export const resetPasswordThunk = () => {
   return createAsyncThunk(
     "user/resetPassword",
     async (
-      { uid, token, newPassword, newPasswordConfirm }: { uid: string; token: string; newPassword: string; newPasswordConfirm: string },
+      {
+        uid,
+        token,
+        newPassword,
+        newPasswordConfirm,
+      }: {
+        uid: string;
+        token: string;
+        newPassword: string;
+        newPasswordConfirm: string;
+      },
       { rejectWithValue }
     ) => {
       try {
@@ -100,6 +110,35 @@ export const resetPasswordThunk = () => {
           new_password_confirm: newPasswordConfirm,
         });
         return response.data;
+      } catch (error: any) {
+        return rejectWithValue(error.response?.data);
+      }
+    }
+  );
+};
+
+export const changePasswordThunk = () => {
+  return createAsyncThunk(
+    "user/changePassword",
+    async (
+      {
+        oldPassword,
+        newPassword,
+        newPasswordConfirm,
+      }: {
+        oldPassword: string;
+        newPassword: string;
+        newPasswordConfirm: string;
+      },
+      { rejectWithValue }
+    ) => {
+      try {
+        const response = await userApi.changePassword(
+          oldPassword,
+          newPassword,
+          newPasswordConfirm
+        );
+        return response;
       } catch (error: any) {
         return rejectWithValue(error.response?.data);
       }

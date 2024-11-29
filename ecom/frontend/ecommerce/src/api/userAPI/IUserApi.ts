@@ -14,4 +14,9 @@ export interface IUserApi {
     token: string,
     data: { new_password: string; new_password_confirm: string }
   ): any;
+  changePassword(
+    oldPassword: string,
+    newPassword: string,
+    newPasswordConfirm: string
+  ): Promise<{ msg: string; status: number }>;
 }
