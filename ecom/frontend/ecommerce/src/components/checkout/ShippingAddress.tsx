@@ -59,50 +59,48 @@ const ShippingAddressComponent: React.FC = () => {
     return <p className="text-red-500">Error loading shipping addresses. Please try again.</p>;
   }
 
-  if (normalizedAddresses.length === 0) {
-    return (
-      <div className="text-center">
-        <p className="text-gray-600 my-20">No shipping address available.</p>
-      </div>
-    );
-  }
-
   return (
     <div className="basis-1/2 py-6 sm:px-6 space-y-4">
       <div className="flex items-center justify-between">
         <h2 className="text-lg font-semibold">Select Shipping Address</h2>
         <Link href={`/${locale}/shipping`}>
-          <span
-            className="px-2 text-4xl font-semibold"
+          <button
+            className="px-3 text-lg bg-black text-white rounded-[20px] hover:bg-opacity-70"
           >
-            +
-          </span>
+            Add
+          </button>
         </Link>
       </div>
 
-      <form className="space-y-4 pt-6">
-        {normalizedAddresses.map((address, index) => (
-          <label
-            key={index}
-            className={`flex items-start p-4 border rounded cursor-pointer space-x-4 ${selectedAddressIndex === index ? "border-black" : "border-gray-300"
-              }`}
-          >
-            <input
-              type="radio"
-              name="shippingAddress"
-              value={index}
-              checked={selectedAddressIndex === index}
-              onChange={() => handleSelectAddress(index)}
-              className="mt-1"
-            />
-            <div>
-              <p className="font-semibold">{address.city}, {address.state}</p>
-              <p>{address.country}</p>
-              <p>Postal Code: {address.postal_code}</p>
-            </div>
-          </label>
-        ))}
-      </form>
+      {normalizedAddresses.length === 0 ? (
+        <div className="text-center">
+          <p className="text-red-600 my-[150px]">No shipping address available.</p>
+        </div>
+      ) : (
+        <form className="space-y-4 pt-6">
+          {normalizedAddresses.map((address, index) => (
+            <label
+              key={index}
+              className={`flex items-start p-4 border rounded cursor-pointer space-x-4 ${selectedAddressIndex === index ? "border-black" : "border-gray-300"
+                }`}
+            >
+              <input
+                type="radio"
+                name="shippingAddress"
+                value={index}
+                checked={selectedAddressIndex === index}
+                onChange={() => handleSelectAddress(index)}
+                className="mt-1"
+              />
+              <div>
+                <p className="font-semibold">{address.city}, {address.state}</p>
+                <p>{address.country}</p>
+                <p>Postal Code: {address.postal_code}</p>
+              </div>
+            </label>
+          ))}
+        </form>
+      )}
     </div>
   );
 };

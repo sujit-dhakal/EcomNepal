@@ -6,6 +6,9 @@ import { useFormik } from "formik";
 import React from "react";
 import { shippingSchema } from "../validations/schema";
 import { toFormikValidationSchema } from "zod-formik-adapter";
+import { useRouter } from "next/navigation";
+import { useLocale } from "next-intl";
+
 const initialValues: ShippingAddress = {
   state: "",
   country: "",
@@ -15,14 +18,21 @@ const initialValues: ShippingAddress = {
 };
 
 const page = () => {
+  const router = useRouter();
+  const locale = useLocale();
   const dispatch = useAppDispatch();
   const { values, errors, handleChange, handleSubmit } = useFormik({
     initialValues,
     onSubmit: async (values, { resetForm }) => {
-      console.log(values);
-      const response = await dispatch(addShippingAddress(values));
-      console.log(response);
-      resetForm();
+      try {
+        const response = await dispatch(addShippingAddress(values));
+        if (response.type === "addShippingAddress/fulfilled") {
+          resetForm();
+          router.push(`/${locale}/profile/addresses`);
+        }
+      } catch (error) {
+        console.error("Submission error:", error);
+      }
     },
     validationSchema: toFormikValidationSchema(shippingSchema),
   });
