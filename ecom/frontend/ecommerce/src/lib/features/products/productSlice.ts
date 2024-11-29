@@ -20,6 +20,11 @@ const initialProductState: ProductState = {
     price: 0,
     stock: 0,
     description: "",
+    image: "",
+    average_rating: {
+      rating: null,
+      count: 0,
+    }
   },
 };
 

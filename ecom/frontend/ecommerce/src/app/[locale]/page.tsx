@@ -6,7 +6,6 @@ import axios from "axios";
 import { Product } from "@/types/productTypes";
 import ProductCard from "@/components/products/ProductCard";
 
-
 const images = [
   // Carousel Images for small devices
   "/images/homepage/carousel/small-iphone.png",

@@ -98,11 +98,29 @@ const page = ({
 
         <div className="flex justify-center">
           <div className="flex flex-col gap-5 max-w-[420px]">
-            <h1 className="text-2xl font-semibold text-black">
-              {product.name}
-            </h1>
-            <h1 className="text-md text-red-900">${product.price}</h1>
-            <p className="text-md text-black">{product.description}</p>
+            <div className="flex flex-col gap-2">
+              <h1 className="text-2xl font-semibold text-black">
+                {product.name}
+              </h1>
+              <div className="flex items-center gap-1">
+                <div className="flex items-center">
+                  {Array.from({ length: 5 }, (_, index) => (
+                    <span
+                      key={index}
+                      className={`text-lg ${index < Math.round(product.average_rating.rating)
+                        ? "text-yellow-500"
+                        : "text-gray-300"
+                        }`}
+                    >
+                      ★
+                    </span>
+                  ))}
+                </div>
+                <span>({product.average_rating.count})</span>
+              </div>
+              <h1 className="text-md text-red-900">${product.price}</h1>
+              <p className="text-md text-black">{product.description}</p>
+            </div>
             {isAuth && (
               <>
                 <hr className="border-black border-opacity-30" />
@@ -153,8 +171,8 @@ const page = ({
                         <span
                           key={index}
                           className={`text-lg ${index < Math.round(comment.rating)
-                              ? "text-yellow-500"
-                              : "text-gray-300"
+                            ? "text-yellow-500"
+                            : "text-gray-300"
                             }`}
                         >
                           ★

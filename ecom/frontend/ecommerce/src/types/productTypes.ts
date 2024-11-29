@@ -1,3 +1,8 @@
+export interface AverageRating {
+  rating: number | null;
+  count: number;
+}
+
 export interface Product {
   id: number;
   name: string;
@@ -5,6 +10,7 @@ export interface Product {
   stock: number;
   description: string;
   image: string;
+  average_rating: AverageRating;
 }
 
 export interface ProductState {

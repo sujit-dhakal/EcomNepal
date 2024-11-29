@@ -15,7 +15,6 @@ const Filter: React.FC = () => {
   const fetchCategories = async () => {
     const response = await client.get("categories/");
     setCategories(response.data);
-    console.log(response.data);
   };
 
   useEffect(() => {
