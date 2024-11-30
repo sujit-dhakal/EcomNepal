@@ -37,7 +37,7 @@ const page = () => {
           dispatch(actions.login());
           Cookies.set("accessToken", response.payload.data.access);
           Cookies.set("refreshToken", response.payload.data.refresh);
-          router.push(`/${locale}/profile`);
+          router.push(`/${locale}`);
         } else {
           console.log("login failed");
           setLoginSuccess(false);
@@ -77,8 +77,8 @@ const page = () => {
               placeholder="password"
               className="w-full py-1 px-2 ring-2 ring-black focus:ring-transparent rounded-[20px]"
             />
-            <div 
-              onClick={() => setShowPassword(!showPassword)} 
+            <div
+              onClick={() => setShowPassword(!showPassword)}
               className="absolute right-3 top-[8px] transform-translate-y-1/2 cursor-pointer"
             >
               {showPassword ? <FaEyeSlash /> : <FaEye />}
@@ -92,7 +92,7 @@ const page = () => {
           <div className="mt-6 px-3 text-sm text-left text-blue-700 hover:underline">
             <Link href={`/${locale}/accounts/forgotpassword`}>
               Forgot Password?
-            </Link>            
+            </Link>
           </div>
           <div className="mt-6 flex justify-center">
             <button
@@ -105,7 +105,9 @@ const page = () => {
           <div className="mt-6">
             {t("notAUser")}
             <Link href={`/${locale}/accounts/signup`}>
-              <span className="text-blue-700 hover:underline">{t("createAccount")}</span>
+              <span className="text-blue-700 hover:underline">
+                {t("createAccount")}
+              </span>
             </Link>
           </div>
           <div>
