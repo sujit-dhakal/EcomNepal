@@ -3,12 +3,12 @@ import React, { useEffect } from 'react';
 import { useAppDispatch } from "@/lib/hooks";
 import { userProfile, RootState } from "@/lib/store";
 import { useSelector } from "react-redux";
-import { useRouter, usePathname } from 'next/navigation';
+import { usePathname } from 'next/navigation';
 import { useLocale } from "next-intl";
 import { FaUser, FaShoppingBag, FaStar, FaMapMarkerAlt, FaLock } from 'react-icons/fa';
+import Link from 'next/link';
 
 const Sidebar: React.FC = () => {
-  const router = useRouter();
   const pathname = usePathname();
   const dispatch = useAppDispatch();
   const locale = useLocale();
@@ -41,13 +41,13 @@ const Sidebar: React.FC = () => {
               className={`flex items-center space-x-3 ${isActive ? "text-black font-bold" : "text-gray-500"
                 }`}
             >
-              <a
+              <Link
                 href={link.href}
                 className="flex gap-4 items-center hover:text-black"
               >
                 <span className={`${isActive ? "text-black" : "text-gray-500"}`}>{link.icon}</span>
                 {link.label}
-              </a>
+              </Link>
             </li>
           );
         })}

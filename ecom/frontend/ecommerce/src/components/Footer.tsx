@@ -1,6 +1,7 @@
 import React from 'react';
 import { useLocale } from 'next-intl';
 import { FaFacebook, FaInstagram, FaTwitter } from 'react-icons/fa';
+import Link from 'next/link';
 
 const Footer: React.FC = () => {
   const locale = useLocale();
@@ -35,9 +36,9 @@ const Footer: React.FC = () => {
     items.map((item, index) => (
       <li key={index}>
         {item.href ? (
-          <a href={item.href} className="hover:text-gray-400">
+          <Link href={item.href} className="hover:text-gray-400">
             {item.label}
-          </a>
+          </Link>
         ) : (
           item.label
         )}
@@ -67,9 +68,9 @@ const Footer: React.FC = () => {
             {renderLinks(links.quickLinks)}
             <li className="flex space-x-3">
               {links.socials.map((social, index) => (
-                <a key={index} href={social.href} className={social.color}>
+                <Link key={index} href={social.href} className={social.color}>
                   {social.icon}
-                </a>
+                </Link>
               ))}
             </li>
           </ul>
