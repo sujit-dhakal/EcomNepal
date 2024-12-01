@@ -50,9 +50,50 @@ export const shippingSchema = z.object({
     required_error: "Country is required",
   }),
   state: z.string({
-    required_error: "City is required",
+    required_error: "State is required",
   }),
   postal_code: z.string({
-    required_error: "postal code is required",
+    required_error: "Postal code is required",
   }),
 });
+
+export const resetPasswordSchema = z
+  .object({
+    password: z
+      .string({
+        required_error: "Password is required.",
+      })
+      .regex(
+        /^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
+        "Password must be at least 8 characters long, include one uppercase letter, one number, and one special character."
+      ),
+    confirm_password: z.string({
+      required_error: "Confirm password is required.",
+    }),
+  })
+  .refine((data) => data.password === data.confirm_password, {
+    message: "Password doesn't match.",
+    path: ["confirm_password"],
+  });
+
+export const changePasswordSchema = z
+  .object({
+    old_password: z.string({
+      required_error: "Old password is required",
+    }),
+    password: z
+      .string({
+        required_error: "Password is required.",
+      })
+      .regex(
+        /^(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/,
+        "Password must be at least 8 characters long, include one uppercase letter, one number, and one special character."
+      ),
+    confirm_password: z.string({
+      required_error: "Confirm password is required.",
+    }),
+  })
+  .refine((data) => data.password === data.confirm_password, {
+    message: "Password doesn't match.",
+    path: ["confirm_password"],
+  });

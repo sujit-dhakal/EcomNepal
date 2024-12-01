@@ -42,7 +42,7 @@ const Carousel: React.FC<CarouselProps> = ({ images, largeImages }) => {
           <button
             key={index}
             onClick={() => setCurrentIndex(index)}
-            className={`w-3 h-3 rounded-full ${index === currentIndex ? 'bg-[#DB4444] border-white border-2' : 'bg-gray-300'}`}
+            className={`w-3 h-3 rounded-full ${index === currentIndex ? 'bg-black border-white border-2' : 'bg-gray-300'}`}
           />
         ))}
       </div>
