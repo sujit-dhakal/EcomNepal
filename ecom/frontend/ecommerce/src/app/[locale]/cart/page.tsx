@@ -63,7 +63,7 @@ const page = () => {
             <div className="w-64 py-4 px-8 border-2 text-center border-gray-200 mt-20">
               <p className="font-semibold">No items in cart.</p>
               <p className="mt-4 bg-gray-500 text-white py-2 px-4 rounded-lg">
-                <Link href={`/${locale}/home`}>Add some items</Link>
+                <Link href={`/${locale}`}>Add some items</Link>
               </p>
             </div>
           ) : (
