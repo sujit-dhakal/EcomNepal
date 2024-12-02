@@ -2,6 +2,10 @@ from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin as BaseUserAdmin
 from users.models import CustomUser
 
+admin.site.site_header = "EcomNEPAL Admin"
+admin.site.site_title = "EcomNEPAL Admin Portal"
+admin.site.index_title = "Welcome to EcomNEPAL Admin Portal"
+
 class UserAdmin(BaseUserAdmin):
 
     list_display = ["user_id","username","email","first_name","last_name","is_superuser"]
