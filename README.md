@@ -11,13 +11,13 @@ This is a ecommerce project.
 
 Clone this repository:
 
-    https://github.com/sujit-dhakal/ecommerce-nextjs-django.git
+    https://github.com/sujit-dhakal/EcomNepal.git
 
 # Run
 
 Run the project using docker-compose
 
-    cd ecommerce-drf-next
+    cd ecom
     docker-compose up -d --build
 
 # Access the development server
