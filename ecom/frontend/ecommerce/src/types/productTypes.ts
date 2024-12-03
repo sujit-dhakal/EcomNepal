@@ -1,5 +1,5 @@
 export interface AverageRating {
-  rating: number | null;
+  rating: number;
   count: number;
 }
 
