@@ -39,11 +39,7 @@ const Paypal: React.FC<createOrderProps> = ({ cartItems, sum }) => {
         items: cartItems,
         total: sum,
       });
-      console.log("payment successsful", response.data);
-      alert("paid successfully");
-      setTimeout(() => {
-        router.push(`/${locale}`);
-      }, 2000);
+        router.push(`/${locale}/order-confirm`);
     } catch (error: any) {
       console.log("onApprove", error.response.data);
     }
