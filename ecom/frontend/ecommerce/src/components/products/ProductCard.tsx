@@ -2,22 +2,20 @@ import { Product } from "@/types/productTypes";
 import React from "react";
 import Link from "next/link";
 import { useLocale } from "next-intl";
-import Image from "next/image";
 
 export interface ProductCard {
   product: Product;
-  imageUrl: string;
 }
 
-const ProductCard: React.FC<ProductCard> = ({ product, imageUrl }) => {
+const ProductCard: React.FC<ProductCard> = ({ product }) => {
   const locale = useLocale();
   return (
     <div className="w-70 md:w-75 mx-10">
       <Link href={`/${locale}/product/${product.id}`}>
         <div className="relative bg-[#F5F5F5]">
           <div className="">
-            <Image
-              src={imageUrl}
+            <img
+              src={product.image}
               alt="product image"
               width={500}
               height={500}
@@ -31,11 +29,10 @@ const ProductCard: React.FC<ProductCard> = ({ product, imageUrl }) => {
               {Array.from({ length: 5 }, (_, index) => (
                 <span
                   key={index}
-                  className={`text-lg ${
-                    index < Math.round(product.average_rating?.rating || 0)
+                  className={`text-lg ${index < Math.round(product.average_rating?.rating || 0)
                       ? "text-yellow-500"
                       : "text-gray-300"
-                  }`}
+                    }`}
                 >
                   ★
                 </span>

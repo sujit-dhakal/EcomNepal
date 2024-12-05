@@ -1,7 +1,6 @@
 import axios from "axios";
 import ProductCard from "@/components/products/ProductCard";
 import { Product } from "@/types/productTypes";
-import Filter from "@/components/filtering/Filter";
 
 const fetchCategoryProducts = async (categoryId: string) => {
   const response = await axios.get(
@@ -26,8 +25,11 @@ const page = async ({
         <div className="flex flex-wrap justify-center xl:justify-between gap-4 lg:gap-8">
           {products.map((product: Product) => (
             <ProductCard
-              product={product}
-              imageUrl={`http://django-app:8000${product.image}`}
+              key={product.id}
+              product={{
+                ...product,
+                image: `http://127.0.0.1:8000${product.image}`
+              }}
             />
           ))}
         </div>
