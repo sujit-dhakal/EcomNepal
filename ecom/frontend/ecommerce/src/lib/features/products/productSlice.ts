@@ -1,10 +1,10 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { 
-  getProductDetailThunk, 
-  getProductThunk, 
-  getCommentsThunk, 
-  getAverageRatingThunk, 
-  addCommentThunk, 
+import {
+  getProductDetailThunk,
+  getProductThunk,
+  getCommentsThunk,
+  getAverageRatingThunk,
+  addCommentThunk,
   getUserCommentsThunk,
 } from "./productThunk";
 import { Product, ProductState } from "@/types/productTypes";
@@ -22,9 +22,9 @@ const initialProductState: ProductState = {
     description: "",
     image: "",
     average_rating: {
-      rating: null,
+      rating: 0,
       count: 0,
-    }
+    },
   },
 };
 

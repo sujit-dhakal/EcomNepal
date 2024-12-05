@@ -16,7 +16,12 @@ const ProductCard: React.FC<ProductCard> = ({ product, imageUrl }) => {
       <Link href={`/${locale}/product/${product.id}`}>
         <div className="relative bg-[#F5F5F5]">
           <div className="">
-            <Image src={imageUrl} alt="product image" width={500} height={500} />
+            <Image
+              src={imageUrl}
+              alt="product image"
+              width={500}
+              height={500}
+            />
           </div>
         </div>
         <div className="flex flex-col gap-1">
@@ -26,16 +31,17 @@ const ProductCard: React.FC<ProductCard> = ({ product, imageUrl }) => {
               {Array.from({ length: 5 }, (_, index) => (
                 <span
                   key={index}
-                  className={`text-lg ${index < Math.round(product.average_rating.rating)
-                    ? "text-yellow-500"
-                    : "text-gray-300"
-                    }`}
+                  className={`text-lg ${
+                    index < Math.round(product.average_rating?.rating || 0)
+                      ? "text-yellow-500"
+                      : "text-gray-300"
+                  }`}
                 >
                   ★
                 </span>
               ))}
             </div>
-            <span>({product.average_rating.count})</span>
+            <span>({product.average_rating?.count || 0})</span>
           </div>
           <p className="text-[#DB4444] text-base font-medium">
             {product.price}

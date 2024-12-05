@@ -10,4 +10,8 @@ export interface CommentState {
   isLoading: boolean;
   isError: boolean;
   comments: Comment[];
+  averageRating: {
+    rating: number;
+    count: number;
+  };
 }

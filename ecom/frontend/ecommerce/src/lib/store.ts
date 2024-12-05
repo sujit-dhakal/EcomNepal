@@ -5,6 +5,7 @@ import storage from "redux-persist/lib/storage";
 import { buildProductSlice } from "./features/products/productSlice";
 import { buildCartSlice } from "./features/cart/cartSlice";
 import { buildShippingSlice } from "./features/shipping/shippingSlice";
+import { buildOrderSlice } from "./features/order/orderSlice";
 
 const persistConfig = {
   key: "user",
@@ -42,6 +43,8 @@ const { cartSlice, getCartItems, getCartSum, updateCartItem, removeCartItem } =
 const { shippingSlice, getShippingAddresses, addShippingAddress } =
   buildShippingSlice();
 
+const { orderSlice, getOrders, getOrderDetails } = buildOrderSlice();
+
 const persistedUserReducer = persistReducer(persistConfig, userSlice.reducer);
 
 const makeStore = () => {
@@ -51,6 +54,7 @@ const makeStore = () => {
       product: productSlice.reducer,
       cart: cartSlice.reducer,
       shipping: shippingSlice.reducer,
+      order: orderSlice.reducer,
     },
     middleware: (getDefaultMiddleware) =>
       getDefaultMiddleware({
@@ -82,6 +86,8 @@ export {
   removeCartItem,
   getShippingAddresses,
   addShippingAddress,
+  getOrders,
+  getOrderDetails,
 };
 export type AppStore = ReturnType<typeof makeStore>;
 export type RootState = ReturnType<AppStore["getState"]>;

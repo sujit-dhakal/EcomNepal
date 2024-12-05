@@ -12,6 +12,12 @@ from django.views.decorators.csrf import csrf_exempt
 from base64 import b64encode
 from django.utils.decorators import method_decorator
 from cart.models import CartItem
+from rest_framework import generics
+from order.serializers.serializers import OrderSerializer
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.decorators import action
+from users.tasks import send_mail_task
+from rest_framework import viewsets
 import os
 
 def get_paypal_access_token():
@@ -117,6 +123,7 @@ class CapturePayPalOrderView(APIView):
 
             order = Order.objects.create(user=request.user,total_amount=total,status='PAID')
 
+
             for item in items:
                 OrderItem.objects.create( order = order,
                                         product_name = item['product']['name'] ,
@@ -125,7 +132,7 @@ class CapturePayPalOrderView(APIView):
 
             CartItem.objects.filter(user=request.user).delete()
 
-            # self.send_order_receipt(order)
+            self.send_order_receipt(order,items)
 
             return Response({
                 "status": "Payment executed successfully",
@@ -140,24 +147,28 @@ class CapturePayPalOrderView(APIView):
         except Exception as e:
             return Response({"error": f"An unexpected error occurred {e}",}, status=500)
 
-    # def send_order_receipt(self, order):
-    #     subject = f'Receipt for Order #{order.id}'
-    #     message = render_to_string('email/order_receipt.html', {
-    #         'order': order,
-    #         'items': order.objects.all(),
-    #     })
-    #     send_mail(
-    #         subject,
-    #         message,
-    #         settings.DEFAULT_FROM_EMAIL,
-    #         [order.user.email],
-    #         html_message=message,
-    #     )
+    def send_order_receipt(self, order, items):
+        subject = f'Receipt for Order #{order.id}'
+        message = render_to_string('email/order_receipt.html', {
+            'order': order,
+            'items': items
+        })
+        send_mail_task.delay(subject=subject,message=message,recipient_list=[order.user.email])
 
-class OrderDetailView(APIView):
-    def get(self, request, order_id):
+class OrderView(viewsets.ModelViewSet):
+    serializer_class = OrderSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        return Order.objects.filter(user=self.request.user).order_by('-created_at')
+
+    @action(detail=True, methods=['get'], url_path='details')
+    def order_id(self, request, pk=None):
+        """
+        Retrieve details of a specific order by its ID.
+        """
         try:
-            order = Order.objects.get(id=order_id, user=request.user)
+            order = Order.objects.get(id=pk, user=request.user)
             return Response({
                 "id": order.id,
                 "status": order.status,
@@ -166,9 +177,11 @@ class OrderDetailView(APIView):
                     {
                         "product_name": item.product_name,
                         "quantity": item.quantity,
-                        "price": str(item.price)
-                    } for item in order.objects.all()
-                ]
+                        "price": str(item.price),
+                    } for item in order.orderitem_set.all()
+                ],
+                "created_at": order.created_at,
+                "updated_at": order.updated_at,
             })
         except Order.DoesNotExist:
             return Response({"error": "Order not found"}, status=404)
