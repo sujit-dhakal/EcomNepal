@@ -37,7 +37,7 @@ const ProductSection = ({ type, topHeading, heading }: ProductSectionProps) => {
     fetchProducts();
   }, [dispatch, type]);
 
-  const displayedProducts = type ? products.slice(0, 5) : useAppSelector((state) => state.product.productState.products).slice(0, 10);
+  const displayedProducts = type ? products.slice(0, 4) : useAppSelector((state) => state.product.productState.products).slice(0, 8);
 
   const handleViewAll = () => {
     if (type) {
@@ -60,12 +60,10 @@ const ProductSection = ({ type, topHeading, heading }: ProductSectionProps) => {
           />,
         ]}
       />
-      <div className="flex justify-center">
-        <div className="flex flex-wrap justify-center xl:justify-between gap-4 lg:gap-8">
-          {displayedProducts.map((product: Product) => (
-            <ProductCard product={product} key={product.id} />
-          ))}
-        </div>
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 xl:gap-12">
+        {displayedProducts.map((product: Product) => (
+          <ProductCard product={product} key={product.id} />
+        ))}
       </div>
     </>
   );

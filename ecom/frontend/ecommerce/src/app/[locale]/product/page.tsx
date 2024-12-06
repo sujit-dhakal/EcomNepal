@@ -21,12 +21,10 @@ const Products = () => {
       <h1 className="text-2xl font-bold my-10 text-center">
         {productType.charAt(0).toUpperCase() + productType.slice(1)} Products
       </h1>
-      <div className="flex justify-center">
-        <div className="flex flex-wrap justify-center xl:justify-between gap-4 lg:gap-8">
-          {products.map((product: Product) => (
-            <ProductCard product={product} key={product.id} />
-          ))}
-        </div>
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 xl:gap-12">
+        {products.map((product: Product) => (
+          <ProductCard product={product} key={product.id} />
+        ))}
       </div>
     </div>
   );

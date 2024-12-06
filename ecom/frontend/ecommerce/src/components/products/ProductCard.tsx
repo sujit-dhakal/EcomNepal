@@ -10,26 +10,26 @@ export interface ProductCard {
 const ProductCard: React.FC<ProductCard> = ({ product }) => {
   const locale = useLocale();
   return (
-    <div className="w-70 md:w-75 mx-10">
+    <div className="max-w-xs mx-auto rounded-lg shadow-md bg-white transition-transform duration-300 transform hover:-translate-y-2 hover:shadow-lg">
       <Link href={`/${locale}/product/${product.id}`}>
-        <div className="relative bg-[#F5F5F5]">
-          <div className="">
-            <img
-              src={product.image}
-              alt="product image"
-              width={500}
-              height={500}
-            />
-          </div>
+        <div className="relative">
+          <img
+            src={product.image}
+            alt={`Image of ${product.name}`}
+            className="w-full h-64 object-cover rounded-t-lg"
+          />
         </div>
-        <div className="flex flex-col gap-1">
-          <h1 className="text-black text-base font-medium">{product.name}</h1>
-          <div className="flex items-center gap-1">
+        <div className="p-4">
+          <h2 className="text-lg font-semibold text-gray-800 truncate">
+            {product.name}
+          </h2>
+          <div className="flex items-center mt-2">
             <div className="flex items-center">
               {Array.from({ length: 5 }, (_, index) => (
                 <span
                   key={index}
-                  className={`text-lg ${index < Math.round(product.average_rating?.rating || 0)
+                  className={`text-lg ${index <
+                      Math.round(product.average_rating?.rating || 0)
                       ? "text-yellow-500"
                       : "text-gray-300"
                     }`}
@@ -38,10 +38,12 @@ const ProductCard: React.FC<ProductCard> = ({ product }) => {
                 </span>
               ))}
             </div>
-            <span>({product.average_rating?.count || 0})</span>
+            <span className="text-sm text-gray-600 ml-2">
+              ({product.average_rating?.count || 0})
+            </span>
           </div>
-          <p className="text-[#DB4444] text-base font-medium">
-            {product.price}
+          <p className="text-xl font-bold text-red-500 mt-3">
+            ${product.price}
           </p>
         </div>
       </Link>
