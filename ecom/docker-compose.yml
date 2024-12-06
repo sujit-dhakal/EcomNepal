@@ -61,5 +61,17 @@ services:
     env_file:
       - .env
 
+  chatbot:
+    container_name: chatbot
+    build:
+      dockerfile: Dockerfile
+      context: ./fastapi
+    ports:
+      - 8080:8080
+    env_file:
+      - .env
+    volumes:
+      - ./fastapi:/app
+
 volumes:
   postgres_data:

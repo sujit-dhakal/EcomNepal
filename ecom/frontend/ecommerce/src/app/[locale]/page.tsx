@@ -1,6 +1,8 @@
+"use client";
 import Carousel from "@/components/homepage/Carousel";
 import Filter from "@/components/filtering/Filter";
 import ProductSection from "@/components/homepage/ProductSection";
+import ChatInterface from "@/components/chatbot/ChatInterface";
 
 const images = [
   // Carousel Images for small devices
@@ -49,7 +51,11 @@ export default async function HomePage() {
 
         {/* Best Selling Products */}
         <Section>
-          <ProductSection type="bestselling" topHeading="This Month" heading="Best Selling Products" />
+          <ProductSection
+            type="bestselling"
+            topHeading="This Month"
+            heading="Best Selling Products"
+          />
         </Section>
 
         {/* Horizontal Line */}
@@ -57,7 +63,11 @@ export default async function HomePage() {
 
         {/* Latest Products */}
         <Section>
-          <ProductSection type="latest" topHeading="Latest" heading="Recently Added Products" />
+          <ProductSection
+            type="latest"
+            topHeading="Latest"
+            heading="Recently Added Products"
+          />
         </Section>
 
         {/* Horizontal Line */}
@@ -67,6 +77,7 @@ export default async function HomePage() {
         <Section>
           <ProductSection topHeading="Explore" heading="All Products" />
         </Section>
+        <ChatInterface />
       </div>
     </div>
   );
