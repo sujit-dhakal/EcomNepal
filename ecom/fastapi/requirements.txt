@@ -1,0 +1,11 @@
+fastapi[standard]
+langchain
+langchain-openai
+langchain-core
+langchain_community
+docx2txt
+pypdf
+textloader
+langchain_chroma
+python-multipart
+uvicorn
