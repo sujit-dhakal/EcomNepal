@@ -1,10 +1,6 @@
 import Carousel from "@/components/homepage/Carousel";
-import SectionHeader from "@/components/homepage/SectionHeader";
-import Button from "@/components/Button";
 import Filter from "@/components/filtering/Filter";
-import axios from "axios";
-import { Product } from "@/types/productTypes";
-import ProductCard from "@/components/products/ProductCard";
+import ProductSection from "@/components/homepage/ProductSection";
 
 const images = [
   // Carousel Images for small devices
@@ -20,14 +16,21 @@ const largeImages = [
   "/images/homepage/carousel/cycle.png",
 ];
 
-const fetchData = async () => {
-  const response = await axios.get("http://django-app:8000/products/");
-  return response.data;
-};
+// Reusable Section Component
+const Section = ({ children }: { children: React.ReactNode }) => (
+  <section className="flex flex-col gap-10 md:gap-[60px] w-full px-3.5 md:px-0">
+    {children}
+  </section>
+);
+
+// Reusable Horizontal Line Component
+const HorizontalLine = () => (
+  <div className="w-full px-3.5 md:px-0">
+    <hr className="border-0.5 border-black border-opacity-30" />
+  </div>
+);
 
 export default async function HomePage() {
-  let products = await fetchData();
-  products = products.slice(0, 5);
   return (
     <div className="container md:px-2 mx-auto">
       <div className="flex flex-col items-center justify-center gap-14">
@@ -37,35 +40,33 @@ export default async function HomePage() {
         </section>
 
         {/* Categories */}
-        <section className="flex flex-col gap-10 md:gap-[60px] w-full px-3.5 md:px-0">
+        <Section>
           <Filter />
-        </section>
+        </Section>
 
-        {/* Horizontal line */}
-        <div className="w-full px-3.5 md:px-0">
-          <hr className="border-0.5 border-black border-opacity-30" />
-        </div>
+        {/* Horizontal Line */}
+        <HorizontalLine />
 
         {/* Best Selling Products */}
-        <section className="flex flex-col gap-10 md:gap-[60px] w-full px-3.5 md:px-0">
-          <SectionHeader
-            topHeading="This Month"
-            heading="Best Selling Products"
-            buttons={[
-              <Button
-                text="View All"
-                className="md:w-40 md:h-14 md:text-base"
-              />,
-            ]}
-          />
-          <div className="flex justify-center">
-            <div className="flex flex-wrap justify-center xl:justify-between gap-4 lg:gap-8">
-              {products.map((product: Product) => (
-                <ProductCard product={product} imageUrl={product.image} />
-              ))}
-            </div>
-          </div>
-        </section>
+        <Section>
+          <ProductSection type="bestselling" topHeading="This Month" heading="Best Selling Products" />
+        </Section>
+
+        {/* Horizontal Line */}
+        <HorizontalLine />
+
+        {/* Latest Products */}
+        <Section>
+          <ProductSection type="latest" topHeading="Latest" heading="Recently Added Products" />
+        </Section>
+
+        {/* Horizontal Line */}
+        <HorizontalLine />
+
+        {/* All Products */}
+        <Section>
+          <ProductSection topHeading="Explore" heading="All Products" />
+        </Section>
       </div>
     </div>
   );
