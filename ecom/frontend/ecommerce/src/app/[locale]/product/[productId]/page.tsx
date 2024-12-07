@@ -76,7 +76,7 @@ const page = ({
       const updatedProducts = response.data.results.map((product: Product) => ({
         ...product,
         image: product.image.replace("django-app:8000", "127.0.0.1:8000"),
-      }))
+      }));
       setSimilarProducts(updatedProducts);
     } catch (error) {
       console.error("Error fetching similar products:", error);
@@ -125,11 +125,11 @@ const page = ({
                           {Array.from({ length: 5 }, (_, index) => (
                             <span
                               key={index}
-                              className={`text-lg ${index <
-                                Math.round(rating)
-                                ? "text-yellow-500"
-                                : "text-gray-300"
-                                }`}
+                              className={`text-lg ${
+                                index < Math.round(rating)
+                                  ? "text-yellow-500"
+                                  : "text-gray-300"
+                              }`}
                             >
                               ★
                             </span>
@@ -168,7 +168,6 @@ const page = ({
           )}
         </div>
 
-
         <>
           {/* Comments Section */}
           {isLoading ? (
@@ -194,6 +193,7 @@ const page = ({
                       </span>
                     }
                   />
+                  {isAuth && <ReviewForm productId={product.id} />}
 
                   <div className="grid grid-col-1 md:grid-cols-2 xl:grid-cols-3 w-full gap-6 mx-auto">
                     {comments.map((comment) => (
@@ -207,10 +207,11 @@ const page = ({
                             {Array.from({ length: 5 }, (_, index) => (
                               <span
                                 key={index}
-                                className={`text-lg ${index < Math.round(comment.rating)
-                                  ? "text-yellow-500"
-                                  : "text-gray-300"
-                                  }`}
+                                className={`text-lg ${
+                                  index < Math.round(comment.rating)
+                                    ? "text-yellow-500"
+                                    : "text-gray-300"
+                                }`}
                               >
                                 ★
                               </span>
@@ -223,9 +224,6 @@ const page = ({
                       </div>
                     ))}
                   </div>
-                  {isAuth &&
-                    <ReviewForm productId={product.id} />
-                  }
                 </section>
               </div>
             )
