@@ -24,8 +24,15 @@ class CategorySerializer(serializers.ModelSerializer):
 
 class CommentSerializer(serializers.ModelSerializer):
     user = serializers.CharField(source='user.username', read_only=True)
-    product_id = serializers.IntegerField(source='product.id', read_only=True)
+    product_id = serializers.IntegerField(write_only=True)
     product = serializers.CharField(source='product.name', read_only=True)
     class Meta:
         model = Comment
         fields = ['id', 'product_id','product','user','content','rating']
+
+    def create(self, validated_data):
+        product_id = validated_data.pop('product_id')
+        product = Product.objects.get(id=product_id)
+        validated_data['product'] = product
+        validated_data['user'] = self.context['request'].user
+        return super().create(validated_data)

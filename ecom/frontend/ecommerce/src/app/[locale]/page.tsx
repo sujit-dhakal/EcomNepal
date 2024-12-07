@@ -1,4 +1,3 @@
-"use client";
 import Carousel from "@/components/homepage/Carousel";
 import Filter from "@/components/filtering/Filter";
 import ProductSection from "@/components/homepage/ProductSection";

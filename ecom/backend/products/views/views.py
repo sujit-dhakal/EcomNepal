@@ -89,7 +89,7 @@ class CommentListView(viewsets.ModelViewSet):
 class CommentPostView(APIView):
     permission_classes = [IsAuthenticated]
     def post(self,request):
-        serializer = CommentSerializer(request.data)
+        serializer = CommentSerializer(data=request.data, context={'request': request})
         if serializer.is_valid(raise_exception=True):
             serializer.save()
             return Response({
