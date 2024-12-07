@@ -11,6 +11,7 @@ import SectionHeader from "@/components/homepage/SectionHeader";
 import Button from "@/components/Button";
 import { RootState } from "@/lib/store";
 import axios from "axios";
+import ReviewForm from "@/components/products/ReviewForm";
 
 const page = ({
   params,
@@ -125,7 +126,7 @@ const page = ({
                             <span
                               key={index}
                               className={`text-lg ${index <
-                                Math.round(product.average_rating.rating)
+                                Math.round(rating)
                                 ? "text-yellow-500"
                                 : "text-gray-300"
                                 }`}
@@ -134,7 +135,7 @@ const page = ({
                             </span>
                           ))}
                         </div>
-                        <span>({product.average_rating.count})</span>
+                        <span>({count})</span>
                       </div>
                       <h1 className="text-md text-red-900">${product.price}</h1>
                       <p className="text-md text-black">
@@ -166,6 +167,8 @@ const page = ({
             </>
           )}
         </div>
+
+
         <>
           {/* Comments Section */}
           {isLoading ? (
@@ -192,11 +195,11 @@ const page = ({
                     }
                   />
 
-                  <div className="grid grid-col-1 md:grid-cols-2 xl:grid-cols-3 gap-6 mx-auto">
+                  <div className="grid grid-col-1 md:grid-cols-2 xl:grid-cols-3 w-full gap-6 mx-auto">
                     {comments.map((comment) => (
                       <div
                         key={comment.id}
-                        className="py-4 border-t border-black border-opacity-30 w-full md:w-[350px] lg:w-[480px] xl:w-[400px] 2xl:w-[480px] justify-self-center"
+                        className="py-4 px-2 bg-white border-t-2 border-black border-opacity-30 w-full md:w-[350px] lg:w-[480px] xl:w-[400px] 2xl:w-[480px] justify-self-center shadow-lg"
                       >
                         <div className="flex flex-col">
                           <p className="font-semibold">{comment.user}</p>
@@ -220,6 +223,9 @@ const page = ({
                       </div>
                     ))}
                   </div>
+                  {isAuth &&
+                    <ReviewForm productId={product.id} />
+                  }
                 </section>
               </div>
             )
