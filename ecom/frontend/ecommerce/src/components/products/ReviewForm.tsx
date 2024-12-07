@@ -1,16 +1,13 @@
 "use client";
-import React, { useEffect, useState } from "react";
-import Button from "@/components/Button";
-import { useAppDispatch, useAppSelector } from "@/lib/hooks";
-import { addComment, getAverageRating, getComments } from "@/lib/store";
-import { useRouter } from "next/navigation";
-import { useLocale } from "next-intl";
-import { RootState } from "@/lib/store";
 
-type FormValues = {
-  comment: string;
-  rating: number;
-};
+import React from "react";
+import Button from "@/components/Button";
+import { useAppDispatch } from "@/lib/hooks";
+import { addComment, getAverageRating } from "@/lib/store";
+import { useFormik } from "formik";
+import { commentSchema } from "@/app/[locale]/validations/schema";
+import { toFormikValidationSchema } from "zod-formik-adapter";
+
 
 type ReviewFormProps = {
   productId: number;
@@ -18,37 +15,34 @@ type ReviewFormProps = {
 
 const ReviewForm: React.FC<ReviewFormProps> = ({ productId }) => {
   const dispatch = useAppDispatch();
-  const [formData, setFormData] = useState<FormValues>({
-    comment: "",
-    rating: 0,
+  const formik = useFormik({
+    initialValues: {
+      comment: "",
+      rating: 0,
+    },
+    validationSchema: toFormikValidationSchema(commentSchema),
+    onSubmit: async (values, { resetForm }) => {
+      try {
+        await dispatch(
+          addComment({
+            content: values.comment,
+            rating: values.rating,
+            product_id: productId,
+          })
+        );
+        await dispatch(getAverageRating(productId));
+        resetForm();
+        console.log("Comment submitted successfully");
+      } catch (error) {
+        console.error("Failed to submit comment:", error);
+      }
+    },
   });
-
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: name === "rating" ? Number(value) : value });
-  };
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    const commentData = {
-      content: formData.comment,
-      rating: formData.rating,
-      product_id: productId,
-    };
-    try {
-      await dispatch(addComment(commentData));
-      await dispatch(getAverageRating(productId));
-      setFormData({ comment: "", rating: 0 });
-      console.log("Comment submitted successfully");
-    } catch (error) {
-      console.error("Failed to submit comment:", error);
-    }
-  };
 
   return (
     <div className="flex items-center justify-center ">
       <form
-        onSubmit={handleSubmit}
+        onSubmit={formik.handleSubmit}
         className="w-[500px] mx-auto bg-white shadow-lg rounded-lg px-6 py-10 space-y-4"
       >
         <h2 className="text-xl font-bold text-gray-700">Leave a Review</h2>
@@ -61,13 +55,15 @@ const ReviewForm: React.FC<ReviewFormProps> = ({ productId }) => {
           <textarea
             id="comment"
             name="comment"
-            value={formData.comment}
-            onChange={handleInputChange}
+            value={formik.values.comment}
+            onChange={formik.handleChange}
             className="w-full mt-1 p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
             placeholder="Write your comment"
             rows={4}
-            required
           />
+          {formik.touched.comment && formik.errors.comment && (
+            <div className="text-red-600 text-sm mt-1">{formik.errors.comment}</div>
+          )}
         </div>
 
         {/* Rating Field */}
@@ -82,22 +78,26 @@ const ReviewForm: React.FC<ReviewFormProps> = ({ productId }) => {
                   type="radio"
                   name="rating"
                   value={star}
-                  checked={formData.rating === star}
-                  onChange={handleInputChange}
+                  checked={formik.values.rating === star}
+                  onChange={() => formik.setFieldValue("rating", star)}
                   className="hidden"
+                  aria-label={`Rate ${star} star${star > 1 ? "s" : ""}`}
                 />
                 <span
-                  className={`cursor-pointer text-2xl ${formData.rating >= star ? "text-yellow-400" : "text-gray-400"}`}
+                  className={`cursor-pointer text-2xl ${formik.values.rating >= star ? "text-yellow-400" : "text-gray-400"}`}
                 >
                   ★
                 </span>
               </label>
             ))}
           </div>
+          {formik.touched.rating && formik.errors.rating && (
+            <div className="text-red-600 text-sm mt-1">{formik.errors.rating}</div>
+          )}
         </div>
 
         {/* Submit Button */}
-        <Button text="Submit Review" className="w-full !h-11 !text-base" />
+        <Button text="Submit Review" className="w-full !h-11 !text-base" disabled={formik.isSubmitting} />
       </form>
     </div>
   );
