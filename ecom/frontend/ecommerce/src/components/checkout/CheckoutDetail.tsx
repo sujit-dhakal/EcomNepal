@@ -2,13 +2,10 @@
 import React, { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import { getCartSum, getCartItems } from "@/lib/store";
-import { useLocale } from "next-intl";
-import Link from "next/link";
 import Paypal from "../paypal/Paypal";
 
 const CheckoutDetail: React.FC = () => {
   const sum = useAppSelector((state) => state.cart.sum);
-  const locale = useLocale();
   const cartItems = useAppSelector((state) => state.cart.itemsInCart);
   const dispatch = useAppDispatch();
 
@@ -54,7 +51,7 @@ const CheckoutDetail: React.FC = () => {
       {/* Summary Details */}
       <div className="flex justify-between">
         <p>Subtotal:</p>
-        <p className="font-semibold">${subtotal}</p>
+        <p className="font-semibold">${subtotal.toFixed(2)}</p>
       </div>
       <div className="flex justify-between border-t border-gray-400 pt-4">
         <p>Shipping:</p>
@@ -62,7 +59,7 @@ const CheckoutDetail: React.FC = () => {
       </div>
       <div className="flex justify-between font-bold text-lg border-t border-gray-400 mt-4 pt-4">
         <p>Total:</p>
-        <p>${total}</p>
+        <p>${total.toFixed(2)}</p>
       </div>
       <Paypal cartItems={cartItems} sum={sum} />      
     </div>

@@ -97,3 +97,12 @@ export const changePasswordSchema = z
     message: "Password doesn't match.",
     path: ["confirm_password"],
   });
+
+
+export const commentSchema = z.object({
+  comment: z.string({
+    required_error: "Comment is required.",
+  }),
+  rating: z.number()
+    .min(1, "Rating is required"),
+});

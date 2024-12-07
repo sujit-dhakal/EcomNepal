@@ -1,15 +1,13 @@
 "use client";
 import React, { useState } from 'react';
-import { useAppDispatch } from "@/lib/hooks";
 import { RootState } from "@/lib/store";
 import { useFormik } from "formik";
 import { useSelector } from "react-redux";
 import axios from "axios";
 
 const PersonalInfo: React.FC = () => {
-  const dispatch = useAppDispatch();
   const profile = useSelector((state: RootState) => state.user.user);
-  const [onSave, setOnSave] = useState<boolean>(false);
+  const [onSaveMessage, setOnSaveMessage] = useState<string | null>(null);
 
   const formik = useFormik({
     initialValues: {
@@ -19,18 +17,22 @@ const PersonalInfo: React.FC = () => {
     },
     enableReinitialize: true,
     onSubmit: async (values) => {
+      if (!formik.dirty) {
+        setOnSaveMessage("No changes to save.");
+        setTimeout(() => setOnSaveMessage(null), 3000);
+        return;
+      }
       try {
         const response = await axios.put(
           `http://127.0.0.1:8000/users/${profile.user_id}/`,
           values
         );
-        setOnSave(true);
+        setOnSaveMessage("Changes made successfully.");
         setTimeout(() => {
-          setOnSave(false);
+          setOnSaveMessage(null);
         }, 3000);
-        console.log(response);
       } catch (error) {
-        console.log(error);
+        setOnSaveMessage("An error occurred while saving changes.");
       }
     },
   });
@@ -86,16 +88,23 @@ const PersonalInfo: React.FC = () => {
         <div className="mt-6 flex justify-around pt-4">
           <button
             type="submit"
-            className="bg-black py-3 w-full sm:w-1/2 md:w-[300px] text-white rounded-[10px]"
+            className="bg-black hover:bg-opacity-70 py-3 w-full sm:w-1/2 md:w-[300px] text-white rounded-[10px]"
           >
             Save Changes
           </button>
-          {onSave && (
-            <div className="text-green-900 text-center mt-6">
-              Changes made successfully.
-            </div>
-          )}
         </div>
+        {onSaveMessage && (
+          <div className="text-center mt-6">
+            <p
+              className={`${onSaveMessage === "Changes made successfully."
+                  ? "text-green-900"
+                  : "text-red-900"
+                }`}
+            >
+              {onSaveMessage}
+            </p>
+          </div>
+        )}
       </form>
     </section>
   );
