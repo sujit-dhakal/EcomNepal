@@ -24,7 +24,7 @@ const page = () => {
       <h1 className="text-xl font-semibold my-10">
         Search Result: Found {products.length} products
       </h1>
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 xl:gap-12">
+      <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-8 xl:gap-12">
         {products.map((product: Product) => (
           <ProductCard key={product.id} product={product} />
         ))}
