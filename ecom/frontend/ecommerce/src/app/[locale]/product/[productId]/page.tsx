@@ -5,13 +5,11 @@ import { getProductDetail, getComments, getAverageRating } from "@/lib/store";
 import { client } from "@/api/baseConfig";
 import { useRouter } from "next/navigation";
 import { useLocale } from "next-intl";
-import { Product } from "@/types/productTypes";
-import ProductCard from "@/components/products/ProductCard";
 import SectionHeader from "@/components/homepage/SectionHeader";
-import Button from "@/components/Button";
 import { RootState } from "@/lib/store";
-import axios from "axios";
 import ReviewForm from "@/components/products/ReviewForm";
+import { HorizontalLine, Section } from "../../page";
+import ProductSection from "@/components/homepage/ProductSection";
 
 const page = ({
   params,
@@ -20,7 +18,6 @@ const page = ({
     productId: string;
   };
 }) => {
-  const [similarProducts, setSimilarProducts] = useState([]);
   const router = useRouter();
   const locale = useLocale();
   const [addToCartValue, setAddToCartValue] = useState("Add to cart");
@@ -65,35 +62,12 @@ const page = ({
     router.push(`/${locale}/cart`);
     console.log(response.data);
   };
-  const fetchSimilarProducts = async (
-    productName: string,
-    product_id: number
-  ) => {
-    try {
-      const response = await axios.get(
-        `http://127.0.0.1:8000/product-recommend/?q=${productName}&product_id=${product_id}`
-      );
-      const updatedProducts = response.data.results.map((product: Product) => ({
-        ...product,
-        image: product.image.replace("django-app:8000", "127.0.0.1:8000"),
-      }));
-      setSimilarProducts(updatedProducts);
-    } catch (error) {
-      console.error("Error fetching similar products:", error);
-    }
-  };
 
   useEffect(() => {
     dispatch(getProductDetail(params.productId));
     dispatch(getComments(params.productId));
     dispatch(getAverageRating(params.productId));
   }, [dispatch, params.productId]);
-
-  useEffect(() => {
-    if (product.name) {
-      fetchSimilarProducts(product.name, product.id);
-    }
-  }, [product.name, fetchSimilarProducts]);
 
   return (
     <>
@@ -125,17 +99,16 @@ const page = ({
                           {Array.from({ length: 5 }, (_, index) => (
                             <span
                               key={index}
-                              className={`text-lg ${
-                                index < Math.round(rating)
-                                  ? "text-yellow-500"
-                                  : "text-gray-300"
-                              }`}
+                              className={`text-lg ${index < Math.round(rating)
+                                ? "text-yellow-500"
+                                : "text-gray-300"
+                                }`}
                             >
                               ★
                             </span>
                           ))}
                         </div>
-                        <span>({count})</span>
+                        <span>({count || 0})</span>
                       </div>
                       <h1 className="text-md text-red-900">${product.price}</h1>
                       <p className="text-md text-black">
@@ -175,83 +148,72 @@ const page = ({
           ) : isError ? (
             <p>Failed to load comments. Please try again.</p>
           ) : (
-            comments.length > 0 && (
-              <div className="container mx-auto mt-20 px-4">
-                <div className="w-full px-3.5 md:px-0">
-                  <hr className="border-0.5 border-black border-opacity-30" />
-                </div>
-
-                <section className="flex flex-col gap-10 md:gap-[60px] w-full mt-10 px-3.5 md:px-0">
+            (comments.length > 0 || isAuth) && (
+              <div className="container mx-auto mt-20 px-4 space-y-14">
+                <HorizontalLine />
+                <Section>
                   <SectionHeader
                     topHeading="Ratings and Reviews"
                     heading={
                       <span className="flex items-center gap-2">
                         <span className="text-yellow-500">★</span>
-                        <span>{rating.toFixed(2)} Ratings</span>
+                        <span>{rating ? rating.toFixed(2) : "0.00"} Ratings</span>
                         <span className="w-2 h-2 bg-black rounded-full mx-1"></span>
-                        <span>{count} Reviews</span>
+                        <span>{count || 0} Reviews</span>
                       </span>
                     }
                   />
                   {isAuth && <ReviewForm productId={product.id} />}
 
-                  <div className="grid grid-col-1 md:grid-cols-2 xl:grid-cols-3 w-full gap-6 mx-auto">
-                    {comments.map((comment) => (
-                      <div
-                        key={comment.id}
-                        className="py-4 px-2 bg-white border-t-2 border-black border-opacity-30 w-full md:w-[350px] lg:w-[480px] xl:w-[400px] 2xl:w-[480px] justify-self-center shadow-lg"
-                      >
-                        <div className="flex flex-col">
-                          <p className="font-semibold">{comment.user}</p>
-                          <div className="flex items-center">
-                            {Array.from({ length: 5 }, (_, index) => (
-                              <span
-                                key={index}
-                                className={`text-lg ${
-                                  index < Math.round(comment.rating)
+                  {comments.length > 0 && (
+                    <div className="grid grid-col-1 md:grid-cols-2 xl:grid-cols-3 w-full gap-6 mx-auto">
+                      {comments.map((comment) => (
+                        <div
+                          key={comment.id}
+                          className="py-4 px-2 bg-white border-t-2 border-black border-opacity-30 w-full md:w-[350px] lg:w-[480px] xl:w-[400px] 2xl:w-[480px] justify-self-center shadow-lg"
+                        >
+                          <div className="flex flex-col">
+                            <p className="font-semibold">{comment.user}</p>
+                            <div className="flex items-center">
+                              {Array.from({ length: 5 }, (_, index) => (
+                                <span
+                                  key={index}
+                                  className={`text-lg ${index < Math.round(comment.rating)
                                     ? "text-yellow-500"
                                     : "text-gray-300"
-                                }`}
-                              >
-                                ★
-                              </span>
-                            ))}
+                                    }`}
+                                >
+                                  ★
+                                </span>
+                              ))}
+                            </div>
                           </div>
+                          <p className="mt-2 text-sm text-justify">
+                            {comment.content}
+                          </p>
                         </div>
-                        <p className="mt-2 text-sm text-justify">
-                          {comment.content}
-                        </p>
-                      </div>
-                    ))}
-                  </div>
-                </section>
+                      ))}
+                    </div>
+                  )}
+                </Section>
               </div>
             )
           )}
         </>
 
-        <div className="container mx-auto mt-20 px-4">
-          <div className="w-full px-3.5 md:px-0">
-            <hr className="border-0.5 border-black border-opacity-30" />
-          </div>
-
-          <section className="flex flex-col gap-10 md:gap-[60px] w-full mt-10 px-3.5 md:px-0">
-            <SectionHeader
-              topHeading="Related Items"
-              heading="You Might Also Like"
-              buttons={[
-                <Button
-                  text="View All"
-                  className="md:w-40 md:h-14 md:text-base"
-                />,
-              ]}
-            />
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 xl:gap-12">
-              {similarProducts.map((product: Product) => (
-                <ProductCard key={product.id} product={product} />
-              ))}
-            </div>
-          </section>
+        <div className="container mx-auto mt-20 px-4 space-y-14">
+          <HorizontalLine />
+          <Section>
+            {product && product.name && product.id && (
+              <ProductSection
+                type="similar"
+                topHeading="Related Items"
+                heading="You Might Also Like"
+                productName={product.name}
+                productId={product.id}
+              />
+            )}
+          </Section>
         </div>
       </div>
     </>

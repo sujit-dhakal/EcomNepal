@@ -9,14 +9,18 @@ import Button from "../Button";
 import { useRouter } from "next/navigation";
 import { useLocale } from "next-intl";
 import axios from "axios";
+import { fetchSimilarProducts } from "@/app/[locale]/product/similarProducts";
+import { shuffleArray } from "@/lib/shuffleArray";
 
 interface ProductSectionProps {
-  type?: "bestselling" | "latest";
+  type?: "bestselling" | "latest" | "similar";
   topHeading: string;
   heading: string;
+  productName?: string;
+  productId?: number;
 }
 
-const ProductSection = ({ type, topHeading, heading }: ProductSectionProps) => {
+const ProductSection = ({ type, topHeading, heading, productName, productId }: ProductSectionProps) => {
   const dispatch = useAppDispatch();
   const router = useRouter();
   const locale = useLocale();
@@ -30,18 +34,26 @@ const ProductSection = ({ type, topHeading, heading }: ProductSectionProps) => {
       } else if (type === "latest") {
         const response = await axios.get("http://127.0.0.1:8000/products?query=latest");
         setProducts(response.data);
+      } else if (type === "similar" && productName && productId) {
+        const response = await fetchSimilarProducts(productName, productId);
+        setProducts(response)
       } else {
         dispatch(getProducts());
       }
     };
     fetchProducts();
-  }, [dispatch, type]);
+  }, [dispatch, type, productName, productId]);
 
   const displayedProducts = type ? products.slice(0, 4) : useAppSelector((state) => state.product.productState.products).slice(0, 8);
+  const shuffledProducts = shuffleArray(displayedProducts);
 
   const handleViewAll = () => {
     if (type) {
-      router.push(`/${locale}/product?type=${type}`);
+      if (type === "similar") {
+        router.push(`/${locale}/product?type=${type}&product_name=${productName}&product_id=${productId}`)
+      } else {
+        router.push(`/${locale}/product?type=${type}`);
+      }
     } else {
       router.push(`/${locale}/product`);
     }
@@ -60,8 +72,8 @@ const ProductSection = ({ type, topHeading, heading }: ProductSectionProps) => {
           />,
         ]}
       />
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 xl:gap-12">
-        {displayedProducts.map((product: Product) => (
+      <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-8 xl:gap-12">
+        {shuffledProducts.map((product: Product) => (
           <ProductCard product={product} key={product.id} />
         ))}
       </div>
