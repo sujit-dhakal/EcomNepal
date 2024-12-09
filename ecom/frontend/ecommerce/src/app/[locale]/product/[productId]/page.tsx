@@ -55,15 +55,11 @@ const page = ({
     console.log(response.data);
   };
   const buyNow = async (productId: number) => {
-    const response = await client.post(
-      "http://127.0.0.1:8000/cart/add_to_cart/",
-      {
-        product_id: productId,
-        quantity: 1,
-      }
-    );
-    router.push(`/${locale}/cart`);
-    console.log(response.data);
+    await client.post("http://127.0.0.1:8000/cart/direct_checkout/", {
+      product_id: productId,
+      quantity: 1,
+    });
+    router.push(`/${locale}/buyNow`);
   };
   const fetchSimilarProducts = async (
     productName: string,

@@ -60,3 +60,42 @@ class CartView(viewsets.ModelViewSet):
             return Response("deleted")
         except CartItem.DoesNotExist:
             return Response("Cart item doesn't exists")
+
+    @action(detail=False, methods=['GET'])
+    def direct_purchase_items(self, request):
+        items = self.get_queryset().filter(is_direct_purchase=True)
+        serializer = self.get_serializer(items, many=True)
+        return Response(serializer.data)
+
+    @action(detail=False, methods=['POST'])
+    def direct_checkout(self, request):
+        product_id = request.data.get('product_id')
+        quantity = request.data.get('quantity', 1)
+
+        try:
+            product = Product.objects.get(id=product_id)
+        except Product.DoesNotExist:
+            return Response({"error": "Product not found"}, status=400)
+
+        CartItem.objects.filter(
+            user=request.user,
+            is_direct_purchase=True
+        ).delete()
+
+        cart_item = CartItem.objects.create(
+            user=request.user,
+            product=product,
+            quantity=quantity,
+            is_direct_purchase=True
+        )
+
+        serializer = self.get_serializer(cart_item)
+        return Response(serializer.data)
+
+    @action(detail=False, methods=['DELETE'])
+    def delete_direct_purchase_items(self, request):
+        items_to_delete = self.get_queryset().filter(is_direct_purchase=True)
+        items_to_delete.delete()
+        return Response({
+            'msg':'items deleted.'
+        })
