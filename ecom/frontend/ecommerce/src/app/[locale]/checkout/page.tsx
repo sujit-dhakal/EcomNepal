@@ -3,7 +3,7 @@ import ShippingAddressComponent from "@/components/checkout/ShippingAddress";
 import CheckoutDetail from "@/components/checkout/CheckoutDetail";
 import { useAppSelector, useAppDispatch } from "@/lib/hooks";
 import { useSearchParams } from "next/navigation";
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
 import { getProductDetail } from "@/lib/store";
 
 const page = () => {
@@ -14,8 +14,7 @@ const page = () => {
 
   useEffect(() => {
       dispatch(getProductDetail(product_id))
-    
-  }, [dispatch]);
+  }, [dispatch, product_id]);
 
   return (
     <div className="container mx-auto px-2 mt-[50px]">

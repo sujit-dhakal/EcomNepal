@@ -12,6 +12,8 @@ const CheckoutDetail: React.FC<{ product: Product | null }> = ({ product }) => {
   const cartItems = useAppSelector((state) => state.cart.itemsInCart);
   const dispatch = useAppDispatch();
   const [items, setItems] = useState<any[]>([]);
+  const [hasAddress, setHasAddress] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
   const fetchSum = async () => {
     await dispatch(getCartSum());
@@ -70,7 +72,13 @@ const CheckoutDetail: React.FC<{ product: Product | null }> = ({ product }) => {
         <p>Total:</p>
         <p>${total.toFixed(2)}</p>
       </div>
-      <Paypal cartItems={items} sum={sum} />
+      <Paypal
+        cartItems={items}
+        sum={sum}
+        validateShippingAddress={() => hasAddress}
+        onValidationFail={() => setError("Shipping address is required to proceed.")}
+      />
+      {error && <p className="text-red-500 mt-4">{error}</p>}
     </div>
   );
 };

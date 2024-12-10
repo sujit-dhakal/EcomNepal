@@ -5,7 +5,9 @@ import { getShippingAddresses } from "@/lib/store";
 import Link from "next/link";
 import { useLocale } from "next-intl";
 
-const ShippingAddressComponent: React.FC = () => {
+const ShippingAddressComponent: React.FC<{ onAddressSelect: (hasAddress: boolean) => void }> = ({
+  onAddressSelect
+}) => {
   const locale = useLocale();
   const dispatch = useAppDispatch();
   const addresses = useAppSelector((state) => state.shipping.addresses);
@@ -47,6 +49,7 @@ const ShippingAddressComponent: React.FC = () => {
 
   const handleSelectAddress = (index: number) => {
     setSelectedAddressIndex(index);
+    onAddressSelect(true);
   };
 
   // Ensure addresses is always an array
