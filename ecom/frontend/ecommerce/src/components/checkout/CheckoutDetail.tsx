@@ -6,14 +6,16 @@ import Paypal from "../paypal/Paypal";
 import { Product } from "@/types/productTypes";
 import { useSearchParams } from "next/navigation";
 
-const CheckoutDetail: React.FC<{ product: Product | null }> = ({ product }) => {
+const CheckoutDetail: React.FC<{
+  product: Product | null;
+  hasAddress: boolean;
+  onPaypalError: () => void;
+}> = ({ product, hasAddress, onPaypalError }) => {
   const searchParams = useSearchParams();
   const sum = useAppSelector((state) => state.cart.sum);
   const cartItems = useAppSelector((state) => state.cart.itemsInCart);
   const dispatch = useAppDispatch();
   const [items, setItems] = useState<any[]>([]);
-  const [hasAddress, setHasAddress] = useState(false);
-  const [error, setError] = useState<string | null>(null);
 
   const fetchSum = async () => {
     await dispatch(getCartSum());
@@ -76,9 +78,8 @@ const CheckoutDetail: React.FC<{ product: Product | null }> = ({ product }) => {
         cartItems={items}
         sum={sum}
         validateShippingAddress={() => hasAddress}
-        onValidationFail={() => setError("Shipping address is required to proceed.")}
+        onValidationFail={onPaypalError}
       />
-      {error && <p className="text-red-500 mt-4">{error}</p>}
     </div>
   );
 };
