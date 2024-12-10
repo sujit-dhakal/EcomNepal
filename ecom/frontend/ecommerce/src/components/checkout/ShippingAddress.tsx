@@ -29,8 +29,9 @@ const ShippingAddressComponent: React.FC<{ onAddressChange: (hasAddress: boolean
 
       // Find the index of the default address
       const defaultIndex = fetchedAddresses.findIndex((addr) => addr.is_default);
-      const hasAddress = fetchedAddresses.length > 0;
-      onAddressChange(hasAddress);
+      if (fetchedAddresses.length > 0) {
+        onAddressChange(true);
+      }
 
       // Set selected address index: default if available, otherwise a random address
       if (defaultIndex !== -1) {
@@ -52,7 +53,6 @@ const ShippingAddressComponent: React.FC<{ onAddressChange: (hasAddress: boolean
 
   const handleSelectAddress = (index: number) => {
     setSelectedAddressIndex(index);
-    onAddressChange(true);
   };
 
   // Ensure addresses is always an array
