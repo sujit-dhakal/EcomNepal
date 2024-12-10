@@ -6,7 +6,11 @@ import Paypal from "../paypal/Paypal";
 import { Product } from "@/types/productTypes";
 import { useSearchParams } from "next/navigation";
 
-const CheckoutDetail: React.FC<{ product: Product | null }> = ({ product }) => {
+const CheckoutDetail: React.FC<{
+  product: Product | null;
+  hasAddress: boolean;
+  onPaypalError: () => void;
+}> = ({ product, hasAddress, onPaypalError }) => {
   const searchParams = useSearchParams();
   const sum = useAppSelector((state) => state.cart.sum);
   const cartItems = useAppSelector((state) => state.cart.itemsInCart);
@@ -70,7 +74,12 @@ const CheckoutDetail: React.FC<{ product: Product | null }> = ({ product }) => {
         <p>Total:</p>
         <p>${total.toFixed(2)}</p>
       </div>
-      <Paypal cartItems={items} sum={sum} />
+      <Paypal
+        cartItems={items}
+        sum={sum}
+        validateShippingAddress={() => hasAddress}
+        onValidationFail={onPaypalError}
+      />
     </div>
   );
 };

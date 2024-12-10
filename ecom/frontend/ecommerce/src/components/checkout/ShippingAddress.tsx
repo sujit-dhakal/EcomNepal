@@ -5,7 +5,9 @@ import { getShippingAddresses } from "@/lib/store";
 import Link from "next/link";
 import { useLocale } from "next-intl";
 
-const ShippingAddressComponent: React.FC = () => {
+const ShippingAddressComponent: React.FC<{ onAddressChange: (hasAddress: boolean) => void }> = ({
+  onAddressChange
+}) => {
   const locale = useLocale();
   const dispatch = useAppDispatch();
   const addresses = useAppSelector((state) => state.shipping.addresses);
@@ -27,6 +29,8 @@ const ShippingAddressComponent: React.FC = () => {
 
       // Find the index of the default address
       const defaultIndex = fetchedAddresses.findIndex((addr) => addr.is_default);
+      const hasAddress = fetchedAddresses.length > 0;
+      onAddressChange(hasAddress);
 
       // Set selected address index: default if available, otherwise a random address
       if (defaultIndex !== -1) {
@@ -37,16 +41,18 @@ const ShippingAddressComponent: React.FC = () => {
     } catch (error) {
       console.error("Error fetching shipping addresses:", error);
       setIsError(true);
+      onAddressChange(false);
     } finally {
       setIsLoading(false);
     }
   };
   useEffect(() => {
     fetchAddress();
-  }, [dispatch]);
+  }, [dispatch, onAddressChange]);
 
   const handleSelectAddress = (index: number) => {
     setSelectedAddressIndex(index);
+    onAddressChange(true);
   };
 
   // Ensure addresses is always an array
