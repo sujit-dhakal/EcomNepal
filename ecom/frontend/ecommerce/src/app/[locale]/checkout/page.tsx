@@ -17,11 +17,9 @@ const page = () => {
   useEffect(() => {
       dispatch(getProductDetail(product_id))
   }, [dispatch, product_id]);
-
   const handlePaypalError = () => {
     setError("Please add shipping address to continue order placement.");
   };
-
   return (
     <div className="container mx-auto px-2 mt-[50px]">
       <h2 className="text-2xl font-semibold">Checkout Details</h2>
