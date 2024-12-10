@@ -55,15 +55,7 @@ const page = ({
     console.log(response.data);
   };
   const buyNow = async (productId: number) => {
-    const response = await client.post(
-      "http://127.0.0.1:8000/cart/add_to_cart/",
-      {
-        product_id: productId,
-        quantity: 1,
-      }
-    );
-    router.push(`/${locale}/cart`);
-    console.log(response.data);
+    router.push(`/${locale}/checkout?product_id=${productId}`);
   };
   const fetchSimilarProducts = async (
     productName: string,
@@ -125,11 +117,10 @@ const page = ({
                           {Array.from({ length: 5 }, (_, index) => (
                             <span
                               key={index}
-                              className={`text-lg ${
-                                index < Math.round(rating)
+                              className={`text-lg ${index < Math.round(rating)
                                   ? "text-yellow-500"
                                   : "text-gray-300"
-                              }`}
+                                }`}
                             >
                               ★
                             </span>
@@ -207,11 +198,10 @@ const page = ({
                             {Array.from({ length: 5 }, (_, index) => (
                               <span
                                 key={index}
-                                className={`text-lg ${
-                                  index < Math.round(comment.rating)
+                                className={`text-lg ${index < Math.round(comment.rating)
                                     ? "text-yellow-500"
                                     : "text-gray-300"
-                                }`}
+                                  }`}
                               >
                                 ★
                               </span>

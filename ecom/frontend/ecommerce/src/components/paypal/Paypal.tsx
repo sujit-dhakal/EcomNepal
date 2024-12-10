@@ -9,8 +9,10 @@ import { useLocale } from "next-intl";
 interface createOrderProps {
   cartItems: CartItems[];
   sum: number;
+  validateShippingAddress: () => boolean;
+  onValidationFail: () => void;
 }
-const Paypal: React.FC<createOrderProps> = ({ cartItems, sum }) => {
+const Paypal: React.FC<createOrderProps> = ({ cartItems, sum, validateShippingAddress, onValidationFail, }) => {
   const router = useRouter();
   const locale = useLocale();
   const initialOptions = {
@@ -20,6 +22,11 @@ const Paypal: React.FC<createOrderProps> = ({ cartItems, sum }) => {
   };
 
   const createOrder = async () => {
+    if (!validateShippingAddress()) {
+      onValidationFail();
+      return;
+    }
+
     try {
       const paypalresponse = await client.post("create-paypal-order/", {
         items: cartItems,
@@ -39,7 +46,7 @@ const Paypal: React.FC<createOrderProps> = ({ cartItems, sum }) => {
         items: cartItems,
         total: sum,
       });
-        router.push(`/${locale}/order-confirm`);
+      router.push(`/${locale}/order-confirm`);
     } catch (error: any) {
       console.log("onApprove", error.response.data);
     }
