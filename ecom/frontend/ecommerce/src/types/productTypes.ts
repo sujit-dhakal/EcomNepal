@@ -18,4 +18,5 @@ export interface ProductState {
   isError: boolean;
   products: Product[];
   product: Product;
+  relatedProducts: Product[];
 }

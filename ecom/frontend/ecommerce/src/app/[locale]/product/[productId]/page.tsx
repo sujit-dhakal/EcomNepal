@@ -6,11 +6,10 @@ import { client } from "@/api/baseConfig";
 import { useRouter } from "next/navigation";
 import { useLocale } from "next-intl";
 import { Product } from "@/types/productTypes";
-import ProductCard from "@/components/products/ProductCard";
 import SectionHeader from "@/components/homepage/SectionHeader";
 import Button from "@/components/Button";
 import { RootState } from "@/lib/store";
-import axios from "axios";
+import Link from "next/link";
 import ReviewForm from "@/components/products/ReviewForm";
 
 const page = ({
@@ -25,8 +24,8 @@ const page = ({
   const locale = useLocale();
   const [addToCartValue, setAddToCartValue] = useState("Add to cart");
   const dispatch = useAppDispatch();
-  const product = useAppSelector(
-    (state: RootState) => state.product.productState.product
+  const { product, relatedProducts } = useAppSelector(
+    (state: RootState) => state.product.productState
   );
   const isAuth = useAppSelector(
     (state: RootState) => state.user.isAuthenticated
@@ -57,23 +56,23 @@ const page = ({
   const buyNow = async (productId: number) => {
     router.push(`/${locale}/checkout?product_id=${productId}`);
   };
-  const fetchSimilarProducts = async (
-    productName: string,
-    product_id: number
-  ) => {
-    try {
-      const response = await axios.get(
-        `http://127.0.0.1:8000/product-recommend/?q=${productName}&product_id=${product_id}`
-      );
-      const updatedProducts = response.data.results.map((product: Product) => ({
-        ...product,
-        image: product.image.replace("django-app:8000", "127.0.0.1:8000"),
-      }));
-      setSimilarProducts(updatedProducts);
-    } catch (error) {
-      console.error("Error fetching similar products:", error);
-    }
-  };
+  // const fetchSimilarProducts = async (
+  //   productName: string,
+  //   product_id: number
+  // ) => {
+  //   try {
+  //     const response = await axios.get(
+  //       `http://127.0.0.1:8000/product-recommend/?q=${productName}&product_id=${product_id}`
+  //     );
+  //     const updatedProducts = response.data.results.map((product: Product) => ({
+  //       ...product,
+  //       image: product.image.replace("django-app:8000", "127.0.0.1:8000"),
+  //     }));
+  //     setSimilarProducts(updatedProducts);
+  //   } catch (error) {
+  //     console.error("Error fetching similar products:", error);
+  //   }
+  // };
 
   useEffect(() => {
     dispatch(getProductDetail(params.productId));
@@ -81,11 +80,11 @@ const page = ({
     dispatch(getAverageRating(params.productId));
   }, [dispatch, params.productId]);
 
-  useEffect(() => {
-    if (product.name) {
-      fetchSimilarProducts(product.name, product.id);
-    }
-  }, [product.name, fetchSimilarProducts]);
+  // useEffect(() => {
+  //   if (product.name) {
+  //     fetchSimilarProducts(product.name, product.id);
+  //   }
+  // }, [product.name, fetchSimilarProducts]);
 
   return (
     <>
@@ -100,7 +99,7 @@ const page = ({
               <div className="flex flex-col justify-center lg:flex-row gap-16 px-3.5">
                 <div className="flex justify-center">
                   <img
-                    src={product.image}
+                    src={`http://localhost:8000/${product.image}`}
                     alt="product image"
                     className="w-[450px] h-[350px] rounded-lg"
                   />
@@ -117,10 +116,11 @@ const page = ({
                           {Array.from({ length: 5 }, (_, index) => (
                             <span
                               key={index}
-                              className={`text-lg ${index < Math.round(rating)
+                              className={`text-lg ${
+                                index < Math.round(rating)
                                   ? "text-yellow-500"
                                   : "text-gray-300"
-                                }`}
+                              }`}
                             >
                               ★
                             </span>
@@ -198,10 +198,11 @@ const page = ({
                             {Array.from({ length: 5 }, (_, index) => (
                               <span
                                 key={index}
-                                className={`text-lg ${index < Math.round(comment.rating)
+                                className={`text-lg ${
+                                  index < Math.round(comment.rating)
                                     ? "text-yellow-500"
                                     : "text-gray-300"
-                                  }`}
+                                }`}
                               >
                                 ★
                               </span>
@@ -237,8 +238,46 @@ const page = ({
               ]}
             />
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 xl:gap-12">
-              {similarProducts.map((product: Product) => (
-                <ProductCard key={product.id} product={product} />
+              {relatedProducts.map((product: Product) => (
+                <div className="max-w-xs mx-auto rounded-lg shadow-md bg-white transition-transform duration-300 transform hover:-translate-y-2 hover:shadow-lg">
+                  <Link href={`/${locale}/product/${product.id}`}>
+                    <div className="relative">
+                      <img
+                        src={`http://localhost:8000/${product.image}`}
+                        alt={`Image of ${product.name}`}
+                        className="w-full h-64 object-cover rounded-t-lg"
+                      />
+                    </div>
+                    <div className="p-4">
+                      <h2 className="text-lg font-semibold text-gray-800 truncate">
+                        {product.name}
+                      </h2>
+                      <div className="flex items-center mt-2">
+                        <div className="flex items-center">
+                          {Array.from({ length: 5 }, (_, index) => (
+                            <span
+                              key={index}
+                              className={`text-lg ${
+                                index <
+                                Math.round(product.average_rating?.rating || 0)
+                                  ? "text-yellow-500"
+                                  : "text-gray-300"
+                              }`}
+                            >
+                              ★
+                            </span>
+                          ))}
+                        </div>
+                        <span className="text-sm text-gray-600 ml-2">
+                          ({product.average_rating?.count || 0})
+                        </span>
+                      </div>
+                      <p className="text-xl font-bold text-red-500 mt-3">
+                        ${product.price}
+                      </p>
+                    </div>
+                  </Link>
+                </div>
               ))}
             </div>
           </section>

@@ -8,9 +8,7 @@ import { useSearchParams } from "next/navigation";
 
 const CheckoutDetail: React.FC<{
   product: Product | null;
-  hasAddress: boolean;
-  onPaypalError: () => void;
-}> = ({ product, hasAddress, onPaypalError }) => {
+}> = ({ product }) => {
   const searchParams = useSearchParams();
   const sum = useAppSelector((state) => state.cart.sum);
   const cartItems = useAppSelector((state) => state.cart.itemsInCart);
@@ -27,7 +25,9 @@ const CheckoutDetail: React.FC<{
   useEffect(() => {
     const productId = searchParams.get("product_id");
     if (productId) {
-      setItems([{ product, total_price: parseFloat(product.price.toString()) }]);
+      setItems([
+        { product, total_price: parseFloat(product.price.toString()) },
+      ]);
     } else if (product) {
       fetchCart();
       setItems(cartItems);
@@ -44,10 +44,7 @@ const CheckoutDetail: React.FC<{
       {/* Product Summary */}
       <div>
         {items.map((item, index) => (
-          <div
-            key={index}
-            className="flex justify-between items-center mb-10"
-          >
+          <div key={index} className="flex justify-between items-center mb-10">
             <div className="flex items-center space-x-4">
               <img
                 src={item.product.image}
@@ -74,12 +71,7 @@ const CheckoutDetail: React.FC<{
         <p>Total:</p>
         <p>${total.toFixed(2)}</p>
       </div>
-      <Paypal
-        cartItems={items}
-        sum={sum}
-        validateShippingAddress={() => hasAddress}
-        onValidationFail={onPaypalError}
-      />
+      <Paypal cartItems={items} sum={sum} />
     </div>
   );
 };
