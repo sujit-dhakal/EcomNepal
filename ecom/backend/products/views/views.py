@@ -145,10 +145,10 @@ class ProductRecommendView(APIView):
                     status=status.HTTP_400_BAD_REQUEST
                 )
             try:
-                num_results = int(request.GET.get('limit', 5))
+                num_results = int(request.GET.get('limit', 20))
                 num_results = min(max(1, num_results), 20)
             except ValueError:
-                num_results = 5
+                num_results = 20
 
             product_id = request.GET.get('product_id')
             if product_id is not None:
