@@ -8,7 +8,7 @@ class ProductSerializer(serializers.ModelSerializer):
     class Meta:
         model = Product
         fields = '__all__'
-    
+
     def get_average_rating(self, obj):
         comments = Comment.objects.filter(product=obj)
         if comments.exists():

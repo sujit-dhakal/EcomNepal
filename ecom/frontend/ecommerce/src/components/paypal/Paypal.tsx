@@ -39,7 +39,7 @@ const Paypal: React.FC<createOrderProps> = ({ cartItems, sum }) => {
         items: cartItems,
         total: sum,
       });
-        router.push(`/${locale}/order-confirm`);
+      router.push(`/${locale}/order-confirm`);
     } catch (error: any) {
       console.log("onApprove", error.response.data);
     }

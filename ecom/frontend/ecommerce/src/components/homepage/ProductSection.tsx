@@ -9,48 +9,59 @@ import Button from "../Button";
 import { useRouter } from "next/navigation";
 import { useLocale } from "next-intl";
 import axios from "axios";
-import { fetchSimilarProducts } from "@/app/[locale]/product/similarProducts";
 import { shuffleArray } from "@/lib/shuffleArray";
+import { RootState } from "@/lib/store";
 
 interface ProductSectionProps {
   type?: "bestselling" | "latest" | "similar";
   topHeading: string;
   heading: string;
-  productName?: string;
   productId?: number;
 }
 
-const ProductSection = ({ type, topHeading, heading, productName, productId }: ProductSectionProps) => {
+const ProductSection = ({ type, topHeading, heading, productId }: ProductSectionProps) => {
   const dispatch = useAppDispatch();
   const router = useRouter();
   const locale = useLocale();
   const [products, setProducts] = useState<Product[]>([]);
+  const { relatedProducts } = useAppSelector(
+    (state: RootState) => state.product.productState
+  );
 
   useEffect(() => {
     const fetchProducts = async () => {
       if (type === "bestselling") {
-        const response = await axios.get("http://127.0.0.1:8000/products?query=bestselling");
+        const response = await axios.get(
+          "http://127.0.0.1:8000/products?query=bestselling"
+        );
         setProducts(response.data);
       } else if (type === "latest") {
-        const response = await axios.get("http://127.0.0.1:8000/products?query=latest");
+        const response = await axios.get(
+          "http://127.0.0.1:8000/products?query=latest"
+        );
         setProducts(response.data);
-      } else if (type === "similar" && productName && productId) {
-        const response = await fetchSimilarProducts(productName, productId);
-        setProducts(response)
+      } else if (type === "similar" && productId) {     
+        setProducts(relatedProducts.map((product) => ({
+          ...product,
+          image: `http://localhost:8000${product.image}`
+        })));
       } else {
         dispatch(getProducts());
       }
     };
     fetchProducts();
-  }, [dispatch, type, productName, productId]);
+  }, [dispatch, type, productId]);
 
-  const displayedProducts = type ? products.slice(0, 4) : useAppSelector((state) => state.product.productState.products).slice(0, 8);
+  const displayedProducts = type
+    ? products.slice(0, 4)
+    : useAppSelector((state) => state.product.productState.products).slice(0, 8);
+
   const shuffledProducts = shuffleArray(displayedProducts);
 
   const handleViewAll = () => {
     if (type) {
       if (type === "similar") {
-        router.push(`/${locale}/product?type=${type}&product_name=${productName}&product_id=${productId}`)
+        router.push(`/${locale}/product?type=${type}&product_id=${productId}`)
       } else {
         router.push(`/${locale}/product?type=${type}`);
       }

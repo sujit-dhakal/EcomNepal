@@ -88,7 +88,9 @@ const ChatInterface = () => {
   return (
     <div
       className={`fixed bottom-4 right-4 ${
-        isMinimized ? "w-[100px] h-[100px]" : "w-[450px] h-[600px]"
+        isMinimized
+          ? "w-[100px] h-[100px]"
+          : "w-[400px] md:w-[500px] lg:w-[450px] h-[600px] md:h-[600px] lg:h-[600px]"
       } flex flex-col bg-white border border-gray-200 rounded-lg shadow-lg transition-all`}
     >
       {isMinimized ? (
@@ -102,7 +104,7 @@ const ChatInterface = () => {
         <>
           {/* Chat Header with Minimize Button */}
           <div className="p-4 border-b flex justify-between items-center">
-            <h2 className="text-lg font-semibold text-gray-800">
+            <h2 className="text-lg font:semibold text-gray-800 md:text-xl">
               Chat Interface
             </h2>
             <button
@@ -119,7 +121,7 @@ const ChatInterface = () => {
               <div
                 key={index}
                 className={`
-                  max-w-[80%] p-3 rounded-lg
+                  max-w-[80%] p-3 rounded-lg text-sm md:text-base
                   ${
                     message.sender === "user"
                       ? "bg-blue-100 ml-auto text-right rounded-br-none"
@@ -131,7 +133,7 @@ const ChatInterface = () => {
               </div>
             ))}
             {isLoading && (
-              <div className="text-center text-gray-500 italic">
+              <div className="text-center text-gray-500 italic text-sm md:text-base">
                 Thinking...
               </div>
             )}
@@ -146,12 +148,12 @@ const ChatInterface = () => {
               onChange={(e) => setInputMessage(e.target.value)}
               onKeyDown={handleKeyPress}
               disabled={isLoading}
-              className="flex-grow px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
+              className="flex-grow px-3 py-2 text-sm md:text-base border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
             <button
               onClick={handleSendMessage}
               disabled={isLoading || !inputMessage.trim()}
-              className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 disabled:bg-gray-300 disabled:cursor-not-allowed transition-colors"
+              className="px-4 py-2 text-sm md:text-base bg-blue-500 text-white rounded hover:bg-blue-600 disabled:bg-gray-300 disabled:cursor-not-allowed transition-colors"
             >
               Send
             </button>

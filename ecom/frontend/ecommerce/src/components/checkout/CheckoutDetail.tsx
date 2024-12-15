@@ -1,28 +1,41 @@
 "use client";
-import React, { useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import { getCartSum, getCartItems } from "@/lib/store";
 import Paypal from "../paypal/Paypal";
+import { Product } from "@/types/productTypes";
+import { useSearchParams } from "next/navigation";
 
-const CheckoutDetail: React.FC = () => {
+const CheckoutDetail: React.FC<{
+  product: Product | null;
+}> = ({ product, address }) => {
+  const searchParams = useSearchParams();
   const sum = useAppSelector((state) => state.cart.sum);
   const cartItems = useAppSelector((state) => state.cart.itemsInCart);
   const dispatch = useAppDispatch();
+  const [items, setItems] = useState<any[]>([]);
 
   const fetchSum = async () => {
-    const response = await dispatch(getCartSum());
-    console.log(response);
+    await dispatch(getCartSum());
   };
   const fetchCart = async () => {
-    const response = await dispatch(getCartItems());
-    console.log(response);
+    await dispatch(getCartItems());
   };
-  useEffect(() => {
-    fetchCart();
-    fetchSum();
-  }, []);
 
-  const subtotal = cartItems.reduce((total, item) => total + item.total_price, 0);
+  useEffect(() => {
+    const productId = searchParams.get("product_id");
+    if (productId) {
+      setItems([
+        { product, total_price: parseFloat(product.price.toString()) },
+      ]);
+    } else {
+      fetchCart();
+      setItems(cartItems);
+    }
+    fetchSum();
+  }, [cartItems, product, dispatch, searchParams]);
+
+  const subtotal = items.reduce((total, item) => total + item.total_price, 0);
   const shipping = "Free";
   const total = subtotal;
 
@@ -30,11 +43,8 @@ const CheckoutDetail: React.FC = () => {
     <div className="basis-1/2 py-6 sm:px-6 space-y-6">
       {/* Product Summary */}
       <div>
-        {cartItems.map((item) => (
-          <div
-            key={item.product.id}
-            className="flex justify-between items-center mb-10"
-          >
+        {items.map((item, index) => (
+          <div key={index} className="flex justify-between items-center mb-10">
             <div className="flex items-center space-x-4">
               <img
                 src={item.product.image}
@@ -61,7 +71,13 @@ const CheckoutDetail: React.FC = () => {
         <p>Total:</p>
         <p>${total.toFixed(2)}</p>
       </div>
-      <Paypal cartItems={cartItems} sum={sum} />      
+      {address.length > 0 ? (
+        <Paypal cartItems={items} sum={sum} />
+      ) : (
+        <p className="text-red-500 font-medium">
+          Please provide a valid address to proceed with the payment.
+        </p>
+      )}
     </div>
   );
 };

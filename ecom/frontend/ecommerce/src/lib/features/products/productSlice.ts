@@ -26,6 +26,7 @@ const initialProductState: ProductState = {
       count: 0,
     },
   },
+  relatedProducts: [],
 };
 
 const initialCommentState: CommentState = {
@@ -71,14 +72,12 @@ export const buildProductSlice = () => {
           state.productState.isLoading = true;
           state.productState.isError = false;
         })
-        .addCase(
-          getProductDetail.fulfilled,
-          (state, action: PayloadAction<Product>) => {
-            state.productState.isLoading = false;
-            state.productState.product = action.payload;
-            state.productState.isError = false;
-          }
-        )
+        .addCase(getProductDetail.fulfilled, (state, action) => {
+          state.productState.isLoading = false;
+          state.productState.product = action.payload.product;
+          state.productState.isError = false;
+          state.productState.relatedProducts = action.payload.related_products;
+        })
         .addCase(getProductDetail.rejected, (state) => {
           state.productState.isError = true;
           state.productState.isLoading = false;

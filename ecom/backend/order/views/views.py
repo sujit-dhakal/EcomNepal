@@ -124,6 +124,8 @@ class CapturePayPalOrderView(APIView):
             order = Order.objects.create(user=request.user,total_amount=total,status='PAID')
 
 
+
+
             for item in items:
                 OrderItem.objects.create( order = order,
                                         product_name = item['product']['name'] ,

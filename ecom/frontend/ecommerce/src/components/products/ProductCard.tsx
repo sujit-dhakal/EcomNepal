@@ -28,11 +28,11 @@ const ProductCard: React.FC<ProductCard> = ({ product }) => {
               {Array.from({ length: 5 }, (_, index) => (
                 <span
                   key={index}
-                  className={`text-lg ${index <
-                      Math.round(product.average_rating?.rating || 0)
+                  className={`text-lg ${
+                    index < Math.round(product.average_rating?.rating || 0)
                       ? "text-yellow-500"
                       : "text-gray-300"
-                    }`}
+                  }`}
                 >
                   ★
                 </span>

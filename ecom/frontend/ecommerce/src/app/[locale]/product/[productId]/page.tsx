@@ -22,8 +22,8 @@ const page = ({
   const locale = useLocale();
   const [addToCartValue, setAddToCartValue] = useState("Add to cart");
   const dispatch = useAppDispatch();
-  const product = useAppSelector(
-    (state: RootState) => state.product.productState.product
+  const { product, isLoading: isProductLoading } = useAppSelector(
+    (state: RootState) => state.product.productState
   );
   const isAuth = useAppSelector(
     (state: RootState) => state.user.isAuthenticated
@@ -34,10 +34,6 @@ const page = ({
   const { rating, count } = useAppSelector(
     (state: RootState) =>
       state.product.commentState.averageRating || { rating: 0, count: 0 }
-  );
-
-  const isProductLoading = useAppSelector(
-    (state: RootState) => state.product.productState.isLoading
   );
 
   const addToCart = async (productId: number) => {
@@ -52,15 +48,7 @@ const page = ({
     console.log(response.data);
   };
   const buyNow = async (productId: number) => {
-    const response = await client.post(
-      "http://127.0.0.1:8000/cart/add_to_cart/",
-      {
-        product_id: productId,
-        quantity: 1,
-      }
-    );
-    router.push(`/${locale}/cart`);
-    console.log(response.data);
+    router.push(`/${locale}/checkout?product_id=${productId}`);
   };
 
   useEffect(() => {
@@ -69,76 +57,78 @@ const page = ({
     dispatch(getAverageRating(params.productId));
   }, [dispatch, params.productId]);
 
+  if (isProductLoading) {
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <div className="animate-spin rounded-full h-16 w-16 border-t-4 border-blue-500"></div>
+      </div>
+    );
+  }
+
+  if (!product || !product.id) {
+    return <div className="text-center mt-10">Product not found.</div>;
+  }
+
   return (
     <>
       <div className="mt-[50px]">
-        <div>
-          {isProductLoading ? (
-            <>
-              <div className="animate-spin rounded-full h-16 w-16 border-t-4 border-blue-500"></div>
-            </>
-          ) : (
-            <>
-              <div className="flex flex-col justify-center lg:flex-row gap-16 px-3.5">
-                <div className="flex justify-center">
-                  <img
-                    src={product.image}
-                    alt="product image"
-                    className="w-[450px] h-[350px] rounded-lg"
-                  />
-                </div>
+        <div className="flex flex-col justify-center lg:flex-row gap-16 px-3.5">
+          <div className="flex justify-center">
+            <img
+              src={`http://localhost:8000/${product.image}`}
+              alt="product image"
+              className="w-[450px] h-[350px] rounded-lg"
+            />
+          </div>
 
-                <div className="flex justify-center">
-                  <div className="flex flex-col gap-5 max-w-[420px]">
-                    <div className="flex flex-col gap-2">
-                      <h1 className="text-2xl font-semibold text-black">
-                        {product.name}
-                      </h1>
-                      <div className="flex items-center gap-1">
-                        <div className="flex items-center">
-                          {Array.from({ length: 5 }, (_, index) => (
-                            <span
-                              key={index}
-                              className={`text-lg ${index < Math.round(rating)
-                                ? "text-yellow-500"
-                                : "text-gray-300"
-                                }`}
-                            >
-                              ★
-                            </span>
-                          ))}
-                        </div>
-                        <span>({count || 0})</span>
-                      </div>
-                      <h1 className="text-md text-red-900">${product.price}</h1>
-                      <p className="text-md text-black">
-                        {product.description}
-                      </p>
-                    </div>
-                    {isAuth && (
-                      <>
-                        <hr className="border-black border-opacity-30" />
-                        <button
-                          className="bg-black hover:bg-opacity-70 text-white rounded-lg py-2 px-4"
-                          type="button"
-                          onClick={() => addToCart(product.id)}
-                        >
-                          {addToCartValue}
-                        </button>
-                        <button
-                          className="bg-black hover:bg-opacity-70 text-white text-md rounded-lg py-2 px-4"
-                          type="button"
-                          onClick={() => buyNow(product.id)}
-                        >
-                          Buy Now
-                        </button>
-                      </>
-                    )}
+          <div className="flex justify-center">
+            <div className="flex flex-col gap-5 max-w-[420px]">
+              <div className="flex flex-col gap-2">
+                <h1 className="text-2xl font-semibold text-black">
+                  {product.name}
+                </h1>
+                <div className="flex items-center gap-1">
+                  <div className="flex items-center">
+                    {Array.from({ length: 5 }, (_, index) => (
+                      <span
+                        key={index}
+                        className={`text-lg ${index < Math.round(rating)
+                          ? "text-yellow-500"
+                          : "text-gray-300"
+                          }`}
+                      >
+                        ★
+                      </span>
+                    ))}
                   </div>
+                  <span>({count || 0})</span>
                 </div>
+                <h1 className="text-md text-red-900">${product.price}</h1>
+                <p className="text-md text-black">
+                  {product.description}
+                </p>
               </div>
-            </>
-          )}
+              {isAuth && (
+                <>
+                  <hr className="border-black border-opacity-30" />
+                  <button
+                    className="bg-black hover:bg-opacity-70 text-white rounded-lg py-2 px-4"
+                    type="button"
+                    onClick={() => addToCart(product.id)}
+                  >
+                    {addToCartValue}
+                  </button>
+                  <button
+                    className="bg-black hover:bg-opacity-70 text-white text-md rounded-lg py-2 px-4"
+                    type="button"
+                    onClick={() => buyNow(product.id)}
+                  >
+                    Buy Now
+                  </button>
+                </>
+              )}
+            </div>
+          </div>
         </div>
 
         <>
@@ -204,12 +194,11 @@ const page = ({
         <div className="container mx-auto mt-20 px-4 space-y-14">
           <HorizontalLine />
           <Section>
-            {product && product.name && product.id && (
+            {product && product.id && (
               <ProductSection
                 type="similar"
                 topHeading="Related Items"
                 heading="You Might Also Like"
-                productName={product.name}
                 productId={product.id}
               />
             )}

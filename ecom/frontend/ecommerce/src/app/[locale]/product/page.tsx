@@ -1,35 +1,37 @@
 "use client";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
-import { getProducts } from "@/lib/store";
-import { useEffect, useState } from "react";
+import { getProductDetail, getProducts } from "@/lib/store";
+import { useEffect } from "react";
 import { useSearchParams } from "next/navigation";
 import { Product } from "@/types/productTypes";
 import ProductCard from "@/components/products/ProductCard";
-import { fetchSimilarProducts } from "./similarProducts";
 import { shuffleArray } from "@/lib/shuffleArray";
 
 const Products = () => {
   const dispatch = useAppDispatch();
-  const [products, setProducts] = useState<Product[]>([]);
-  const productsFromRedux = useAppSelector((state) => state.product.productState.products);
+  const products = useAppSelector((state) => state.product.productState.products);
+  const { relatedProducts } = useAppSelector((state) => state.product.productState);
   const searchParams = useSearchParams();
   const productType = searchParams.get("type") || "";
-  const productName = searchParams.get("product_name") || "";
   const productId = searchParams.get("product_id");
 
   useEffect(() => {
     const fetchProducts = async () => {
-      if (productId && productName) {
-        const similarProducts = await fetchSimilarProducts(productName, productId);
-        setProducts(similarProducts);
+      if (productId) {
+        dispatch(getProductDetail(productId));
       } else {
         dispatch(getProducts(productType));
       }
     };
     fetchProducts();
-  }, [dispatch, productType, productId, productName]);
+  }, [dispatch, productType, productId]);
 
-  const displayedProducts = productType === "similar" ? products : productsFromRedux;
+  const updatedRelatedProducts = relatedProducts.map((product) => ({
+    ...product,
+    image: `http://localhost:8000${product.image}`,
+  }));
+
+  const displayedProducts = productType === "similar" ? updatedRelatedProducts : products;
   const shuffledProducts = shuffleArray(displayedProducts);
 
   return (
