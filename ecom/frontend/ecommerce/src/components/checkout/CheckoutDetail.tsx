@@ -26,8 +26,13 @@ const CheckoutDetail: React.FC<{
     const productId = searchParams.get("product_id");
     if (productId) {
       setItems([
-        { product, total_price: parseFloat(product.price.toString()) },
+        {
+          product,
+          quantity: 1,
+          total_price: product?.price,
+        },
       ]);
+      console.log(items);
     } else {
       fetchCart();
       setItems(cartItems);
@@ -47,7 +52,11 @@ const CheckoutDetail: React.FC<{
           <div key={index} className="flex justify-between items-center mb-10">
             <div className="flex items-center space-x-4">
               <img
-                src={item.product.image}
+                src={
+                  item.product.image.startsWith("http")
+                    ? item.product.image
+                    : `http://localhost:8000/${item.product.image}`
+                }
                 alt={item.product.name}
                 className="w-16 h-16 object-cover rounded-lg"
               />
@@ -61,7 +70,7 @@ const CheckoutDetail: React.FC<{
       {/* Summary Details */}
       <div className="flex justify-between">
         <p>Subtotal:</p>
-        <p className="font-semibold">${subtotal.toFixed(2)}</p>
+        <p className="font-semibold">${subtotal}</p>
       </div>
       <div className="flex justify-between border-t border-gray-400 pt-4">
         <p>Shipping:</p>
@@ -69,7 +78,7 @@ const CheckoutDetail: React.FC<{
       </div>
       <div className="flex justify-between font-bold text-lg border-t border-gray-400 mt-4 pt-4">
         <p>Total:</p>
-        <p>${total.toFixed(2)}</p>
+        <p>${total}</p>
       </div>
       {address.length > 0 ? (
         <Paypal cartItems={items} sum={sum} />

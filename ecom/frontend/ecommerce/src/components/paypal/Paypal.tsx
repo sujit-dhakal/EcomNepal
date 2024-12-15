@@ -25,6 +25,7 @@ const Paypal: React.FC<createOrderProps> = ({ cartItems, sum }) => {
         items: cartItems,
         total: sum,
       });
+      console.log(paypalresponse);
       console.log(paypalresponse.data.paypal_order_id);
       return paypalresponse.data.paypal_order_id;
     } catch (error: any) {
