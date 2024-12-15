@@ -1,7 +1,7 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "@/lib/hooks";
-import { getCartSum, getCartItems } from "@/lib/store";
+import { getCartItems } from "@/lib/store";
 import Paypal from "../paypal/Paypal";
 import { Product } from "@/types/productTypes";
 import { useSearchParams } from "next/navigation";
@@ -10,35 +10,33 @@ const CheckoutDetail: React.FC<{
   product: Product | null;
 }> = ({ product, address }) => {
   const searchParams = useSearchParams();
-  const sum = useAppSelector((state) => state.cart.sum);
   const cartItems = useAppSelector((state) => state.cart.itemsInCart);
   const dispatch = useAppDispatch();
   const [items, setItems] = useState<any[]>([]);
-
-  const fetchSum = async () => {
-    await dispatch(getCartSum());
-  };
+  
   const fetchCart = async () => {
     await dispatch(getCartItems());
   };
 
   useEffect(() => {
     const productId = searchParams.get("product_id");
-    if (productId) {
+    if (productId && product) {
       setItems([
         {
           product,
           quantity: 1,
-          total_price: product?.price,
+          total_price: parseFloat(product.price.toString()),
         },
       ]);
-      console.log(items);
     } else {
       fetchCart();
       setItems(cartItems);
     }
-    fetchSum();
-  }, [cartItems, product, dispatch, searchParams]);
+  }, [cartItems, product, searchParams]);
+
+  // useEffect(() => {
+  //   console.log(items)
+  // }, [items]);
 
   const subtotal = items.reduce((total, item) => total + item.total_price, 0);
   const shipping = "Free";
@@ -70,7 +68,7 @@ const CheckoutDetail: React.FC<{
       {/* Summary Details */}
       <div className="flex justify-between">
         <p>Subtotal:</p>
-        <p className="font-semibold">${subtotal}</p>
+        <p className="font-semibold">${subtotal.toFixed(2)}</p>
       </div>
       <div className="flex justify-between border-t border-gray-400 pt-4">
         <p>Shipping:</p>
@@ -78,10 +76,10 @@ const CheckoutDetail: React.FC<{
       </div>
       <div className="flex justify-between font-bold text-lg border-t border-gray-400 mt-4 pt-4">
         <p>Total:</p>
-        <p>${total}</p>
+        <p>${total.toFixed(2)}</p>
       </div>
       {address.length > 0 ? (
-        <Paypal cartItems={items} sum={sum} />
+        <Paypal cartItems={items} sum={total} />
       ) : (
         <p className="text-red-500 font-medium">
           Please provide a valid address to proceed with the payment.
