@@ -8,7 +8,7 @@ import { useSearchParams } from "next/navigation";
 
 const CheckoutDetail: React.FC<{
   product: Product | null;
-}> = ({ product }) => {
+}> = ({ product, address }) => {
   const searchParams = useSearchParams();
   const sum = useAppSelector((state) => state.cart.sum);
   const cartItems = useAppSelector((state) => state.cart.itemsInCart);
@@ -28,7 +28,7 @@ const CheckoutDetail: React.FC<{
       setItems([
         { product, total_price: parseFloat(product.price.toString()) },
       ]);
-    } else if (product) {
+    } else {
       fetchCart();
       setItems(cartItems);
     }
@@ -71,7 +71,13 @@ const CheckoutDetail: React.FC<{
         <p>Total:</p>
         <p>${total.toFixed(2)}</p>
       </div>
-      <Paypal cartItems={items} sum={sum} />
+      {address.length > 0 ? (
+        <Paypal cartItems={items} sum={sum} />
+      ) : (
+        <p className="text-red-500 font-medium">
+          Please provide a valid address to proceed with the payment.
+        </p>
+      )}
     </div>
   );
 };

@@ -43,10 +43,7 @@ const ProductSection = ({ type, topHeading, heading }: ProductSectionProps) => {
 
   const displayedProducts = type
     ? products.slice(0, 4)
-    : useAppSelector((state) => state.product.productState.products).slice(
-        0,
-        8
-      );
+    : useAppSelector((state) => state.product.productState.products).slice(0, 8);
 
   const handleViewAll = () => {
     if (type) {

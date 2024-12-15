@@ -28,13 +28,7 @@ const page = () => {
       <h2 className="text-2xl font-semibold">Checkout Details</h2>
       <div className="flex flex-col lg:flex-row justify-between gap-[60px]">
         <ShippingAddressComponent />
-        {addresses.length > 0 ? (
-          <>
-            <CheckoutDetail product={product} />{" "}
-          </>
-        ) : (
-          <></>
-        )}
+        <CheckoutDetail product={product} address={addresses} />
       </div>
     </div>
   );
