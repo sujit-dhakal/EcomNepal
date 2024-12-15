@@ -11,6 +11,7 @@ from rest_framework import viewsets
 from rest_framework.decorators import action
 from django.db.models import Q
 from products.product_recommender import ProductSearch
+from products.utils import get_related_products_knn
 class ProductView(generics.ListAPIView):
     serializer_class = ProductSerializer
     queryset = Product.objects.all()
@@ -28,10 +29,24 @@ class ProductView(generics.ListAPIView):
             ).distinct()
         return queryset
 
-class ProductDetailView(generics.RetrieveAPIView):
-    serializer_class = ProductSerializer
-    queryset = Product.objects.all()
-    lookup_field = 'id'
+class ProductDetailView(APIView):
+    def get(self, request, id):
+        try:
+            product = Product.objects.get(id=id)
+        except Product.DoesNotExist:
+            return Response({"error": "Product not found"}, status=404)
+
+        # Fetch related products using KNN
+        related_products = get_related_products_knn(target_product_id=id, n_neighbors=5)
+
+        # Serialize data
+        product_serializer = ProductSerializer(product)
+        related_products_serializer = ProductSerializer(related_products, many=True)
+
+        return Response({
+            'product': product_serializer.data,
+            'related_products': related_products_serializer.data
+        })
 
 class CategoryList(generics.ListAPIView):
     serializer_class = CategorySerializer

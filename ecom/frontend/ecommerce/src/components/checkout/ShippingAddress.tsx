@@ -5,14 +5,14 @@ import { getShippingAddresses } from "@/lib/store";
 import Link from "next/link";
 import { useLocale } from "next-intl";
 
-const ShippingAddressComponent: React.FC<{ onAddressChange: (hasAddress: boolean) => void }> = ({
-  onAddressChange
-}) => {
+const ShippingAddressComponent = () => {
   const locale = useLocale();
   const dispatch = useAppDispatch();
   const addresses = useAppSelector((state) => state.shipping.addresses);
 
-  const [selectedAddressIndex, setSelectedAddressIndex] = useState<number | null>(null);
+  const [selectedAddressIndex, setSelectedAddressIndex] = useState<
+    number | null
+  >(null);
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
 
@@ -28,10 +28,9 @@ const ShippingAddressComponent: React.FC<{ onAddressChange: (hasAddress: boolean
         : [response.payload];
 
       // Find the index of the default address
-      const defaultIndex = fetchedAddresses.findIndex((addr) => addr.is_default);
-      if (fetchedAddresses.length > 0) {
-        onAddressChange(true);
-      }
+      const defaultIndex = fetchedAddresses.findIndex(
+        (addr) => addr.is_default
+      );
 
       // Set selected address index: default if available, otherwise a random address
       if (defaultIndex !== -1) {
@@ -42,14 +41,13 @@ const ShippingAddressComponent: React.FC<{ onAddressChange: (hasAddress: boolean
     } catch (error) {
       console.error("Error fetching shipping addresses:", error);
       setIsError(true);
-      onAddressChange(false);
     } finally {
       setIsLoading(false);
     }
   };
   useEffect(() => {
     fetchAddress();
-  }, [dispatch, onAddressChange]);
+  }, [dispatch]);
 
   const handleSelectAddress = (index: number) => {
     setSelectedAddressIndex(index);
@@ -62,7 +60,11 @@ const ShippingAddressComponent: React.FC<{ onAddressChange: (hasAddress: boolean
   }
 
   if (isError) {
-    return <p className="text-red-500">Error loading shipping addresses. Please try again.</p>;
+    return (
+      <p className="text-red-500">
+        Error loading shipping addresses. Please try again.
+      </p>
+    );
   }
 
   return (
@@ -70,9 +72,7 @@ const ShippingAddressComponent: React.FC<{ onAddressChange: (hasAddress: boolean
       <div className="flex items-center justify-between">
         <h2 className="text-lg font-semibold">Select Shipping Address</h2>
         <Link href={`/${locale}/shipping`}>
-          <button
-            className="px-3 text-lg bg-black text-white rounded-[20px] hover:bg-opacity-70"
-          >
+          <button className="px-3 text-lg bg-black text-white rounded-[20px] hover:bg-opacity-70">
             Add
           </button>
         </Link>
@@ -80,15 +80,20 @@ const ShippingAddressComponent: React.FC<{ onAddressChange: (hasAddress: boolean
 
       {normalizedAddresses.length === 0 ? (
         <div className="text-center">
-          <p className="text-red-600 my-[150px]">No shipping address available.</p>
+          <p className="text-red-600 my-[150px]">
+            No shipping address available.
+          </p>
         </div>
       ) : (
         <form className="space-y-4 pt-6">
           {normalizedAddresses.map((address, index) => (
             <label
               key={index}
-              className={`flex items-start p-4 border rounded cursor-pointer space-x-4 ${selectedAddressIndex === index ? "border-black" : "border-gray-300"
-                }`}
+              className={`flex items-start p-4 border rounded cursor-pointer space-x-4 ${
+                selectedAddressIndex === index
+                  ? "border-black"
+                  : "border-gray-300"
+              }`}
             >
               <input
                 type="radio"
@@ -99,7 +104,9 @@ const ShippingAddressComponent: React.FC<{ onAddressChange: (hasAddress: boolean
                 className="mt-1"
               />
               <div>
-                <p className="font-semibold">{address.city}, {address.state}</p>
+                <p className="font-semibold">
+                  {address.city}, {address.state}
+                </p>
                 <p>{address.country}</p>
                 <p>Postal Code: {address.postal_code}</p>
               </div>

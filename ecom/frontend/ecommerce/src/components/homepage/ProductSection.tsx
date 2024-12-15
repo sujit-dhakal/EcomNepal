@@ -25,10 +25,14 @@ const ProductSection = ({ type, topHeading, heading }: ProductSectionProps) => {
   useEffect(() => {
     const fetchProducts = async () => {
       if (type === "bestselling") {
-        const response = await axios.get("http://127.0.0.1:8000/products?query=bestselling");
+        const response = await axios.get(
+          "http://127.0.0.1:8000/products?query=bestselling"
+        );
         setProducts(response.data);
       } else if (type === "latest") {
-        const response = await axios.get("http://127.0.0.1:8000/products?query=latest");
+        const response = await axios.get(
+          "http://127.0.0.1:8000/products?query=latest"
+        );
         setProducts(response.data);
       } else {
         dispatch(getProducts());
@@ -37,7 +41,9 @@ const ProductSection = ({ type, topHeading, heading }: ProductSectionProps) => {
     fetchProducts();
   }, [dispatch, type]);
 
-  const displayedProducts = type ? products.slice(0, 4) : useAppSelector((state) => state.product.productState.products).slice(0, 8);
+  const displayedProducts = type
+    ? products.slice(0, 4)
+    : useAppSelector((state) => state.product.productState.products).slice(0, 8);
 
   const handleViewAll = () => {
     if (type) {
