@@ -3,11 +3,10 @@
 import React, { useState, useEffect } from 'react';
 
 interface CarouselProps {
-  images: string[];   // Images for smaller screens
-  largeImages: string[];  // Images for larger screens
+  images: string[];
 }
 
-const Carousel: React.FC<CarouselProps> = ({ images, largeImages }) => {
+const Carousel: React.FC<CarouselProps> = ({ images }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const autoSlideInterval = 3000;
 
@@ -27,11 +26,8 @@ const Carousel: React.FC<CarouselProps> = ({ images, largeImages }) => {
       <div className="flex transition-transform duration-500 ease-in-out" style={{ transform: `translateX(-${currentIndex * 100}%)` }}>
         {images.map((image, index) => (
           <div key={index} className="min-w-full flex">
-            <div className="block sm:hidden w-full max-h-[660px] flex justify-center items-center">
-              <img src={image} alt={`Slide ${index}`} className="w-full object-cover" />
-            </div>
-            <div className="hidden sm:block w-full max-h-[450px] flex justify-center items-center">
-              <img src={largeImages[index]} alt={`Slide ${index} - large`} className="w-full h-full object-cover" />
+            <div className="w-full max-h-[450px] flex justify-center items-center">
+              <img src={image} alt={`Slide ${index}`} className="w-full h-full object-cover" />
             </div>
           </div>
         ))}

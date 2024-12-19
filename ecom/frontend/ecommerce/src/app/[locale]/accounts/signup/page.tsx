@@ -1,13 +1,14 @@
 "use client";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useFormik } from "formik";
 import { registrationSchema } from "../../validations/schema";
 import { toFormikValidationSchema } from "zod-formik-adapter";
 import Link from "next/link";
-import { useAppDispatch } from "@/lib/hooks";
+import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import { checkEmail, registerUser, checkUserName } from "@/lib/store";
 import { useTranslations, useLocale } from "next-intl";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
+import { useRouter } from "next/navigation";
 
 interface RegistrationFormValues {
   user_id: "";
@@ -32,6 +33,8 @@ const initialValues: RegistrationFormValues = {
 const page = () => {
   const t = useTranslations("SignUp");
   const locale = useLocale();
+  const router = useRouter();
+  const user = useAppSelector((state) => state.user.isAuthenticated);
   const [userNameAlreadyExist, setUserNameAlreadyExist] =
     useState<boolean>(false);
   const [emailAlreadyExist, setEmailAlreadyExist] = useState<boolean>(false);
@@ -40,6 +43,17 @@ const page = () => {
   const [showConfirmPassword, setShowConfirmPassword] =
     useState<boolean>(false);
   const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    if (user) {
+      router.push(`/${locale}/profile`);
+    }
+  }, [user, locale, router]);
+
+  if (user) {
+    return null;
+  }
+
   const formik = useFormik<RegistrationFormValues>({
     initialValues,
     validationSchema: toFormikValidationSchema(registrationSchema),

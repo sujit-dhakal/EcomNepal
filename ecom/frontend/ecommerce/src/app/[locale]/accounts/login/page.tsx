@@ -1,11 +1,11 @@
 "use client";
 import { useFormik } from "formik";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { loginSchema } from "../../validations/schema";
 import { toFormikValidationSchema } from "zod-formik-adapter";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useAppDispatch } from "@/lib/hooks";
+import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import { actions, loginUser } from "@/lib/store";
 import Cookies from "js-cookie";
 import { loginUserType } from "@/types/userTypes";
@@ -24,6 +24,18 @@ const page = () => {
   const [showPassword, setShowPassword] = useState<boolean>(false);
   const dispatch = useAppDispatch();
   const router = useRouter();
+  const user = useAppSelector((state) => state.user.isAuthenticated);
+
+  useEffect(() => {
+    if (user) {
+      router.push(`/${locale}/profile`);
+    }
+  }, [user, locale, router]);
+
+  if (user) {
+    return null;
+  }
+
   const formik = useFormik<loginUserType>({
     initialValues,
     validationSchema: toFormikValidationSchema(loginSchema),
@@ -48,6 +60,7 @@ const page = () => {
       }
     },
   });
+
   return (
     <div className="h-[calc(60vh-265px)] w-[90%] md:w-[370px] text-center m-auto mt-[100px]">
       <div className="">
