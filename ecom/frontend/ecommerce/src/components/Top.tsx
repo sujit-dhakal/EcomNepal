@@ -23,8 +23,8 @@ const Top = () => {
       <div className="flex-grow text-center">
         <p>
           Dashain Offer - OFF 50%!{" "}
-          <Link href="/swim-suits-link">
-            <span className="font-medium">ShopNow</span>
+          <Link href={`${localActive}/product?type=dashain`}>
+            <span className="font-medium hover:underline">ShopNow</span>
           </Link>
         </p>
       </div>
