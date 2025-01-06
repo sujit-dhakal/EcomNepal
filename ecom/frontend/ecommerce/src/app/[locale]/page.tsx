@@ -4,17 +4,9 @@ import ProductSection from "@/components/homepage/ProductSection";
 import ChatInterface from "@/components/chatbot/ChatInterface";
 
 const images = [
-  // Carousel Images for small devices
-  "/images/homepage/carousel/small-iphone.png",
-  "/images/products/joystick.svg",
-  "/images/heart small.svg",
-];
-
-const largeImages = [
-  // Carousel Images for large devices
-  "/images/homepage/carousel/large-iphone.png",
-  "/images/homepage/carousel/ecommerce.jpeg",
-  "/images/homepage/carousel/cycle.png",
+  "/images/homepage/carousel/buy.png",
+  "/images/homepage/carousel/sale.png",
+  "/images/homepage/carousel/phone.png",
 ];
 
 // Reusable Section Component
@@ -37,7 +29,7 @@ export default async function HomePage() {
       <div className="flex flex-col items-center justify-center gap-14">
         {/* Carousel */}
         <section className="w-full">
-          <Carousel images={images} largeImages={largeImages} />
+          <Carousel images={images} />
         </section>
 
         {/* Categories */}
@@ -70,7 +62,11 @@ export default async function HomePage() {
         </Section>
 
         {/* Horizontal Line */}
-        <HorizontalLine />
+        {/* <HorizontalLine /> */}
+
+        <Section>
+          <img src="/images/homepage/banner.png" className="lg:my-[50px]"></img>
+        </Section>
 
         {/* All Products */}
         <Section>
