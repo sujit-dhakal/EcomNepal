@@ -1,6 +1,6 @@
-# ecommerce-drf-next
+# ecomNEPAL
 
-This is a ecommerce project.
+This is an ecommerce project.
 
 # Prerequities
 
@@ -24,5 +24,5 @@ Run the project using docker-compose
 
 To access the development server:
 
-    locahost:8000 # frontend
-    localhost:3000 #backend
+    localhost:8000 # frontend
+    localhost:3000 # backend
