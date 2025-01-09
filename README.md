@@ -1,4 +1,4 @@
-# ecomNEPAL
+# EcomNepal
 
 This is an ecommerce project.
 

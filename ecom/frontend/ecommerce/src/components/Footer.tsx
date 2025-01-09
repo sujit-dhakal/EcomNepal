@@ -49,7 +49,7 @@ const Footer: React.FC = () => {
     <footer className="bg-black text-[#FAFAFA] py-10 mt-24">
       <div className="container mx-auto px-2 sm:px-4 grid grid-cols-2 md:grid-cols-4 gap-y-8 sm:gap-8">
         <div>
-          <h3 className="text-xl font-bold">EcomNEPAL</h3>
+          <h3 className="text-xl font-bold">EcomNepal</h3>
         </div>
 
         <div>
@@ -78,7 +78,7 @@ const Footer: React.FC = () => {
       </div>
 
       <div className="border-t border-gray-700 mt-8 pt-6 text-center text-base text-[#FAFAFA]">
-        © {year} EcomNEPAL. All rights reserved.
+        © {year} EcomNepal. All rights reserved.
       </div>
     </footer>
   );

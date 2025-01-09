@@ -22,7 +22,7 @@ const Top = () => {
     <div className="w-full text-[15px] md:text-[20px] lg:text-[20px] bg-black text-white flex items-center justify-between px-10 py-2.5">
       <div className="flex-grow text-center">
         <p>
-          Dashain Offer - OFF 50%!{" "}
+          Holi Offer - OFF 50%!{" "}
           <Link href={`${localActive}/product?type=dashain`}>
             <span className="font-medium hover:underline">ShopNow</span>
           </Link>
