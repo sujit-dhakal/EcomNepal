@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 700" role="img" aria-labelledby="title">
+  <title id="title">Memory Foam Pillow</title>
+  <rect width="900" height="700" rx="36" fill="#f8fafc"/>
+  <circle cx="735" cy="125" r="110" fill="#6366f1" opacity=".14"/>
+  <circle cx="150" cy="575" r="130" fill="#6366f1" opacity=".10"/>
+  <ellipse cx="450" cy="535" rx="205" ry="28" fill="#6366f1" opacity=".20"/>
+  <rect x="255" y="225" width="390" height="180" rx="85" fill="#6366f1" stroke="#172554" stroke-width="10"/><path d="M330 280c75-45 165-45 240 0" fill="none" stroke="#f8fafc" stroke-width="12" opacity=".55"/>
+  <text x="450" y="610" text-anchor="middle" font-family="Arial,sans-serif" font-size="27" font-weight="700" fill="#172554">Memory Foam Pillow</text>
+  <text x="450" y="650" text-anchor="middle" font-family="Arial,sans-serif" font-size="16" letter-spacing="2" fill="#6366f1">HOME &AMP; LIVING</text>
+</svg>

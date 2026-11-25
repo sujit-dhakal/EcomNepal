@@ -35,7 +35,10 @@ def chat(query_input: QueryInput):
     logging.info(f"Session ID: {session_id}, User Query: {query_input.question}, Model: {query_input.model.value}")
 
     chat_history = get_chat_history(session_id)
-    rag_chain = get_rag_chain(query_input.model.value)
+    try:
+        rag_chain = get_rag_chain(query_input.model.value)
+    except RuntimeError as exc:
+        raise HTTPException(status_code=503, detail=str(exc)) from exc
     answer = rag_chain.invoke({
         "input": query_input.question,
         "chat_history": chat_history

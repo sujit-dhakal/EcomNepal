@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 700" role="img" aria-labelledby="title">
+  <title id="title">Rechargeable Camping Lantern</title>
+  <rect width="900" height="700" rx="36" fill="#f8fafc"/>
+  <circle cx="735" cy="125" r="110" fill="#ca8a04" opacity=".14"/>
+  <circle cx="150" cy="575" r="130" fill="#ca8a04" opacity=".10"/>
+  <ellipse cx="450" cy="535" rx="205" ry="28" fill="#ca8a04" opacity=".20"/>
+  <rect x="350" y="230" width="200" height="230" rx="30" fill="#ca8a04" stroke="#172554" stroke-width="10"/><path d="M450 230c-28-42 30-55 0-100 63 42 38 74 0 100Z" fill="#fef08a"/><rect x="380" y="300" width="140" height="60" rx="15" fill="#f8fafc" opacity=".8"/>
+  <text x="450" y="610" text-anchor="middle" font-family="Arial,sans-serif" font-size="27" font-weight="700" fill="#172554">Rechargeable Camping Lantern</text>
+  <text x="450" y="650" text-anchor="middle" font-family="Arial,sans-serif" font-size="16" letter-spacing="2" fill="#ca8a04">SPORTS &AMP; OUTDOORS</text>
+</svg>

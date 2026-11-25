@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 700" role="img" aria-labelledby="title">
+  <title id="title">Woven Storage Basket</title>
+  <rect width="900" height="700" rx="36" fill="#f8fafc"/>
+  <circle cx="735" cy="125" r="110" fill="#b45309" opacity=".14"/>
+  <circle cx="150" cy="575" r="130" fill="#b45309" opacity=".10"/>
+  <ellipse cx="450" cy="535" rx="205" ry="28" fill="#b45309" opacity=".20"/>
+  <path d="M285 245h330l-25 225H310Z" fill="#b45309" stroke="#172554" stroke-width="10"/><path d="M350 245c0-110 200-110 200 0M345 330h210M330 390h240" fill="none" stroke="#fef3c7" stroke-width="12" opacity=".8"/>
+  <text x="450" y="610" text-anchor="middle" font-family="Arial,sans-serif" font-size="27" font-weight="700" fill="#172554">Woven Storage Basket</text>
+  <text x="450" y="650" text-anchor="middle" font-family="Arial,sans-serif" font-size="16" letter-spacing="2" fill="#b45309">HOME &AMP; LIVING</text>
+</svg>

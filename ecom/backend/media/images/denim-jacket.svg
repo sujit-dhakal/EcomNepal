@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 700" role="img" aria-labelledby="title">
+  <title id="title">Denim Jacket</title>
+  <defs><linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#dbeafe"/><stop offset="1" stop-color="#93c5fd"/></linearGradient><linearGradient id="jacket" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#2563eb"/><stop offset="1" stop-color="#1e3a8a"/></linearGradient></defs>
+  <rect width="900" height="700" rx="36" fill="url(#bg)"/><circle cx="165" cy="150" r="88" fill="#fff" opacity=".4"/><ellipse cx="450" cy="592" rx="200" ry="28" fill="#1e40af" opacity=".2"/>
+  <path d="M358 170 250 225l-85 146 108 56 55-78v210h244V349l55 78 108-56-85-146-108-55c-8 34-39 66-92 66s-84-32-92-66Z" fill="url(#jacket)" stroke="#1e3a8a" stroke-width="9"/><path d="M450 235v324M360 170l90 65 90-65M323 355h72v94h-72zm182 0h72v94h-72z" fill="none" stroke="#93c5fd" stroke-width="8"/><circle cx="450" cy="295" r="8" fill="#dbeafe"/><circle cx="450" cy="335" r="8" fill="#dbeafe"/>
+  <text x="450" y="625" text-anchor="middle" font-family="Arial,sans-serif" font-size="28" font-weight="700" fill="#1e3a8a">DENIM JACKET</text>
+</svg>

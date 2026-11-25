@@ -2,26 +2,13 @@ import Carousel from "@/components/homepage/Carousel";
 import Filter from "@/components/filtering/Filter";
 import ProductSection from "@/components/homepage/ProductSection";
 import ChatInterface from "@/components/chatbot/ChatInterface";
+import { HorizontalLine, Section } from "@/components/homepage/LayoutSections";
 
 const images = [
   "/images/homepage/carousel/buy.png",
   "/images/homepage/carousel/sale.png",
   "/images/homepage/carousel/phone.png",
 ];
-
-// Reusable Section Component
-export const Section = ({ children }: { children: React.ReactNode }) => (
-  <section className="flex flex-col gap-10 md:gap-[60px] w-full px-3.5 md:px-0">
-    {children}
-  </section>
-);
-
-// Reusable Horizontal Line Component
-export const HorizontalLine = () => (
-  <div className="w-full px-3.5 md:px-0">
-    <hr className="border-0.5 border-black border-opacity-30" />
-  </div>
-);
 
 export default async function HomePage() {
   return (

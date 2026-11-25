@@ -52,7 +52,6 @@ class CustomUserManager(BaseUserManager):
             password=password,
             **extra_fields
         )
-        user.is_active=True
         user.is_staff = True
         user.is_superuser = True
         user.save()

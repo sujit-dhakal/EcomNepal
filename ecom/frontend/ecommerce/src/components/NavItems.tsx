@@ -26,8 +26,8 @@ const NavItems: React.FC<NavItemsProps> = ({ onLinkClick }) => {
         console.log(response);
         if (response.payload.status == 200) {
           dispatch(actions.logout());
-          Cookies.remove("accessToken");
-          Cookies.remove("refreshToken");
+          Cookies.remove("accessToken", { path: "/" });
+          Cookies.remove("refreshToken", { path: "/" });
           router.push(`/${locale}/accounts/login`);
         }
       } catch (error) {

@@ -6,15 +6,27 @@ services:
       context: ./backend
     ports:
       - 8000:8000
-    env_file:
-      - .env
-    command: python manage.py runserver 0.0.0.0:8000
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-ecom}
+      POSTGRES_USER: ${POSTGRES_USER:-ecom}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-ecom}
+      POSTGRES_HOST: ${POSTGRES_HOST:-postgres}
+      POSTGRES_PORT: ${POSTGRES_PORT:-5432}
+      SECRET_KEY: ${SECRET_KEY:-django-insecure-local-development-only}
+      EMAIL_BACKEND: ${EMAIL_BACKEND:-django.core.mail.backends.console.EmailBackend}
+      EMAIL_HOST_USER: ${EMAIL_HOST_USER:-}
+      EMAIL_HOST_PASSWORD: ${EMAIL_HOST_PASSWORD:-}
+      CLIENT_ID: ${CLIENT_ID:-}
+      CLIENT_SECRET: ${CLIENT_SECRET:-}
     depends_on:
-      - postgres
-      - redis
-      - celery
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
     volumes:
       - ./backend:/app
+    entrypoint: ["/app/start.sh"]
+    command: ["python", "manage.py", "runserver", "0.0.0.0:8000"]
 
   next-app:
     container_name: next-app
@@ -24,7 +36,7 @@ services:
     ports:
       - 3000:3000
     environment:
-      - NEXT_PUBLIC_CLIENT_ID=${NEXT_PUBLIC_CLIENT_ID}
+      NEXT_PUBLIC_CLIENT_ID: ${NEXT_PUBLIC_CLIENT_ID:-}
     command: npm run dev
     volumes:
       - ./frontend/ecommerce:/app
@@ -32,21 +44,29 @@ services:
 
   postgres:
     container_name: postgres
-    image: postgres:latest
+    image: postgres:16-alpine
     environment:
-      - POSTGRES_DB=${POSTGRES_DB}
-      - POSTGRES_USER=${POSTGRES_USER}
-      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB:-ecom}
+      POSTGRES_USER: ${POSTGRES_USER:-ecom}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-ecom}
     ports:
       - 5434:5432
     volumes:
       - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-ecom} -d ${POSTGRES_DB:-ecom}"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
 
   redis:
     container_name: redis
-    image: redis
-    ports:
-      - 6379:6379
+    image: redis:7-alpine
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
 
   celery:
     container_name: celery
@@ -57,9 +77,18 @@ services:
     volumes:
       - ./backend:/app
     depends_on:
-      - redis
-    env_file:
-      - .env
+      redis:
+        condition: service_healthy
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-ecom}
+      POSTGRES_USER: ${POSTGRES_USER:-ecom}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-ecom}
+      POSTGRES_HOST: ${POSTGRES_HOST:-postgres}
+      POSTGRES_PORT: ${POSTGRES_PORT:-5432}
+      SECRET_KEY: ${SECRET_KEY:-django-insecure-local-development-only}
+      EMAIL_BACKEND: ${EMAIL_BACKEND:-django.core.mail.backends.console.EmailBackend}
+      EMAIL_HOST_USER: ${EMAIL_HOST_USER:-}
+      EMAIL_HOST_PASSWORD: ${EMAIL_HOST_PASSWORD:-}
 
   chatbot:
     container_name: chatbot
@@ -68,8 +97,8 @@ services:
       context: ./fastapi
     ports:
       - 8080:8080
-    env_file:
-      - .env
+    environment:
+      OPENAI_API_KEY: ${OPENAI_API_KEY:-}
     volumes:
       - ./fastapi:/app
 

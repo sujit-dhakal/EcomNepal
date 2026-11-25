@@ -11,7 +11,7 @@ const Reviews: React.FC = () => {
   const { comments, isLoading, isError } = useAppSelector((state: RootState) => state.product.commentState);
 
   useEffect(() => {
-    dispatch(getUserComments());
+    dispatch(getUserComments(""));
   }, [dispatch]);
 
   if (isLoading) {

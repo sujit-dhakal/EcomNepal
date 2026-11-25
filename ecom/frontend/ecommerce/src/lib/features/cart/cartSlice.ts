@@ -18,6 +18,8 @@ const initialState: CartState = {
       price: 0,
       stock: 0,
       description: "",
+      image: "",
+      average_rating: { rating: 0, count: 0 },
     },
     quantity: 0,
     total_price: 0,

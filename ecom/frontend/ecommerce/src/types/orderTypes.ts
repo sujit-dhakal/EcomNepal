@@ -1,5 +1,5 @@
 export interface OrderItemTypes {
-  productName: string;
+  product_name: string;
   quantity: string;
   price: string;
 }
@@ -7,9 +7,9 @@ export interface OrderItemTypes {
 export interface OrderTypes {
   id: number;
   status: string;
-  totalAmount: string;
-  createdAt: string;
-  updatedAt: string;
+  total_amount: string;
+  created_at: string;
+  updated_at: string;
   items: OrderItemTypes[];
 }
 

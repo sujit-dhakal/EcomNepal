@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 700" role="img" aria-labelledby="title">
+  <title id="title">LED Desk Lamp</title>
+  <defs><linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#fef9c3"/><stop offset="1" stop-color="#fde68a"/></linearGradient><linearGradient id="lamp" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#f59e0b"/><stop offset="1" stop-color="#b45309"/></linearGradient></defs>
+  <rect width="900" height="700" rx="36" fill="url(#bg)"/><circle cx="700" cy="130" r="110" fill="#fff" opacity=".45"/><ellipse cx="450" cy="560" rx="230" ry="28" fill="#a16207" opacity=".2"/>
+  <path d="M235 530h430" stroke="#78350f" stroke-width="26" stroke-linecap="round"/><path d="M450 520V315l-155-135" fill="none" stroke="#b45309" stroke-width="24" stroke-linecap="round" stroke-linejoin="round"/><path d="M275 130h190l82 105H357Z" fill="url(#lamp)" stroke="#78350f" stroke-width="9"/><path d="M294 157h151l45 55H337Z" fill="#fff7ed"/><path d="M450 520v-55" stroke="#fbbf24" stroke-width="16" stroke-linecap="round"/><circle cx="450" cy="520" r="21" fill="#78350f"/>
+  <text x="450" y="625" text-anchor="middle" font-family="Arial,sans-serif" font-size="28" font-weight="700" fill="#92400e">LED DESK LAMP</text>
+</svg>

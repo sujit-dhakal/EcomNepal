@@ -1,7 +1,8 @@
 export interface Comment {
-  id: number;
-  productId: number;
-  userId: string;
+  id?: number;
+  product_id?: number;
+  product?: string;
+  user?: string;
   content: string;
   rating: number;
 }

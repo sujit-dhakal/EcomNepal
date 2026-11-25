@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 700" role="img" aria-labelledby="title">
+  <title id="title">Leather Wallet</title>
+  <rect width="900" height="700" rx="36" fill="#f8fafc"/>
+  <circle cx="735" cy="125" r="110" fill="#92400e" opacity=".14"/>
+  <circle cx="150" cy="575" r="130" fill="#92400e" opacity=".10"/>
+  <ellipse cx="450" cy="535" rx="205" ry="28" fill="#92400e" opacity=".20"/>
+  <rect x="285" y="220" width="330" height="190" rx="24" fill="#92400e" stroke="#172554" stroke-width="10"/><path d="M285 275h330M490 315h120v65H490c-48 0-48-65 0-65Z" fill="#f8fafc" opacity=".8"/><circle cx="525" cy="347" r="10" fill="#172554"/>
+  <text x="450" y="610" text-anchor="middle" font-family="Arial,sans-serif" font-size="27" font-weight="700" fill="#172554">Leather Wallet</text>
+  <text x="450" y="650" text-anchor="middle" font-family="Arial,sans-serif" font-size="16" letter-spacing="2" fill="#92400e">FASHION</text>
+</svg>

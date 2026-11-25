@@ -20,7 +20,9 @@ const page = () => {
 
   useEffect(() => {
     dispatch(getShippingAddresses());
-    dispatch(getProductDetail(product_id));
+    if (product_id) {
+      dispatch(getProductDetail(product_id));
+    }
   }, [dispatch, product_id]);
 
   return (

@@ -13,8 +13,18 @@ interface createOrderProps {
 const Paypal: React.FC<createOrderProps> = ({ cartItems, sum }) => {
   const router = useRouter();
   const locale = useLocale();
+  const clientId = process.env.NEXT_PUBLIC_CLIENT_ID;
+
+  if (!clientId) {
+    return (
+      <p className="text-red-500 font-medium">
+        PayPal is not configured. Set NEXT_PUBLIC_CLIENT_ID to enable payments.
+      </p>
+    );
+  }
+
   const initialOptions = {
-    clientId: process.env.NEXT_PUBLIC_CLIENT_ID,
+    clientId,
     currency: "USD",
     intent: "capture",
   };

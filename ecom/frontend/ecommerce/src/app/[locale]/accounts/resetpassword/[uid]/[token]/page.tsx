@@ -24,7 +24,7 @@ const PasswordReset: FC = () => {
   const locale = useLocale();
   const router = useRouter();
   const dispatch = useAppDispatch();
-  const { uid, token } = useParams();
+  const { uid, token } = useParams<{ uid: string; token: string }>();
   const [successMessage, setSuccessMessage] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const [showPassword, setShowPassword] = useState(false);

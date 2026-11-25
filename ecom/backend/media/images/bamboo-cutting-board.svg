@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 700" role="img" aria-labelledby="title">
+  <title id="title">Bamboo Cutting Board</title>
+  <rect width="900" height="700" rx="36" fill="#f8fafc"/>
+  <circle cx="735" cy="125" r="110" fill="#a16207" opacity=".14"/>
+  <circle cx="150" cy="575" r="130" fill="#a16207" opacity=".10"/>
+  <ellipse cx="450" cy="535" rx="205" ry="28" fill="#a16207" opacity=".20"/>
+  <rect x="290" y="175" width="320" height="285" rx="25" fill="#a16207" stroke="#172554" stroke-width="10"/><rect x="335" y="220" width="230" height="190" rx="8" fill="#fefce8"/><path d="M370 275h160m-160 48h130m-130 48h95" stroke="#a16207" stroke-width="12" stroke-linecap="round"/>
+  <text x="450" y="610" text-anchor="middle" font-family="Arial,sans-serif" font-size="27" font-weight="700" fill="#172554">Bamboo Cutting Board</text>
+  <text x="450" y="650" text-anchor="middle" font-family="Arial,sans-serif" font-size="16" letter-spacing="2" fill="#a16207">HOME &AMP; LIVING</text>
+</svg>

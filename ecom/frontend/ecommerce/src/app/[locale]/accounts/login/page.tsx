@@ -47,9 +47,9 @@ const page = () => {
         if (response.payload.status == 200) {
           console.log("login successful");
           dispatch(actions.login());
-          Cookies.set("accessToken", response.payload.data.access);
-          Cookies.set("refreshToken", response.payload.data.refresh);
-          router.push(`/${locale}`);
+          Cookies.set("accessToken", response.payload.data.access, { path: "/" });
+          Cookies.set("refreshToken", response.payload.data.refresh, { path: "/" });
+          router.replace(`/${locale}`);
         } else {
           console.log("login failed");
           setLoginSuccess(false);

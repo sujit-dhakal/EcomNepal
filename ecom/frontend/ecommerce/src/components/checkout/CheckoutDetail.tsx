@@ -4,10 +4,12 @@ import { useAppDispatch, useAppSelector } from "@/lib/hooks";
 import { getCartItems } from "@/lib/store";
 import Paypal from "../paypal/Paypal";
 import { Product } from "@/types/productTypes";
+import { ShippingAddress } from "@/types/shippingTypes";
 import { useSearchParams } from "next/navigation";
 
 const CheckoutDetail: React.FC<{
   product: Product | null;
+  address: ShippingAddress[];
 }> = ({ product, address }) => {
   const searchParams = useSearchParams();
   const cartItems = useAppSelector((state) => state.cart.itemsInCart);

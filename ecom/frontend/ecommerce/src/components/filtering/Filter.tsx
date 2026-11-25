@@ -7,10 +7,15 @@ import Slider, { scrollLeft, scrollRight } from "../homepage/Slider";
 import SectionHeader from "../homepage/SectionHeader";
 import Button from "../Button";
 
+type Category = {
+  id: number;
+  name: string;
+};
+
 const Filter: React.FC = () => {
   const sliderRef = useRef<HTMLDivElement>(null);
   const locale = useLocale();
-  const [categoreis, setCategories] = useState([]);
+  const [categoreis, setCategories] = useState<Category[]>([]);
 
   const fetchCategories = async () => {
     const response = await client.get("categories/");
@@ -23,9 +28,8 @@ const Filter: React.FC = () => {
 
   // Transform categories into items for the slider
   const categoryItems = categoreis.map((category) => (
-    <Link href={`/${locale}/category/${category.name}`}>
+    <Link key={category.id} href={`/${locale}/category/${category.name}`}>
       <div
-        key={category.id}
         className="flex justify-center items-center w-32 md:w-44 h-32 md:h-36 text-base text-black hover:text-white border border-black border-opacity-30 hover:border-opacity-0 rounded hover:bg-black"
       >
         {category.name}

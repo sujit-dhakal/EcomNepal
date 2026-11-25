@@ -9,6 +9,7 @@ import SearchBar from "./search/SearchBar";
 import { useTranslations, useLocale } from "next-intl";
 import { useAppSelector } from "@/lib/hooks";
 import { usePathname } from "next/navigation";
+import { siteConfig } from "@/config/site";
 
 const Navbar = () => {
   const t = useTranslations("NavBar");
@@ -58,8 +59,11 @@ const Navbar = () => {
     <div className="relative border-b border-black border-opacity-30 mb-8">
       <div className="container px-2 mx-auto flex justify-between items-center pt-8 pb-4">
         {/* Logo */}
-        <Link href={`/${locale}`} className="font-bold text-3xl" onClick={handleLinkClick}>
-          EcomNepal
+        <Link href={`/${locale}`} className="leading-none" onClick={handleLinkClick}>
+          <span className="block font-bold text-3xl">{siteConfig.name}</span>
+          <span className="mt-1 block text-[9px] font-semibold uppercase tracking-[0.12em] text-gray-500 sm:text-[10px]">
+            Created by {siteConfig.creator}
+          </span>
         </Link>
 
         {/* Desktop Navigation */}

@@ -1,4 +1,5 @@
 from rest_framework.test import APITestCase
+from users.models import CustomUser
 from users.serializers.serializers import UserRegistrationSerializer
 
 
@@ -26,6 +27,14 @@ class UserRegistrationSerializerTestCase(APITestCase):
         self.assertTrue(serializer.is_valid())
         self.assertNotIn('password',serializer.data)
         self.assertNotIn('confirm_password',serializer.data)
+
+    def test_registered_user_is_active_without_email_verification(self):
+        serializer = UserRegistrationSerializer(data=self.data)
+        self.assertTrue(serializer.is_valid())
+
+        user = serializer.save()
+
+        self.assertTrue(user.is_active)
 from rest_framework.test import APITestCase
 from users.serializers.serializers import UserRegistrationSerializer
 

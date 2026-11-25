@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 700" role="img" aria-labelledby="title">
+  <title id="title">Inspirational Journal</title>
+  <rect width="900" height="700" rx="36" fill="#f8fafc"/>
+  <circle cx="735" cy="125" r="110" fill="#be185d" opacity=".14"/>
+  <circle cx="150" cy="575" r="130" fill="#be185d" opacity=".10"/>
+  <ellipse cx="450" cy="535" rx="205" ry="28" fill="#be185d" opacity=".20"/>
+  <rect x="305" y="170" width="290" height="310" rx="18" fill="#be185d" stroke="#172554" stroke-width="10"/><path d="M370 170v310M405 245h130m-130 55h130m-130 55h95" stroke="#fefce8" stroke-width="12" stroke-linecap="round" opacity=".85"/>
+  <text x="450" y="610" text-anchor="middle" font-family="Arial,sans-serif" font-size="27" font-weight="700" fill="#172554">Inspirational Journal</text>
+  <text x="450" y="650" text-anchor="middle" font-family="Arial,sans-serif" font-size="16" letter-spacing="2" fill="#be185d">BOOKS &AMP; STATIONERY</text>
+</svg>

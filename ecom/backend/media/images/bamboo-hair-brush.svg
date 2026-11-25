@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 700" role="img" aria-labelledby="title">
+  <title id="title">Bamboo Hair Brush</title>
+  <rect width="900" height="700" rx="36" fill="#f8fafc"/>
+  <circle cx="735" cy="125" r="110" fill="#65a30d" opacity=".14"/>
+  <circle cx="150" cy="575" r="130" fill="#65a30d" opacity=".10"/>
+  <ellipse cx="450" cy="535" rx="205" ry="28" fill="#65a30d" opacity=".20"/>
+  <rect x="410" y="170" width="80" height="300" rx="40" transform="rotate(25 450 320)" fill="#65a30d" stroke="#172554" stroke-width="10"/><rect x="335" y="205" width="160" height="155" rx="35" fill="#65a30d" stroke="#172554" stroke-width="10"/><g stroke="#fef3c7" stroke-width="8"><path d="M365 235v90m38-100v110m38-110v110m38-100v90"/></g>
+  <text x="450" y="610" text-anchor="middle" font-family="Arial,sans-serif" font-size="27" font-weight="700" fill="#172554">Bamboo Hair Brush</text>
+  <text x="450" y="650" text-anchor="middle" font-family="Arial,sans-serif" font-size="16" letter-spacing="2" fill="#65a30d">BEAUTY &AMP; PERSONAL CARE</text>
+</svg>

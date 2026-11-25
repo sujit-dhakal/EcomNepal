@@ -30,7 +30,7 @@ const ReviewForm: React.FC<ReviewFormProps> = ({ productId }) => {
             product_id: productId,
           })
         );
-        await dispatch(getAverageRating(productId));
+        await dispatch(getAverageRating(String(productId)));
         resetForm();
         console.log("Comment submitted successfully");
       } catch (error) {

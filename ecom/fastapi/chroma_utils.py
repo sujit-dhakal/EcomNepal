@@ -1,4 +1,4 @@
-from langchain_community.document_loaders import PyPDFLoader, Docx2txtLoader, UnstructuredHTMLLoader, TextLoader
+from langchain_community.document_loaders import BSHTMLLoader, PyPDFLoader, Docx2txtLoader, TextLoader
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain_openai import OpenAIEmbeddings
 from langchain_chroma import Chroma
@@ -6,12 +6,13 @@ from typing import List
 from langchain_core.documents import Document
 import os
 
-import os
-os.environ["OPENAI_API_KEY"] = os.getenv("OPENAI_API_KEY")
+OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
+if OPENAI_API_KEY:
+    os.environ["OPENAI_API_KEY"] = OPENAI_API_KEY
 
 # Initialize text splitter and embedding function
 text_splitter = RecursiveCharacterTextSplitter(chunk_size=1000, chunk_overlap=200, length_function=len)
-embedding_function = OpenAIEmbeddings()
+embedding_function = OpenAIEmbeddings(api_key=OPENAI_API_KEY) if OPENAI_API_KEY else None
 
 # Initialize Chroma vector store
 vectorstore = Chroma(persist_directory="./chroma_db", embedding_function=embedding_function)
@@ -22,7 +23,7 @@ def load_and_split_document(file_path: str) -> List[Document]:
     elif file_path.endswith('.docx'):
         loader = Docx2txtLoader(file_path)
     elif file_path.endswith('.html'):
-        loader = UnstructuredHTMLLoader(file_path)
+        loader = BSHTMLLoader(file_path)
     elif file_path.endswith('txt'):
         loader = TextLoader(file_path)
     else:

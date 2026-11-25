@@ -2,7 +2,7 @@ import React, {ReactNode} from 'react';
 
 interface SectionHeaderProps {
   topHeading: string;
-  heading: string;
+  heading: ReactNode;
   buttons?: ReactNode[];
 }
 

@@ -72,8 +72,8 @@ client.interceptors.response.use(
         if (typeof window !== "undefined") {
           localStorage.clear();
           window.location.href = `/en/accounts/login`;
-          Cookies.remove("accessToken");
-          Cookies.remove("refreshToken");
+          Cookies.remove("accessToken", { path: "/" });
+          Cookies.remove("refreshToken", { path: "/" });
         }
         return Promise.reject(refreshError);
       } finally {

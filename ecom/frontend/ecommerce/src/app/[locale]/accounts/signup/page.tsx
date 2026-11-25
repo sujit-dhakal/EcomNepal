@@ -71,7 +71,7 @@ const page = () => {
           setUserNameAlreadyExist(true);
           return;
         }
-        const response: any = dispatch(registerUser(values));
+        await dispatch(registerUser(values));
         setIsRegistered(true);
       } catch (error: any) {
         console.log(error.response.data);
@@ -227,7 +227,7 @@ const page = () => {
 
         {isRegistered && (
           <div className="text-green-800">
-            Check your mail to verify the account.
+            Account created successfully. You can log in now.
           </div>
         )}
       </div>

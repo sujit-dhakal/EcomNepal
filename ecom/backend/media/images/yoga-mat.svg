@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 700" role="img" aria-labelledby="title">
+  <title id="title">Yoga Mat</title>
+  <defs><linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#f3e8ff"/><stop offset="1" stop-color="#ddd6fe"/></linearGradient><linearGradient id="mat" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#7c3aed"/><stop offset="1" stop-color="#4c1d95"/></linearGradient></defs>
+  <rect width="900" height="700" rx="36" fill="url(#bg)"/><circle cx="720" cy="140" r="94" fill="#fff" opacity=".4"/><ellipse cx="450" cy="565" rx="270" ry="30" fill="#5b21b6" opacity=".2"/>
+  <path d="M245 230h350c67 0 93 45 93 104v162H338c-63 0-93-36-93-91Z" fill="url(#mat)" stroke="#4c1d95" stroke-width="10"/><ellipse cx="595" cy="334" rx="78" ry="104" fill="#8b5cf6" stroke="#4c1d95" stroke-width="10"/><ellipse cx="595" cy="334" rx="48" ry="70" fill="#ddd6fe" opacity=".8"/><path d="M310 285h210M310 330h155M310 375h180" stroke="#c4b5fd" stroke-width="9" stroke-linecap="round" opacity=".7"/>
+  <text x="450" y="625" text-anchor="middle" font-family="Arial,sans-serif" font-size="28" font-weight="700" fill="#5b21b6">NON-SLIP YOGA MAT</text>
+</svg>

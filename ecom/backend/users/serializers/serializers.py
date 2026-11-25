@@ -2,12 +2,9 @@ from rest_framework import serializers
 from users.models import CustomUser
 from rest_framework.exceptions import ValidationError
 from django.contrib.auth import authenticate
-from django.contrib.auth.tokens import PasswordResetTokenGenerator,default_token_generator
+from django.contrib.auth.tokens import PasswordResetTokenGenerator
 from django.utils.encoding import force_bytes
 from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
-from django.core.mail import send_mail
-import os
-from django.urls import reverse
 from users.tasks import send_mail_task
 
 class UserSerializer(serializers.ModelSerializer):
@@ -24,13 +21,17 @@ class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = CustomUser
         fields = '__all__'
+        extra_kwargs = {
+            'password': {'write_only': True, 'required': False},
+            'username': {'required': False},
+        }
 
 class UserRegistrationSerializer(serializers.ModelSerializer):
     """
     Serializer for user registration.
 
-    This serializer is used to handle the creation of a new user, including
-    password confirmation and sending a verification email.
+    This serializer is used to handle the creation of a new active user,
+    including password confirmation.
 
     Attributes:
         password (CharField): Write-only field for the user's password.
@@ -67,7 +68,7 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         """
-        Create a new user and send a verification email.
+        Create a new active user without email verification.
 
         Args:
             validated_data (dict): The validated data.
@@ -76,29 +77,8 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
             CustomUser: The created user instance.
         """
         validated_data.pop("confirm_password")
-        user = CustomUser.objects.create_user(**validated_data)
-        self.send_verification_email(user)
+        user = CustomUser.objects.create_user(is_active=True, **validated_data)
         return user
-
-    def send_verification_email(self,user):
-        """
-        Send an email to verify the user's email address.
-
-        Args:
-            user (CustomUser): The user instance to send the verification email to.
-        """
-        token = default_token_generator.make_token(user)
-        uid = urlsafe_base64_encode(force_bytes(user.user_id))
-        verification_link = reverse('email-verify', kwargs={'uid':uid,'token':token})
-        verification_url = f"http://127.0.0.1:8000{verification_link}".strip()
-        # send_mail(
-        #     "Verify your email",
-        #     verification_url,
-        #      os.getenv('EMAIL_HOST_USER'),
-        #     [user.email],
-        #     fail_silently=False
-        # )
-        send_mail_task.delay(subject="Verify your email",message=verification_url,recipient_list=[user.email])
 
 
 class UserLoginSerializer(serializers.Serializer):

@@ -8,7 +8,7 @@ import { useLocale } from "next-intl";
 import SectionHeader from "@/components/homepage/SectionHeader";
 import { RootState } from "@/lib/store";
 import ReviewForm from "@/components/products/ReviewForm";
-import { HorizontalLine, Section } from "../../page";
+import { HorizontalLine, Section } from "@/components/homepage/LayoutSections";
 import ProductSection from "@/components/homepage/ProductSection";
 
 const page = ({

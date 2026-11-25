@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 700" role="img" aria-labelledby="title">
+  <title id="title">Mini Projector</title>
+  <rect width="900" height="700" rx="36" fill="#f8fafc"/>
+  <circle cx="735" cy="125" r="110" fill="#be123c" opacity=".14"/>
+  <circle cx="150" cy="575" r="130" fill="#be123c" opacity=".10"/>
+  <ellipse cx="450" cy="535" rx="205" ry="28" fill="#be123c" opacity=".20"/>
+  <rect x="300" y="210" width="300" height="190" rx="35" fill="#be123c"/><circle cx="450" cy="305" r="70" fill="#e0f2fe"/><circle cx="450" cy="305" r="42" fill="#172554"/><rect x="350" y="175" width="85" height="40" rx="12" fill="#be123c"/><circle cx="560" cy="255" r="12" fill="#fef08a"/>
+  <text x="450" y="610" text-anchor="middle" font-family="Arial,sans-serif" font-size="27" font-weight="700" fill="#172554">Mini Projector</text>
+  <text x="450" y="650" text-anchor="middle" font-family="Arial,sans-serif" font-size="16" letter-spacing="2" fill="#be123c">ELECTRONICS</text>
+</svg>

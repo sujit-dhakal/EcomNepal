@@ -8,9 +8,6 @@ from langchain_core.documents import Document
 import os
 from chroma_utils import vectorstore
 
-import os
-os.environ["OPENAI_API_KEY"] = os.getenv("OPENAI_API_KEY")
-
 retriever = vectorstore.as_retriever(search_kwargs={"k": 2})
 
 output_parser = StrOutputParser()
@@ -37,6 +34,8 @@ qa_prompt = ChatPromptTemplate.from_messages([
 ])
 
 def get_rag_chain(model="gpt-4o-mini"):
+    if not os.getenv("OPENAI_API_KEY"):
+        raise RuntimeError("OPENAI_API_KEY is required to use the chatbot")
     llm = ChatOpenAI(model=model)
     history_aware_retriever = create_history_aware_retriever(llm, retriever, contextualize_q_prompt)
     question_answer_chain = create_stuff_documents_chain(llm, qa_prompt)

@@ -33,7 +33,7 @@ export const buildShippingSlice = () => {
       builder
         .addCase(
           getShippingAddresses.fulfilled,
-          (state, action: PayloadAction<ShippingAddress>) => {
+          (state, action: PayloadAction<ShippingAddress[]>) => {
             state.addresses = action.payload;
             state.isLoading = false;
             state.isError = false;

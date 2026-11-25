@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 700" role="img" aria-labelledby="title">
+  <title id="title">Herbal Face Wash</title>
+  <defs><linearGradient id="bg" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#dcfce7"/><stop offset="1" stop-color="#bbf7d0"/></linearGradient><linearGradient id="tube" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#65a30d"/><stop offset="1" stop-color="#365314"/></linearGradient></defs>
+  <rect width="900" height="700" rx="36" fill="url(#bg)"/><circle cx="720" cy="140" r="94" fill="#fff" opacity=".4"/><ellipse cx="450" cy="570" rx="145" ry="28" fill="#3f6212" opacity=".2"/>
+  <path d="M345 185h210l-20 330c-3 43-39 66-85 66s-82-23-85-66Z" fill="url(#tube)" stroke="#365314" stroke-width="9"/><rect x="370" y="130" width="160" height="70" rx="18" fill="#fefce8" stroke="#365314" stroke-width="8"/><path d="M388 300h124M388 335h124" stroke="#d9f99d" stroke-width="8" stroke-linecap="round"/><circle cx="450" cy="410" r="40" fill="#bef264"/><path d="M450 438c-22-25-38-41-38-61 0-17 22-25 38-7 16-18 38-10 38 7 0 20-16 36-38 61Z" fill="#365314"/>
+  <text x="450" y="635" text-anchor="middle" font-family="Arial,sans-serif" font-size="28" font-weight="700" fill="#3f6212">HERBAL FACE WASH</text>
+</svg>

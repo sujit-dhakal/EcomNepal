@@ -46,7 +46,7 @@ const ProductSection = ({ type, topHeading, heading, productId }: ProductSection
           image: `http://localhost:8000${product.image}`
         })));
       } else {
-        dispatch(getProducts());
+        dispatch(getProducts(""));
       }
     };
     fetchProducts();

@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 700" role="img" aria-labelledby="title">
+  <title id="title">Baseball Cap</title>
+  <rect width="900" height="700" rx="36" fill="#f8fafc"/>
+  <circle cx="735" cy="125" r="110" fill="#1d4ed8" opacity=".14"/>
+  <circle cx="150" cy="575" r="130" fill="#1d4ed8" opacity=".10"/>
+  <ellipse cx="450" cy="535" rx="205" ry="28" fill="#1d4ed8" opacity=".20"/>
+  <path d="M320 335c0-90 54-150 130-150s130 60 130 150H320Z" fill="#1d4ed8" stroke="#172554" stroke-width="10"/><path d="M320 335c110-24 220-15 310 20-65 61-227 67-310 15Z" fill="#1d4ed8" stroke="#172554" stroke-width="10"/>
+  <text x="450" y="610" text-anchor="middle" font-family="Arial,sans-serif" font-size="27" font-weight="700" fill="#172554">Baseball Cap</text>
+  <text x="450" y="650" text-anchor="middle" font-family="Arial,sans-serif" font-size="16" letter-spacing="2" fill="#1d4ed8">FASHION</text>
+</svg>
