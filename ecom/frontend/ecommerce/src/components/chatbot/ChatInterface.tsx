@@ -1,6 +1,7 @@
 "use client";
 import React, { useState, useEffect } from "react";
 import { v4 as uuidv4 } from "uuid";
+import { CHATBOT_API_URL } from "@/api/config";
 
 interface Message {
   text: string;
@@ -33,7 +34,7 @@ const ChatInterface = () => {
     setIsLoading(true);
 
     try {
-      const response = await fetch("http://localhost:8080/chat", {
+      const response = await fetch(`${CHATBOT_API_URL}/chat`, {
         method: "POST",
         headers: {
           accept: "application/json",

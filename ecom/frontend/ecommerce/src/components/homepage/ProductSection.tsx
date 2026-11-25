@@ -11,6 +11,7 @@ import { useLocale } from "next-intl";
 import axios from "axios";
 import { shuffleArray } from "@/lib/shuffleArray";
 import { RootState } from "@/lib/store";
+import { apiUrl } from "@/api/config";
 
 interface ProductSectionProps {
   type?: "bestselling" | "latest" | "similar";
@@ -32,18 +33,18 @@ const ProductSection = ({ type, topHeading, heading, productId }: ProductSection
     const fetchProducts = async () => {
       if (type === "bestselling") {
         const response = await axios.get(
-          "http://127.0.0.1:8000/products?query=bestselling"
+          apiUrl("products?query=bestselling")
         );
         setProducts(response.data);
       } else if (type === "latest") {
         const response = await axios.get(
-          "http://127.0.0.1:8000/products?query=latest"
+          apiUrl("products?query=latest")
         );
         setProducts(response.data);
       } else if (type === "similar" && productId) {     
         setProducts(relatedProducts.map((product) => ({
           ...product,
-          image: `http://localhost:8000${product.image}`
+          image: apiUrl(product.image)
         })));
       } else {
         dispatch(getProducts(""));

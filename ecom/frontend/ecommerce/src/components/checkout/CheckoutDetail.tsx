@@ -6,6 +6,7 @@ import Paypal from "../paypal/Paypal";
 import { Product } from "@/types/productTypes";
 import { ShippingAddress } from "@/types/shippingTypes";
 import { useSearchParams } from "next/navigation";
+import { apiUrl } from "@/api/config";
 
 const CheckoutDetail: React.FC<{
   product: Product | null;
@@ -55,7 +56,7 @@ const CheckoutDetail: React.FC<{
                 src={
                   item.product.image.startsWith("http")
                     ? item.product.image
-                    : `http://localhost:8000/${item.product.image}`
+                    : apiUrl(item.product.image)
                 }
                 alt={item.product.name}
                 className="w-16 h-16 object-cover rounded-lg"

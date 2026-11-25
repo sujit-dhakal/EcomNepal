@@ -18,7 +18,7 @@ const OrderDetails: React.FC<OrderDetailsProps> = ({ params }) => {
   useEffect(() => {
     const deleteBuyNowItemsFromCart = async () => {
       await client.delete(
-        "http://127.0.0.1:8000/cart/delete_direct_purchase_items/"
+        "cart/delete_direct_purchase_items/"
       );
     };
     deleteBuyNowItemsFromCart();

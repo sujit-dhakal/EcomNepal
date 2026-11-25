@@ -26,7 +26,11 @@ SECRET_KEY = os.getenv('SECRET_KEY', 'django-insecure-local-development-only')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = [
+    host.strip()
+    for host in os.getenv('ALLOWED_HOSTS', '*').split(',')
+    if host.strip()
+]
 
 
 # Application definition
@@ -64,12 +68,10 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-CORS_ALLOWED_ORIGINS = [
-    "http://localhost:3000",
-    "http://127.0.0.1:3000",
-    "http://next-app:3000",
-    "http://192.168.1.100:3000"
-]
+CORS_ALLOW_ALL_ORIGINS = os.getenv(
+    'CORS_ALLOW_ALL_ORIGINS',
+    'true',
+).strip().lower() in {'true', '1', 'yes'}
 
 ROOT_URLCONF = 'ecommerce.urls'
 

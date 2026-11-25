@@ -1,8 +1,9 @@
 import axios from "axios";
 import Cookies from "js-cookie";
+import { API_BASE_URL, apiUrl } from "@/api/config";
 
 export const client = axios.create({
-  baseURL: "http://127.0.0.1:8000/",
+  baseURL: `${API_BASE_URL}/`,
   headers: {
     "Content-Type": "application/json",
   },
@@ -32,7 +33,7 @@ const onTokenRefreshed = (token: any) => {
 const refreshTokenAndRetry = async (error: any) => {
   try {
     const refreshToken = Cookies.get("refreshToken");
-    const { data } = await axios.post("http://127.0.0.1:8000/token/refresh/", {
+    const { data } = await axios.post(apiUrl("token/refresh/"), {
       refresh: refreshToken,
     });
     Cookies.set("accessToken", data.access, { path: "/" });

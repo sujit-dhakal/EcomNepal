@@ -6,6 +6,7 @@ import { useSearchParams } from "next/navigation";
 import { Product } from "@/types/productTypes";
 import ProductCard from "@/components/products/ProductCard";
 import { shuffleArray } from "@/lib/shuffleArray";
+import { apiUrl } from "@/api/config";
 
 const Products = () => {
   const dispatch = useAppDispatch();
@@ -28,7 +29,7 @@ const Products = () => {
 
   const updatedRelatedProducts = relatedProducts.map((product) => ({
     ...product,
-    image: `http://localhost:8000${product.image}`,
+    image: apiUrl(product.image),
   }));
 
   const displayedProducts = productType === "similar" ? updatedRelatedProducts : products;

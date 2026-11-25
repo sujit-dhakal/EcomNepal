@@ -24,5 +24,6 @@ Run the project using docker-compose
 
 To access the development server:
 
-    localhost:8000 # frontend
-    localhost:3000 # backend
+    localhost:3000 # frontend
+    localhost:8000 # Django API
+    localhost:8080 # chatbot API

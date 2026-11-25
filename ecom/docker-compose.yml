@@ -13,6 +13,8 @@ services:
       POSTGRES_HOST: ${POSTGRES_HOST:-postgres}
       POSTGRES_PORT: ${POSTGRES_PORT:-5432}
       SECRET_KEY: ${SECRET_KEY:-django-insecure-local-development-only}
+      ALLOWED_HOSTS: ${ALLOWED_HOSTS:-*}
+      CORS_ALLOW_ALL_ORIGINS: ${CORS_ALLOW_ALL_ORIGINS:-true}
       EMAIL_BACKEND: ${EMAIL_BACKEND:-django.core.mail.backends.console.EmailBackend}
       EMAIL_HOST_USER: ${EMAIL_HOST_USER:-}
       EMAIL_HOST_PASSWORD: ${EMAIL_HOST_PASSWORD:-}
@@ -37,6 +39,9 @@ services:
       - 3000:3000
     environment:
       NEXT_PUBLIC_CLIENT_ID: ${NEXT_PUBLIC_CLIENT_ID:-}
+      NEXT_PUBLIC_API_URL: ${NEXT_PUBLIC_API_URL:-http://127.0.0.1:8000}
+      NEXT_PUBLIC_CHATBOT_API_URL: ${NEXT_PUBLIC_CHATBOT_API_URL:-http://127.0.0.1:8080}
+      API_INTERNAL_URL: ${API_INTERNAL_URL:-http://django-app:8000}
     command: npm run dev
     volumes:
       - ./frontend/ecommerce:/app
@@ -99,6 +104,7 @@ services:
       - 8080:8080
     environment:
       OPENAI_API_KEY: ${OPENAI_API_KEY:-}
+      CORS_ALLOW_ALL_ORIGINS: ${CORS_ALLOW_ALL_ORIGINS:-true}
     volumes:
       - ./fastapi:/app
 

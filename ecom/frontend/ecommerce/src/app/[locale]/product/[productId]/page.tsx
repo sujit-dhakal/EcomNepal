@@ -10,6 +10,7 @@ import { RootState } from "@/lib/store";
 import ReviewForm from "@/components/products/ReviewForm";
 import { HorizontalLine, Section } from "@/components/homepage/LayoutSections";
 import ProductSection from "@/components/homepage/ProductSection";
+import { apiUrl } from "@/api/config";
 
 const page = ({
   params,
@@ -38,7 +39,7 @@ const page = ({
 
   const addToCart = async (productId: number) => {
     const response = await client.post(
-      "http://127.0.0.1:8000/cart/add_to_cart/",
+      apiUrl("cart/add_to_cart/"),
       {
         product_id: productId,
         quantity: 1,
@@ -75,7 +76,7 @@ const page = ({
         <div className="flex flex-col justify-center lg:flex-row gap-16 px-3.5">
           <div className="flex justify-center">
             <img
-              src={`http://localhost:8000/${product.image}`}
+              src={apiUrl(product.image)}
               alt="product image"
               className="w-[450px] h-[350px] rounded-lg"
             />

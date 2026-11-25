@@ -1,10 +1,11 @@
 import axios from "axios";
 import ProductCard from "@/components/products/ProductCard";
 import { Product } from "@/types/productTypes";
+import { apiUrl, internalApiUrl } from "@/api/config";
 
 const fetchCategoryProducts = async (categoryId: string) => {
   const response = await axios.get(
-    `http://django-app:8000/product-filter/${categoryId}`
+    internalApiUrl(`product-filter/${categoryId}`)
   );
   return response.data;
 };
@@ -27,7 +28,7 @@ const page = async ({
             key={product.id}
             product={{
               ...product,
-              image: `http://127.0.0.1:8000${product.image}`
+              image: apiUrl(product.image)
             }}
           />
         ))}

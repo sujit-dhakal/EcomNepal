@@ -4,6 +4,7 @@ import { RootState } from "@/lib/store";
 import { useFormik } from "formik";
 import { useSelector } from "react-redux";
 import axios from "axios";
+import { apiUrl } from "@/api/config";
 
 const PersonalInfo: React.FC = () => {
   const profile = useSelector((state: RootState) => state.user.user);
@@ -24,7 +25,7 @@ const PersonalInfo: React.FC = () => {
       }
       try {
         const response = await axios.put(
-          `http://127.0.0.1:8000/users/${profile.user_id}/`,
+          apiUrl(`users/${profile.user_id}/`),
           values
         );
         setOnSaveMessage("Changes made successfully.");
